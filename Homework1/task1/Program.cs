@@ -8,7 +8,6 @@ class MainProgram
         {
             throw new ArgumentNullException(nameof(args));
         }
-
         if (!SortingTest.Test())
         {
             Console.WriteLine("Тесты не пройдены!");
@@ -43,7 +42,6 @@ class MainProgram
     }
 }
 
-
 class Sorting
 {
     public static bool BubbleSort(int[] array)
@@ -65,6 +63,7 @@ class Sorting
         return true;
     }
 }
+
 class SortingTest
 {
     public static bool VerifyTest(int[] array)
@@ -100,4 +99,3 @@ class SortingTest
         return firstAnswer && secondAnswer && thirdAnswer && firstCheck && secondCheck && thirdCheck;
     }
 }
-
