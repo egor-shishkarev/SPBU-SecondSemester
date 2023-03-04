@@ -1,4 +1,5 @@
 ﻿using BubbleSort;
+
 public static class SortingTest
 {
     public static bool VerifyTest(int[] array)

@@ -1,4 +1,5 @@
 ﻿namespace BubbleSort;
+
 public static class Sorting
 {
     public static bool BubbleSort(int[] array)
