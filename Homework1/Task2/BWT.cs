@@ -6,7 +6,7 @@ public static class BWT
 {
     public static (StringBuilder BWTString, int lastPosition) DirectBWT(string stringToConvert)
     {
-        if (stringToConvert == null)
+        if (string.IsNullOrEmpty(stringToConvert))
         {
             return (new StringBuilder(0), 0);
         }
@@ -28,6 +28,10 @@ public static class BWT
 
     public static StringBuilder ReverseBWT(StringBuilder BWTString, int lastPosition)
     {
+        if (BWTString == null || string.IsNullOrEmpty(BWTString.ToString()) || (lastPosition > BWTString.Length || lastPosition < 0))
+        {
+            return new StringBuilder(0);
+        }
         StringBuilder BWTStringWithAdditionalSymbol = new(BWTString.Length + 1);
         for (int i = 0; i < BWTString.Length; ++i)
         {
