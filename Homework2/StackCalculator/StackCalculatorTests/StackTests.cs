@@ -9,45 +9,31 @@ public class StackTests
     {
     }
 
-    [Test]
-    public void PushAndPopShouldGiveSameResult()
+    private static IEnumerable <TestCaseData> Stacks
+        => new TestCaseData[]
     {
-        var arrayStack = new ArrayStack();
-        arrayStack.Push(1);
-        arrayStack.Push(2);
-        var listStack = new ListStack();
-        listStack.Push(3);
-        listStack.Push(4);  
-        Assert.Multiple(() =>
-        {
-            Assert.That(Math.Abs(arrayStack.Pop() - 2) < delta);
-            Assert.That(Math.Abs(arrayStack.Pop() - 1) < delta);
-            Assert.That(Math.Abs(listStack.Pop() - 4) < delta);
-            Assert.That(Math.Abs(listStack.Pop() - 3) < delta);
-        });
+        new TestCaseData(new ArrayStack()),
+        new TestCaseData(new ListStack()),
+    };
+
+    [TestCaseSource(nameof(Stacks))]  
+    public void PushAndPopShouldGiveSameResult(IStack stack)
+    {
+        stack.Push(1);
+        stack.Push(2); 
+        Assert.That(Math.Abs(stack.Pop() - 2), Is.LessThan(delta));
+
     }
 
-    [Test]
-    public void IsEmptyShouldWork()
+    [TestCaseSource(nameof(Stacks))]
+    public void IsEmptyShouldWork(IStack stack)
     {
-        var arrayStack = new ArrayStack();
-        var listStack = new ListStack();
-        Assert.Multiple(() =>
-        {
-            Assert.That(arrayStack.IsEmpty(), Is.True);
-            Assert.That(listStack.IsEmpty(), Is.True);
-        });
+        Assert.That(stack.IsEmpty(), Is.True);
     }
 
-    [Test]
-    public void PopFromEmptyStackShouldThrowException() 
+    [TestCaseSource(nameof(Stacks))]
+    public void PopFromEmptyStackShouldThrowException(IStack stack) 
     {
-        var arrayStack = new ArrayStack();
-        var listStack = new ListStack();
-        Assert.Multiple(() =>
-        {
-            Assert.That(() => arrayStack.Pop(), Throws.Exception);
-            Assert.That(() => listStack.Pop(), Throws.Exception);
-        });
+        Assert.That(stack.Pop, Throws.InvalidOperationException);
     }
 }

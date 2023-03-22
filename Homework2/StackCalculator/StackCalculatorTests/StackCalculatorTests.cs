@@ -1,3 +1,5 @@
+using System.Runtime.CompilerServices;
+
 namespace StackCalculatorClass.Tests;
 
 public class Tests
@@ -10,67 +12,58 @@ public class Tests
     {
     }
 
-    [Test]
-    public void ExpressionShouldCalculateRight()
+    private static IEnumerable<TestCaseData> StackCalculators
+        => new TestCaseData[]
     {
-        var arrayStack = new ArrayStack();
-        var listStack = new ListStack();
-        var stackCalculatorByArray = new StackCalculator(arrayStack);
-        var stackCalculatorByList = new StackCalculator(listStack);
+            new TestCaseData(new StackCalculator(new ArrayStack())),
+            new TestCaseData(new StackCalculator(new ListStack())),
+    };
+
+    [TestCaseSource(nameof(StackCalculators))]
+    public void ExpressionShouldCalculateRight(StackCalculator stackCalculator)
+    {
         var expression = "1 2 + 3 *";
 
-        Assert.Multiple(() =>
-        {
-            Assert.That(Math.Abs(stackCalculatorByArray.CalculateExpression(expression).result - 9) < delta);
-            Assert.That(Math.Abs(stackCalculatorByList.CalculateExpression(expression).result - 9) < delta);
-        });
+        Assert.That(Math.Abs(stackCalculator.CalculateExpression(expression).result - 9), Is.LessThan(delta));
     }
 
-    [Test] 
-    public void ExpressionWithDivisionByZeroShouldReturnFalseArgument()
+    [TestCaseSource(nameof(StackCalculators))]
+    public void ExpressionWithDivisionByZeroShouldReturnFalseArgument(StackCalculator stackCalculator)
     {
-        var arrayStack = new ArrayStack();
-        var listStack = new ListStack();
-        var stackCalculatorByArray = new StackCalculator(arrayStack);
-        var stackCalculatorByList = new StackCalculator(listStack);
-        var expression = "1 0 /";
+        var expression = "1 2 + 0 /";
 
-        Assert.Multiple(() =>
-        {
-            Assert.That(stackCalculatorByArray.CalculateExpression(expression).notDivisionByZero, Is.False);
-            Assert.That(stackCalculatorByList.CalculateExpression(expression).notDivisionByZero, Is.False);
-        });
+        Assert.That(stackCalculator.CalculateExpression(expression).notDivisionByZero, Is.False);
     }
 
-    [Test] 
-    public void IncorrectExpressionShouldThrowException()
+    [TestCaseSource(nameof(StackCalculators))]
+    public void IncorrectExpressionShouldThrowException(StackCalculator stackCalculator)
     {
-        var arrayStack = new ArrayStack();
-        var listStack = new ListStack();
-        var stackCalculatorByArray = new StackCalculator(arrayStack);
-        var stackCalculatorByList = new StackCalculator(listStack);
         var expression = "1 +";
 
-        Assert.Multiple(() =>
-        {
-            Assert.That(() => stackCalculatorByArray.CalculateExpression(expression), Throws.Exception);
-            Assert.That(() => stackCalculatorByList.CalculateExpression(expression), Throws.Exception);
-        });
+        Assert.That(() => stackCalculator.CalculateExpression(expression), Throws.InvalidOperationException);
     }
 
-    [Test]
-    public void UnexpectedSymbolInExpressionShouldThrowException()
+    [TestCaseSource(nameof(StackCalculators))]
+    public void UnexpectedSymbolInExpressionShouldThrowException(StackCalculator stackCalculator)
     {
-        var arrayStack = new ArrayStack();
-        var listStack = new ListStack();
-        var stackCalculatorByArray = new StackCalculator(arrayStack);
-        var stackCalculatorByList = new StackCalculator(listStack);
         var expression = "A 2 +";
 
-        Assert.Multiple(() =>
-        {
-            Assert.That(() => stackCalculatorByArray.CalculateExpression(expression), Throws.Exception);
-            Assert.That(() => stackCalculatorByList.CalculateExpression(expression), Throws.Exception);
-        });
+        Assert.That(() => stackCalculator.CalculateExpression(expression), Throws.ArgumentException);
+    }
+
+    [TestCaseSource(nameof(StackCalculators))]
+    public void NullStringShouldThrowException(StackCalculator stackCalculator)
+    {
+        string? expression = null;
+
+        Assert.That(() => stackCalculator.CalculateExpression(expression!), Throws.ArgumentNullException);
+    }
+
+    [TestCaseSource(nameof(StackCalculators))]
+    public void EmptyStringShouldThrowException(StackCalculator stackCalculator)
+    {
+        string? expression = string.Empty;
+
+        Assert.That(() => stackCalculator.CalculateExpression(expression), Throws.ArgumentException);
     }
 }

@@ -57,12 +57,12 @@ public class ArrayStack: IStack
     /// Method, that returns element from the top of stack.
     /// </summary>
     /// <returns>Number from the top of stack.</returns>
-    /// <exception cref="Exception">Empty stack</exception>
+    /// <exception cref="InvalidOperationException">Empty stack</exception>
     public float Pop()
     {
         if (IsEmpty())
         {
-            throw new Exception();
+            throw new InvalidOperationException("Can't pop from empty stack!");
         }
         --indexOfTop;
         return stack[indexOfTop + 1];

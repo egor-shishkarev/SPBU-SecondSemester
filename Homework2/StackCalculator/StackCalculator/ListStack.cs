@@ -31,12 +31,12 @@ public class ListStack: IStack
     /// Method, that return number from stack.
     /// </summary>
     /// <returns>Number from the top of stack</returns>
-    /// <exception cref="Exception">Empty stack</exception>
+    /// <exception cref="InvalidOperationException">Empty stack</exception>
     public float Pop()
     {
         if (IsEmpty())
         {
-            throw new Exception();
+            throw new InvalidOperationException("Can't pop from empty stack!");
         }
         var elementToPop = stack[stack.Count - 1];
         stack.RemoveAt(stack.Count - 1);

@@ -25,17 +25,19 @@ public class StackCalculator
     /// </summary>
     /// <param name="expression">String, that we want to calculate.</param>
     /// <returns>(..., false) - if in expression was division by zero, (result of exepression, true) - if all was right.</returns>
-    /// <exception cref="Exception"></exception>
+    /// <exception cref="ArgumentNullException">Expression is null</exception>
+    /// <exception cref="ArgumentException">EXpression is empty</exception>
+    /// <exception cref="InvalidOperationException">Can't pop from empty stack</exception>
     public (float result, bool notDivisionByZero) CalculateExpression(string expression)
     {
         if (expression == null) 
         {
-            throw new Exception();
+            throw new ArgumentNullException("Expression to convert is null");
         }
 
         if (string.IsNullOrEmpty(expression))
         {
-            throw new Exception();
+            throw new ArgumentException("Expression is empty");
         }
 
         var splittedString = expression.Split();
@@ -52,7 +54,7 @@ public class StackCalculator
                 }
                 catch
                 {
-                    throw new Exception();
+                    throw new InvalidOperationException("Can't pop from empty stack!");
                 }
                 float result;
                 switch (item)
@@ -84,7 +86,7 @@ public class StackCalculator
                         } 
                     default:
                         {
-                            throw new Exception();
+                            throw new ArgumentException("Unexpected operation!");
                         }
                 }
                 stackCalculator.Push(result);
@@ -94,7 +96,7 @@ public class StackCalculator
                 float newElement;
                 if (!float.TryParse(item, out newElement))
                 {
-                    throw new Exception();
+                    throw new ArgumentException("Unexpected symbol!");
                 }
                 stackCalculator.Push(newElement);
             }
@@ -106,12 +108,12 @@ public class StackCalculator
         }
         catch
         {
-            throw new Exception();
+            throw new InvalidOperationException("Can't pop from empty stack!");
         }
 
         if (!stackCalculator.IsEmpty())
         {
-            throw new Exception();
+            throw new ArgumentException("Wrong exception!");
         }
 
         return (resultOfExpression, true);
