@@ -2,14 +2,14 @@
 
 public static class Sorting
 {
-    public static (byte[], bool) BubbleSuffixSort(byte[] bytes)
+    public static (int[], bool) BubbleSuffixSort(string stringToConvert)
     {
-        if (bytes == null)
+        if (stringToConvert == null)
         {
-            return (Array.Empty<byte>(), false);
+            return (Array.Empty<int>(), false);
         }
-        var arrayOfIndex = new int[bytes.Length];
-        for (int i = 0; i < bytes.Length; ++i)
+        var arrayOfIndex = new int[stringToConvert.Length];
+        for (int i = 0; i < stringToConvert.Length; ++i)
         {
             arrayOfIndex[i] = i;
         }
@@ -17,12 +17,12 @@ public static class Sorting
         {
             for (int j = i - 1; j >= 0; --j)
             {
-                if (bytes[j] < bytes[i])
+                if (string.CompareOrdinal(stringToConvert[arrayOfIndex[i]..], stringToConvert[arrayOfIndex[j]..]) < 0)
                 {
                     (arrayOfIndex[j], arrayOfIndex[i]) = (arrayOfIndex[i], arrayOfIndex[j]);
                 }
             }
         }
-        return (bytes, true);
+        return (arrayOfIndex, true);
     }
 }

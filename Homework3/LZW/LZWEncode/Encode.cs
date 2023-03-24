@@ -1,8 +1,8 @@
 ﻿namespace LZW;
-
+using TrieClass;
 public class Encode
 {
-    public static void EncodeFile(string filePath)
+    public static byte[] EncodeFile(string filePath)
     {
         if (!File.Exists(filePath))
         {
@@ -13,5 +13,6 @@ public class Encode
         {
             Console.WriteLine(entry);
         }
+        return binaryFile;
     }
 }
