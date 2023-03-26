@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Archiver\Archiver.csproj" />
     <ProjectReference Include="..\BWT\BWT.csproj" />
     <ProjectReference Include="..\LZWDecode\LZWDecode.csproj" />
     <ProjectReference Include="..\LZWEncode\LZWEncode.csproj" />

@@ -1,69 +1,66 @@
 ﻿namespace Transform;
 
-using System.Text;
-
+/// <summary>
+/// Class of Burrows-Wheeler transform is made up of Direct and Reverse transformation.
+/// </summary>
 public static class BWT
 {
-    public static (StringBuilder BWTString, int lastPosition) DirectBWT(string stringToConvert)
+    /// <summary>
+    /// Direct transformation of byte array.
+    /// </summary>
+    /// <param name="bytes">Array, to which we want to apply the Burrows Wheeler transform. </param>
+    /// <returns>Array of converted bytes and last position - need for reverse BWT.</returns>
+    /// <exception cref="ArgumentNullException">Array of bytes was null.</exception>
+    public static (byte[] BWTBytes, int lastPosition) DirectBWT(byte[] bytes)
     {
-        if (string.IsNullOrEmpty(stringToConvert))
+        if (bytes == null)
         {
-            return (new StringBuilder(0), 0);
+            throw new ArgumentNullException(nameof(bytes), "Array of bytes mustn't be null!");
         }
-        stringToConvert += "\0";
-        (var arrayOfIndex, bool notNull) = Sorting.BubbleSuffixSort(stringToConvert);
-        if (!notNull)
+        int[] arrayOfIndices = new int[bytes.Length];
+        for (int i = 0; i < bytes.Length; ++i)
         {
-            return (new StringBuilder(0), 0);
+            arrayOfIndices[i] = i;
         }
-        var BWTString = new StringBuilder(stringToConvert.Length);
-        for (int i = 0; i < stringToConvert.Length; ++i)
+        int lastPosition = Sorting.BubbleSuffixSort(bytes, arrayOfIndices);
+        var BWTBytes = new List<byte>();
+        for (int i = 0; i < bytes.Length; ++i)
         {
-            BWTString.Append(stringToConvert[(stringToConvert.Length + arrayOfIndex[i] - 1) % stringToConvert.Length]);
+            BWTBytes.Add(bytes[(bytes.Length + arrayOfIndices[i] - 1) % bytes.Length]);
         }
-        int lastPosition = BWTString.ToString().IndexOf('\0');
-        BWTString = BWTString.Replace("\0", "");
-        return (BWTString, lastPosition);
+        return (BWTBytes.ToArray(), lastPosition);
     }
 
-    public static StringBuilder ReverseBWT(StringBuilder BWTString, int lastPosition)
+    public static byte[] ReverseBWT(byte[] BWTBytes, int lastPosition)
     {
-        if (BWTString == null || string.IsNullOrEmpty(BWTString.ToString()) || (lastPosition > BWTString.Length || lastPosition < 0))
+        if (BWTBytes == null || lastPosition > BWTBytes.Length || lastPosition < 0 || BWTBytes == Array.Empty<byte>())
         {
-            return new StringBuilder(0);
+            throw new ArgumentNullException(nameof(BWTBytes), "Array of bytes to which we apply BWT mustn't be null!");
         }
-        StringBuilder BWTStringWithAdditionalSymbol = new(BWTString.Length + 1);
-        for (int i = 0; i < BWTString.Length; ++i)
-        {
-            BWTStringWithAdditionalSymbol.Append(BWTString[i]);
-        }
-        BWTStringWithAdditionalSymbol.Insert(lastPosition, '\0');
-        var arrayOfChars = BWTStringWithAdditionalSymbol.ToString().ToCharArray();
-        var arrayOfIndex = new int[arrayOfChars.Length];
-        for (int i = 0; i < arrayOfChars.Length; ++i)
+        var arrayOfIndex = new int[BWTBytes.Length];
+        for (int i = 0; i < BWTBytes.Length; ++i)
         {
             arrayOfIndex[i] = i;
         }
-        for (int count = 0; count < arrayOfChars.Length; ++count)
+        for (int count = 0; count < BWTBytes.Length; ++count)
         {
-            for (int j = 1; j < arrayOfChars.Length; ++j)
+            for (int j = 1; j < BWTBytes.Length; ++j)
             {
                 int i = j - 1;
-                if (arrayOfChars[i] > arrayOfChars[j])
+                if (BWTBytes[i] > BWTBytes[j])
                 {
                     (arrayOfIndex[j], arrayOfIndex[i]) = (arrayOfIndex[i], arrayOfIndex[j]);
-                    (arrayOfChars[j], arrayOfChars[i]) = (arrayOfChars[i], arrayOfChars[j]);
+                    (BWTBytes[j], BWTBytes[i]) = (BWTBytes[i], BWTBytes[j]);
                 }
             }
         }
         int currentIndex = 0;
-        StringBuilder reverseBWTString = new(arrayOfChars.Length);
-        for (int i = 0; i < arrayOfChars.Length; ++i)
+        var reverseBWTBytes = new List<byte>();
+        for (int i = 0; i < BWTBytes.Length; ++i)
         {
-            reverseBWTString.Append(arrayOfChars[currentIndex]);
+            reverseBWTBytes.Add(BWTBytes[currentIndex]);
             currentIndex = arrayOfIndex[currentIndex];
         }
-        reverseBWTString.Replace("\0", "");
-        return reverseBWTString;
+        return reverseBWTBytes.ToArray();
     }
 }
