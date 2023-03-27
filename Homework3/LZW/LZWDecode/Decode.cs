@@ -38,10 +38,10 @@ public static class Decode
         var previousSymbol = allSymbolsInt[0];
         var result = new List<byte>() { (byte)currentSymbol };
         int dictionarySize = 256;
-        foreach (var symbol in allSymbolsInt)
-        {
-            Console.WriteLine(symbol);
-        }
+        //foreach (var symbol in allSymbolsInt)
+        //{
+        //    Console.WriteLine(symbol);
+        //}
         // In this code is mistake - need to review!!!
         for (int i = 1; i < allSymbolsInt.Count; ++i)
         {
@@ -51,14 +51,27 @@ public static class Decode
             {
                 sumOfSymbols.Add(element);
             }
-            bool flagOfMoreThanTwoSymbols = dictionary[currentSymbol].Count > 1;
-            for (int j = 0; j < dictionary[currentSymbol].Count; ++j)
-            {
-                if (!(flagOfMoreThanTwoSymbols && (j == dictionary[currentSymbol].Count - 1)))
-                {
-                    sumOfSymbols.Add(dictionary[currentSymbol][j]);
-                }
-            }
+            //if (!dictionary.ContainsKey(currentSymbol))
+            //{
+            //    var additionalList = new List<byte>();
+            //    foreach (var item in dictionary[previousSymbol])
+            //    {
+            //        additionalList.Add(item);
+            //    }
+            //    additionalList.Add(dictionary[previousSymbol][0]);
+            //    dictionary.Add(currentSymbol, additionalList);
+            //    ++dictionarySize;
+            //}
+            //sumOfSymbols.Add(dictionary[currentSymbol][0]);
+
+            //bool flagOfMoreThanTwoSymbols = dictionary[currentSymbol].Count > 1;
+            //for (int j = 0; j < dictionary[currentSymbol].Count; ++j)
+            //{
+            //    if (!(flagOfMoreThanTwoSymbols && (j == dictionary[currentSymbol].Count - 1)))
+            //    {
+            //        sumOfSymbols.Add(dictionary[currentSymbol][0]);
+            //    }
+            //}
             //foreach (var element in dictionary[currentSymbol])
             //{
             //    sumOfSymbols.Add(element);
@@ -69,8 +82,25 @@ public static class Decode
                 {
                     result.Add(item);
                 }
+                sumOfSymbols.Add(dictionary[currentSymbol][0]);
                 dictionary.Add(dictionarySize, sumOfSymbols);
                 ++dictionarySize;
+            }
+            else 
+            {
+                var additionalList = new List<byte>();
+                foreach (var item in dictionary[previousSymbol])
+                {
+                    additionalList.Add(item);
+                }
+                additionalList.Add(dictionary[previousSymbol][0]);
+                dictionary.Add(currentSymbol, additionalList);
+                ++dictionarySize;
+                foreach (var item in dictionary[currentSymbol])
+                {
+                    result.Add(item);
+                }
+                //sumOfSymbols.Add(dictionary[currentSymbol][0]);
             }
             //if (i == allSymbolsInt.Count - 1)
             //{

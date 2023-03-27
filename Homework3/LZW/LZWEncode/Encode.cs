@@ -113,7 +113,6 @@ public static class Encode
             newLZWBytes.Add(BoolToByte(oneByte));
         }
         newLZWBytes.Insert(0, (byte)currentBitsForSymbol);
-        Console.WriteLine($"Коэффициент сжатия - {binaryFile.Length / (float)newLZWBytes.Count}");
         //foreach (var item in newLZWBytes)
         //{
         //    Console.WriteLine(item);

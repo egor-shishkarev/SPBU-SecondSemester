@@ -14,6 +14,9 @@ public static class Archiver
         var newFilePath = filePath + ".zipped";
         var newBytes = Encode.EncodeFile(binaryFile);
         File.WriteAllBytes(newFilePath, newBytes);
+        var fileSize = new FileInfo(filePath).Length;
+        var compressedFileSize = new FileInfo(newFilePath).Length;
+        Console.WriteLine($"Коэффициент сжатия - {fileSize / (float)compressedFileSize}");
     }
 
     public static void Decompress(string filePath)
