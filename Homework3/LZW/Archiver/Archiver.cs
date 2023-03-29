@@ -2,8 +2,16 @@
 
 namespace LZW;
 
+/// <summary>
+/// Class of archiver based on LZW
+/// </summary>
 public static class Archiver
 {
+    /// <summary>
+    /// Method, that compress file.
+    /// </summary>
+    /// <param name="filePath">Path to the file we want to compress.</param>
+    /// <exception cref="ArgumentException">File with this path doesn't exist!</exception>
     public static void Compress(string filePath)
     {
         if (!File.Exists(filePath))
@@ -19,15 +27,15 @@ public static class Archiver
         Console.WriteLine($"Коэффициент сжатия - {fileSize / (float)compressedFileSize}");
     }
 
+    /// <summary>
+    /// Method, that decompress ".zipped" files.
+    /// </summary>
+    /// <param name="filePath">Path to the file we want to decompress.</param>
     public static void Decompress(string filePath)
     {
         var bytes = File.ReadAllBytes(filePath);
         var newFilePath = filePath[..filePath.LastIndexOf('.')];
         var newBytes = Decode.DecodeFile(bytes);
-        //foreach (var item in newBytes)
-        //{
-        //    Console.WriteLine(item);
-        //}
 
         File.WriteAllBytes(newFilePath, newBytes);
     }

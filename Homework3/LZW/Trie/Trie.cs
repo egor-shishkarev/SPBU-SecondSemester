@@ -1,6 +1,4 @@
-﻿using System.Security;
-
-namespace TrieClass;
+﻿namespace TrieClass;
 
 /// <summary>
 /// Class of Trie.
@@ -165,6 +163,12 @@ public class Trie
     /// </summary>
     public int Size => head.CountOfBytes;
 
+    /// <summary>
+    /// Method, that returns value of byte list element.
+    /// </summary>
+    /// <param name="element">Element in trie, which value we try to get.</param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">List of bytes mustn't be null!</exception>
     public int GetValue(List<byte> element)
     {
         if (element == null)

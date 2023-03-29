@@ -1,7 +1,7 @@
 ﻿using LZW;
 
 Console.WriteLine("This program represents archiver with LZW algorithm");
-var filePath = "C:\\Users\\Егор\\source\\repos\\SPBU-SecondSemester\\Homework3\\LZW\\LZWTests\\TestFiles\\tihiy-don-_knigi-1-i-2_.txt"; //Program.exe example.txt
+var filePath = "C:\\Users\\Егор\\source\\repos\\SPBU-SecondSemester\\Homework3\\LZW\\LZWTests\\TestFiles\\example.txt"; //Program.exe example.txt
 var originalBytes = File.ReadAllBytes(filePath);
 Archiver.Compress(filePath);
 Archiver.Decompress(filePath + ".zipped");
@@ -15,5 +15,3 @@ for (int i = 0; i < Math.Min(originalBytes.Length, newBytes.Length); ++i)
     }
 }
 
-/*oloolooloolooloolo - this doesn't work
-and this - wabbawabbawabbawabbawabba - doesn't work*/

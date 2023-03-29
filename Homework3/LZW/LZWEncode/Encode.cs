@@ -1,15 +1,20 @@
 ﻿namespace LZW;
 
 using TrieClass;
+
+/// <summary>
+/// Class of methods, which need to encode ".zipped" files.
+/// </summary>
 public static class Encode
 {
+    /// <summary>
+    /// Main method to encode file.
+    /// </summary>
+    /// <param name="binaryFile">Array of bytes, which we want to encode.</param>
+    /// <returns>Encoded array of bytes.</returns>
+    /// <exception cref="ArgumentNullException">Binary file mustn't be null!</exception>
     public static byte[] EncodeFile(byte[] binaryFile)
     {
-        //Console.WriteLine("NormalFile");
-        //foreach (byte b in binaryFile)
-        //{
-        //    Console.WriteLine(b);
-        //}
         if (binaryFile == null)
         {
             throw new ArgumentNullException(nameof(binaryFile), "Binary file mustn't be null!");
@@ -22,7 +27,6 @@ public static class Encode
         }
         int currentSizeOfTrie = 256;
         int currentBitsForSymbol = 8;
-
         var previousSymbol = new List<byte>();
         var sumOfSymbols = new List<byte>();
         var currentSymbol = new List<byte>();
@@ -38,12 +42,6 @@ public static class Encode
             {
                 sumOfSymbols.Add(item);
             }
-            //Console.Write("P - ");
-            //WriteBytes(previousSymbol);
-            //Console.Write("C - ");
-            //WriteBytes(currentSymbol);
-            //Console.Write("P + C - ");
-            //WriteBytes(sumOfSymbols);
             if (trie.Contains(sumOfSymbols))
             {
                 previousSymbol.Clear();
@@ -74,7 +72,6 @@ public static class Encode
             currentSymbol.Clear();
             sumOfSymbols.Clear();
         }
-
         for (int i = 0; i < LZWBites.Count; ++i)
         {
             LZWBites[i] = ResizeBits(LZWBites[i], currentBitsForSymbol);
@@ -82,19 +79,8 @@ public static class Encode
         var newLZWBites = new List<bool>();
         foreach (var item in LZWBites)
         {
-            //item.AddRange(newLZWBites);
             newLZWBites.AddRange(item);
         }
-        //Console.WriteLine("___________________________");
-        //foreach (var item in LZWBites)
-        //{
-        //    foreach (var subItem in item)
-        //    {
-        //        Console.WriteLine(subItem == true ? 1 : 0);
-        //    }
-        //    Console.WriteLine("----");
-        //}
-        //Console.WriteLine("___________________________");
         while (newLZWBites.Count % 8 != 0)
         {
             newLZWBites.Insert(0, false);
@@ -113,13 +99,14 @@ public static class Encode
             newLZWBytes.Add(BoolToByte(oneByte));
         }
         newLZWBytes.Insert(0, (byte)currentBitsForSymbol);
-        //foreach (var item in newLZWBytes)
-        //{
-        //    Console.WriteLine(item);
-        //}
         return newLZWBytes.ToArray();
     }
 
+    /// <summary>
+    /// Method, that transform array of bool elements to byte element.
+    /// </summary>
+    /// <param name="oneByte">Array of bool elements</param>
+    /// <returns>One byte</returns>
     private static byte BoolToByte(List<bool> oneByte)
     {
         int currentByte = 0;
@@ -130,6 +117,12 @@ public static class Encode
         return (byte)currentByte;
     }
 
+    /// <summary>
+    /// Method, that transform integer number to array of bool elements.
+    /// </summary>
+    /// <param name="element">Number, which we want to transform.</param>
+    /// <param name="currentBitsForSymbol">Power of two, or length of bool array, which we get.</param>
+    /// <returns>List of bool elements.</returns>
     private static List<bool> IntToBits(int element, int currentBitsForSymbol) 
     {
         
@@ -143,6 +136,12 @@ public static class Encode
         return bits;
     }
 
+    /// <summary>
+    /// Method, that add additional bool element to list.
+    /// </summary>
+    /// <param name="bites">List of bool elements, which we want to increase.</param>
+    /// <param name="currentBitsForSymbol">Power of two, or length of bool list, which we get.</param>
+    /// <returns>List of bool elements.</returns>
     private static List<bool> ResizeBits(List<bool> bites, int currentBitsForSymbol)
     {
         while (bites.Count != currentBitsForSymbol)
@@ -151,25 +150,5 @@ public static class Encode
         }
         return bites;
     }
-
-    private static List<int> BoolToInt(List<bool> bites)
-    {
-        var intBites = new List<int>();
-        foreach (var bite in bites)
-        {
-            intBites.Add(bite == true ? 1 : 0);
-        }
-        return intBites;
-    }
-    // Extra method for printing byte arrat - need to delete after completing task
-    //private static void WriteBytes(List<byte> bytes)
-    //{
-    //    foreach(var item in bytes)
-    //    {
-    //        Console.Write(item);
-    //    }
-    //    Console.WriteLine();
-    //}
-    // ---------------------------------------------------------------------------
 }
 

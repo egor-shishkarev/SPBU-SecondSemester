@@ -1,7 +1,16 @@
 ﻿namespace LZW;
 
+/// <summary>
+/// Class of methods, which need to decode ".zipped" files.
+/// </summary>
 public static class Decode
 {
+    /// <summary>
+    /// Main method to decode files.
+    /// </summary>
+    /// <param name="binaryFile">Array of bytes, which we want to decode.</param>
+    /// <returns>Original array of bytes.</returns>
+    /// <exception cref="ArgumentNullException">Array of bytes mustn't be null!</exception>
     public static byte[] DecodeFile(byte[] binaryFile)
     {
         if (binaryFile == null)
@@ -25,24 +34,10 @@ public static class Decode
         {
             allSymbolsInt.Add(BoolToInt(element));
         }
-        //Console.WriteLine("DecodeDecodeDecodeDecodeDecodeDecodeDecodeDecodeDecode");
-        //foreach ( var symbol in allSymbols )
-        //{
-        //    foreach ( var item in symbol ) 
-        //    {
-        //        Console.WriteLine(item == true ? 1 : 0);
-        //    }
-        //    Console.WriteLine("--------");
-        //}
         var currentSymbol = allSymbolsInt[0];
         var previousSymbol = allSymbolsInt[0];
         var result = new List<byte>() { (byte)currentSymbol };
         int dictionarySize = 256;
-        //foreach (var symbol in allSymbolsInt)
-        //{
-        //    Console.WriteLine(symbol);
-        //}
-        // In this code is mistake - need to review!!!
         for (int i = 1; i < allSymbolsInt.Count; ++i)
         {
             currentSymbol = allSymbolsInt[i];
@@ -51,31 +46,6 @@ public static class Decode
             {
                 sumOfSymbols.Add(element);
             }
-            //if (!dictionary.ContainsKey(currentSymbol))
-            //{
-            //    var additionalList = new List<byte>();
-            //    foreach (var item in dictionary[previousSymbol])
-            //    {
-            //        additionalList.Add(item);
-            //    }
-            //    additionalList.Add(dictionary[previousSymbol][0]);
-            //    dictionary.Add(currentSymbol, additionalList);
-            //    ++dictionarySize;
-            //}
-            //sumOfSymbols.Add(dictionary[currentSymbol][0]);
-
-            //bool flagOfMoreThanTwoSymbols = dictionary[currentSymbol].Count > 1;
-            //for (int j = 0; j < dictionary[currentSymbol].Count; ++j)
-            //{
-            //    if (!(flagOfMoreThanTwoSymbols && (j == dictionary[currentSymbol].Count - 1)))
-            //    {
-            //        sumOfSymbols.Add(dictionary[currentSymbol][0]);
-            //    }
-            //}
-            //foreach (var element in dictionary[currentSymbol])
-            //{
-            //    sumOfSymbols.Add(element);
-            //}
             if (dictionary.ContainsKey(currentSymbol))
             {
                 foreach (var item in dictionary[currentSymbol])
@@ -100,20 +70,18 @@ public static class Decode
                 {
                     result.Add(item);
                 }
-                //sumOfSymbols.Add(dictionary[currentSymbol][0]);
             }
-            //if (i == allSymbolsInt.Count - 1)
-            //{
-            //    foreach (var item in dictionary[previousSymbol])
-            //    {
-            //        result.Add(item);
-            //    }
-            //}
             previousSymbol = currentSymbol;
         }
         return result.ToArray();
     }
 
+    /// <summary>
+    /// Method that transform byte array to bool array. For example - 67 => { 0, 1, 0, 0, 0, 0, 1, 1 }
+    /// </summary>
+    /// <param name="byteArray">Array of bytes, that we want to transform.</param>
+    /// <param name="currentBitsForSymbol">Length of bool array or power of two.</param>
+    /// <returns>List of list of bool.</returns>
     private static List<List<bool>> ByteArrayToBoolArray(byte[] byteArray, int currentBitsForSymbol)
     {
         var ListOfAllBites = new List<bool>();
@@ -136,6 +104,11 @@ public static class Decode
         return listOfSymbols;
     }
 
+    /// <summary>
+    /// Method, that trasform byte array to bool array.
+    /// </summary>
+    /// <param name="oneByte">Byte, that we want to represent in bool array</param>
+    /// <returns>List of bool elements - binary representation of a byte.</returns>
     private static List<bool> ByteToBool(byte oneByte)
     {
         var boolList = new List<bool>();
@@ -148,6 +121,11 @@ public static class Decode
         return boolList;
     }
 
+    /// <summary>
+    /// Method, that transform list of bool elements to int.
+    /// </summary>
+    /// <param name="bits">List of bool values</param>
+    /// <returns>Integer number</returns>
     private static int BoolToInt(List<bool> bits)
     {
         int result = 0;
