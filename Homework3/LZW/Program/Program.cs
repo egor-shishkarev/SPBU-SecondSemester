@@ -1,17 +1,28 @@
 ﻿using LZW;
 
-Console.WriteLine("This program represents archiver with LZW algorithm");
-var filePath = "C:\\Users\\Егор\\source\\repos\\SPBU-SecondSemester\\Homework3\\LZW\\LZWTests\\TestFiles\\example.txt"; //Program.exe example.txt
-var originalBytes = File.ReadAllBytes(filePath);
-Archiver.Compress(filePath);
-Archiver.Decompress(filePath + ".zipped");
-var newBytes = File.ReadAllBytes(filePath);
-Console.WriteLine($"{originalBytes.Length} {newBytes.Length}");
-for (int i = 0; i < Math.Min(originalBytes.Length, newBytes.Length); ++i)
+if (args.Length < 2)
 {
-    if (originalBytes[i] != newBytes[i])
-    {
-        Console.WriteLine($"Wrong bytes at {i}");
-    }
+    Console.WriteLine("No arguments were passed!");
+    return;
 }
 
+if (args[1] == "-c")
+{
+    var filePath = args[0];
+    Archiver.Compress(filePath);
+}
+else if (args[1] == "-u")
+{
+    var filePath = args[0];
+    if (!filePath.Contains(".zipped"))
+    {
+        Console.WriteLine("Can't decompress not '.zipped' file");
+        return;
+    }
+    Archiver.Decompress(filePath);
+    Console.WriteLine("Decompress of file is done.");
+}
+else
+{
+    Console.WriteLine("Wrong argument!");
+}

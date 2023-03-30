@@ -18,7 +18,11 @@ public static class Archiver
         {
             throw new ArgumentException("File with this path doesn't exist!", nameof(filePath));
         }
-        var binaryFile = File.ReadAllBytes(filePath) ?? throw new ArgumentException("File mustn't be empty!", nameof(filePath));
+        var binaryFile = File.ReadAllBytes(filePath);
+        if (binaryFile.Length == 0)
+        {
+            throw new ArgumentException("File mustn't be empty!", nameof(filePath));
+        }
         var newFilePath = filePath + ".zipped";
         var newBytes = Encode.EncodeFile(binaryFile);
         File.WriteAllBytes(newFilePath, newBytes);
@@ -33,10 +37,18 @@ public static class Archiver
     /// <param name="filePath">Path to the file we want to decompress.</param>
     public static void Decompress(string filePath)
     {
+        if (!File.Exists(filePath))
+        {
+            throw new ArgumentException("File with this path doesn't exist!", nameof(filePath));
+        }
         var bytes = File.ReadAllBytes(filePath);
+        if (bytes.Length == 0)
+        {
+            throw new ArgumentException("File mustn't be empty!", nameof(filePath));
+        }
         var newFilePath = filePath[..filePath.LastIndexOf('.')];
         var newBytes = Decode.DecodeFile(bytes);
-
+        File.Delete(filePath);
         File.WriteAllBytes(newFilePath, newBytes);
     }
 }
