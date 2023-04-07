@@ -45,5 +45,5 @@ catch (ArgumentException e)
     return;
 }
 Console.WriteLine($"Результат вычисления выражения по дереву - {result}");
-Console.WriteLine("Дерево разбора - ");
+Console.WriteLine("Дерево разбора: ");
 parseTree.Print();
