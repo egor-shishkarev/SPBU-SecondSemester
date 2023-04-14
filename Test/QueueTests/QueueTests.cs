@@ -66,4 +66,29 @@ public class QueueTests
             Assert.That(priorityQueue.Empty, Is.True);
         });
     }
+
+    [Test] 
+    public void ComplicatedTest()
+    {
+        var priorityQueue = new PriorityQueue();
+        priorityQueue.Enqueue(0, 10);
+        priorityQueue.Enqueue(5, 2);
+        priorityQueue.Enqueue(4, 5);
+        priorityQueue.Enqueue(6, 1);
+        priorityQueue.Enqueue(1, 8);
+        priorityQueue.Enqueue(2, 7);
+        priorityQueue.Enqueue(3, 6);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(priorityQueue.Dequeue(), Is.EqualTo(0));
+            Assert.That(priorityQueue.Dequeue(), Is.EqualTo(1));
+            Assert.That(priorityQueue.Dequeue(), Is.EqualTo(2));
+            Assert.That(priorityQueue.Dequeue(), Is.EqualTo(3));
+            Assert.That(priorityQueue.Dequeue(), Is.EqualTo(4));
+            Assert.That(priorityQueue.Dequeue(), Is.EqualTo(5));
+            Assert.That(priorityQueue.Dequeue(), Is.EqualTo(6));
+            Assert.That(priorityQueue.Empty, Is.True);
+        });
+    }
 }

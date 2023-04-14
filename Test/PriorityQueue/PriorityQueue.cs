@@ -45,7 +45,24 @@ public class PriorityQueue
         {
             throw new ArgumentOutOfRangeException(nameof(priority), "Priority should be positive");
         }
-        head.Add((priority, value));
+        if (Empty)
+        {
+            head.Add((priority, value));
+        } 
+        else
+        {
+            var curretnIndex = 0;
+            while (curretnIndex < head.Count - 1)
+            {
+                if (priority <= head[curretnIndex].priority && priority > head[curretnIndex + 1].priority)
+                {
+                    head.Insert(curretnIndex + 1, (priority, value));
+                    return;
+                }
+                ++curretnIndex;
+            }
+            head.Add((priority, value));
+        }
     }
 
     /// <summary>
@@ -59,18 +76,8 @@ public class PriorityQueue
         {
             throw new ArgumentException("Queue has no elements");
         }
-        var maxPriority = int.MinValue;
-        var indexOfMaxPriority = 0;
-        for (int i = 0; i < head.Count; ++i)
-        {
-            if (head[i].priority > maxPriority)
-            {
-                maxPriority = head[i].priority;
-                indexOfMaxPriority = i;
-            }
-        }
-        var result = head[indexOfMaxPriority].value;
-        head.RemoveAt(indexOfMaxPriority);
+        var result = head[0].value;
+        head.RemoveAt(0);
         return result;
     }
 
