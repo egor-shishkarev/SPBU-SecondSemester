@@ -57,6 +57,7 @@ public class QueueTests
         priorityQueue.Enqueue(1, 1);
         priorityQueue.Enqueue(2, 1);
         priorityQueue.Enqueue(3, 1);
+
         Assert.Multiple(() =>
         {
             Assert.That(priorityQueue.Dequeue(), Is.EqualTo(1));
