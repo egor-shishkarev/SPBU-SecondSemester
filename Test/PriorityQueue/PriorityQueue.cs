@@ -1,13 +1,29 @@
 ﻿namespace Queue;
 
+/// <summary>
+/// Class of priority queue based on List.
+/// </summary>
 public class PriorityQueue
 {
-    readonly List<(int priority, int value)> head;
+    /// <summary>
+    /// Main element of the List - head.
+    /// </summary>
+    private readonly List<(int priority, int value)> head;
+
+    /// <summary>
+    /// Constructor for priority queue.
+    /// </summary>
     public PriorityQueue()
     {
         head = new List<(int, int)>();
     }
 
+    /// <summary>
+    /// Add element to queue.
+    /// </summary>
+    /// <param name="value">Value, that we want to add in queue</param>
+    /// <param name="priority">Priority of current element</param>
+    /// <exception cref="ArgumentOutOfRangeException">Priority was less than zero.</exception>
     public void Enqueue(int value, int priority)
     {
         if (priority < 0)
@@ -17,6 +33,11 @@ public class PriorityQueue
         head.Add((priority, value));
     }
 
+    /// <summary>
+    /// Returns an element with max priority.
+    /// </summary>
+    /// <returns>Value of max priority./returns>
+    /// <exception cref="ArgumentException">Queue has no elements.</exception>
     public int Dequeue()
     {
         if (Empty)
@@ -38,15 +59,8 @@ public class PriorityQueue
         return result;
     }
 
+    /// <summary>
+    /// Check if queue has no elements.
+    /// </summary>
     public bool Empty => head.Count == 0;
 }
-
-/*Реализовать очередь с приоритетами. Очередь должна иметь метод Enqueue(), 
- * принимающий на вход значение и численный приоритет, метод Dequeue(), 
- * возвращающий значение с наибольшим приоритетом (то есть приоритетом с 
- * наибольшим численным значением) и удаляющий его из очереди, и свойство 
- * Empty, возвращающее, пуста ли очередь. Если приоритеты элементов равны, 
- * они должны возвращаться в порядке, в котором они поступили в очередь 
- * (First In — First Out). Тип хранимых значений — любой, на ваш выбор. 
- * Если очередь пуста, Dequeue() должен бросать исключение. Комментарии, 
- * юнит-тесты и CI также ожидаются от правильного решения.*/

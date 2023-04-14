@@ -34,4 +34,20 @@ public class QueueTests
             Assert.That(priorityQueue.Empty, Is.True);
         });
     }
+
+    [Test]
+    public void DequeueWithSamePriorititesShouldReturnExprectedResult()
+    {
+        var priorityQueue = new PriorityQueue();
+        priorityQueue.Enqueue(1, 1);
+        priorityQueue.Enqueue(2, 1);
+        priorityQueue.Enqueue(3, 1);
+        Assert.Multiple(() =>
+        {
+            Assert.That(priorityQueue.Dequeue(), Is.EqualTo(1));
+            Assert.That(priorityQueue.Dequeue(), Is.EqualTo(2));
+            Assert.That(priorityQueue.Dequeue(), Is.EqualTo(3));
+            Assert.That(priorityQueue.Empty, Is.True);
+        });
+    }
 }
