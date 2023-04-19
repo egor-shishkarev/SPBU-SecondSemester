@@ -32,6 +32,6 @@ public class RoutersTests
         var outputPath = "../../../TestFiles/" + outputFile;
         CreateOptimalConfiguration(File.ReadAllLines(inputPath), inputPath[..inputPath.IndexOf('.')] + "Res.txt");
 
-        Assert.That(File.ReadAllBytes(outputPath), Is.EqualTo(File.ReadAllBytes(inputPath[..inputPath.IndexOf('.')] + "Res.txt")));
+        Assert.That(File.ReadAllLines(outputPath), Is.EqualTo(File.ReadAllLines(inputPath[..inputPath.IndexOf('.')] + "Res.txt")));
     }
 }
