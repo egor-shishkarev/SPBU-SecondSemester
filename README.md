@@ -14,7 +14,7 @@ _____
   - [Parse Tree](https://github.com/egor-shishkarev/SPBU-SecondSemester/tree/Homework4_task1/Homework4/ParseTree)
   - [Unique List](https://github.com/egor-shishkarev/SPBU-SecondSemester/tree/Homework4_task2/Homework4/List)
 - ## Homework 5
-  - [Routers](https://github.com/egor-shishkarev/SPBU-SecondSemester/tree/Homework5/Homework5/Routers)
+  - [Routers](https://github.com/egor-shishkarev/SPBU-SecondSemester/tree/Homework5/Homework5)
 ____
 ## License
 Distributed under the Apache2.0 License. See [LICENSE](https://github.com/egor-shishkarev/SPBU-SecondSemester/blob/main/LICENSE) for more information.
