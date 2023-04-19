@@ -3,8 +3,14 @@
 using System.Text;
 using static Routers.RoutersTopology;
 
+/// <summary>
+/// Class for parsing configuration 
+/// </summary>
 public class ParseString
 {
+    /// <summary>
+    /// Additional type of variable
+    /// </summary>
     public enum State
     {
         Number,
@@ -19,28 +25,18 @@ public class ParseString
         Wrong
     }
 
-    public static Router Parse(string configuration)
+    /// <summary>
+    /// Parse configuration to Router, Array of Related Rouers, Array of Bandwidth
+    /// </summary>
+    /// <param name="configuration"></param>
+    /// <returns></returns>
+    public static (Router router, int[] relatedRouters, int[] bandwidth) ParseConfiguration(string configuration)
     {
-        (var router, int[] relatedRouters, int[] bandwidth) = ParseConfiguration(configuration);
-        if (relatedRouters == Array.Empty<int>())
-        {
-            throw new ArgumentException(nameof(configuration));
-        }
-        Console.WriteLine($"{router.Name} = ");
-        for (int i = 0; i < relatedRouters.Length; ++i)
-        {
-            Console.WriteLine($"{relatedRouters[i]} - {bandwidth[i]}");
-        }
-        return router;
-    }
-
-    private static (Router router, int[] relatedRouters, int[] bandwidth) ParseConfiguration(string configuration)
-    {
-        List<int> numberOfRelatedRouters = new List<int>();
-        List<int> bandwidth = new List<int>();
+        var numberOfRelatedRouters = new List<int>();
+        var bandwidth = new List<int>();
         var currentState = State.Number;
         int currentIndex = 0;
-        StringBuilder currentSubstring = new StringBuilder();
+        StringBuilder currentSubstring = new();
         int numberOfRouter = -1;
         while (currentIndex < configuration.Length)
         {

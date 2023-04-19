@@ -2,15 +2,10 @@
 using static Routers.RoutersTopology;
 
 var listOfRouters = new List<Router>();
-using (StreamReader file = new StreamReader("../../../NetworkTopology.txt"))
-{
-    while (!file.EndOfStream)
-    {
-        var line = file.ReadLine();
-        if (line == null)
-        {
-            break;
-        }
-        listOfRouters.Add(ParseString.Parse(line));
-    }
-}
+var allLines = File.ReadAllLines("../../../NetworkTopology.txt");
+CreateOptimalConfiguration(allLines);
+
+//1: 2(2), 6(5)
+//2: 5(10), 6(7), 3(4)
+//3: 6(8), 4(9)
+//4: 6(8), 5(6)
