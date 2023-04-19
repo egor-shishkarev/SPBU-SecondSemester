@@ -1,36 +1,52 @@
-﻿using System.Reflection.Metadata.Ecma335;
+﻿// <copyright file = "Routers.cs" author = "Egor Shishkarev">
+// Copyright (c) Egor Shishkarev. All rights reserved.
+// </copyright>
 
 namespace Routers;
 
 /// <summary>
-/// Class of Routers Topology
+/// Class of Routers Topology.
 /// </summary>
 public class RoutersTopology
 {
+    /// <summary>
+    /// Class of Router - vertices in a graph of connections.
+    /// </summary>
     public class Router
     {
+        /// <summary>
+        /// Constructor for instance of Router Class.
+        /// </summary>
+        /// <param name="name">Integer number - name of Router.</param>
         public Router(int name)
         {
             Name = name;
             RelatedRouters = new Dictionary<int, (int bandwidth, Router router)>();
         }
 
+        /// <summary>
+        /// Integer number - name of Router.
+        /// </summary>
         public int Name { get; set; }
 
+        /// <summary>
+        /// Dictionary of Related Routers and the throughput values ​​between routers.
+        /// </summary>
         public Dictionary<int, (int bandwidth, Router router)> RelatedRouters { get; set; }
-
     }
 
-    public static void CreateOptimalConfiguration(string[] connections)
+    /// <summary>
+    /// Creates optimal connection between Routers, based on bandwidth.
+    /// </summary>
+    /// <param name="connections">Array of connections.</param>
+    /// <exception cref="WrongExpressionException">Wrong pattern of connection.</exception>
+    /// <exception cref="DisconnectedGraphException">Vertices in graph was not connected.</exception>
+    public static void CreateOptimalConfiguration(string[] connections, string filePath)
     {
         var listOfRouters = new List<Router>();
         for (int i = 0; i < connections.Length; ++i)
         {
             (var router, int[] numbersOfRelatedRouters, int[] bandwidth) = ParseString.ParseConfiguration(connections[i]);
-            if (numbersOfRelatedRouters == Array.Empty<int>() || bandwidth == Array.Empty<int>())
-            {
-                throw new ArgumentException("Connections was incorrect!", nameof(connections));
-            }
             if (!IsInList(listOfRouters, router.Name))
             {
                 listOfRouters.Add(router);
@@ -54,10 +70,10 @@ public class RoutersTopology
         listOfRouters.Sort(CompareByName);
         if (!IsConnected(listOfRouters))
         {
-            throw new IOException();
+            throw new DisconnectedGraphException("Router network is not connected!");
         }
         var topologyResult = FindOptimalConfiguration(listOfRouters);
-        WriteTopologyInFile(topologyResult);
+        WriteTopologyInFile(topologyResult, filePath);
     }
 
     private static int CompareByName(Router firstRouter, Router secondRouter)
@@ -69,6 +85,12 @@ public class RoutersTopology
         return -1;
     }
 
+    /// <summary>
+    /// Additional function to sorting Routers for writing in file.
+    /// </summary>
+    /// <param name="firstPair">First pair of Routers to compare.</param>
+    /// <param name="secondPair">Second pair of Routers to compare.</param>
+    /// <returns>1 -- if first pair preced second, -1 -- otherwise.</returns>
     private static int ComparePairByName((Router, Router) firstPair, (Router, Router) secondPair)
     {
         var firstFirstRouter = firstPair.Item1;
@@ -87,6 +109,12 @@ public class RoutersTopology
         return -1;
     }
 
+    /// <summary>
+    /// Check if Router with such name locacted in List.
+    /// </summary>
+    /// <param name="listOfRouters">List of Routers, where we want to check current Router.</param>
+    /// <param name="name">Name of Router, that we want to check.</param>
+    /// <returns>True -- if Router in List, False -- otherwise.</returns>
     private static bool IsInList(List<Router> listOfRouters, int name)
     {
         foreach(var router in listOfRouters)
@@ -99,6 +127,12 @@ public class RoutersTopology
         return false;
     }
 
+    /// <summary>
+    /// Finds Router in List.
+    /// </summary>
+    /// <param name="listOfRouters">List of Routers, where we want find current Router.</param>
+    /// <param name="name">Name of Router, that we want to find.</param>
+    /// <returns>Router with needed name.</returns>
     private static Router FindRouter(List<Router> listOfRouters, int name)
     {
         foreach (var router in listOfRouters)
@@ -111,12 +145,25 @@ public class RoutersTopology
         return new Router(-1);
     }
 
+    /// <summary>
+    /// Adding Routers to Related Routers each other.
+    /// </summary>
+    /// <param name="firstRouter">First Router.</param>
+    /// <param name="firstName">Name of first Router.</param>
+    /// <param name="secondRouter">Second Router.</param>
+    /// <param name="secondName">Name of second Router.</param>
+    /// <param name="bandwidth">Bandwidth between first and second Router.</param>
     private static void ConnectRouters(Router firstRouter, int firstName, Router secondRouter, int secondName, int bandwidth)
     {
         firstRouter.RelatedRouters.Add(secondName, (bandwidth, secondRouter));
         secondRouter.RelatedRouters.Add(firstName, (bandwidth, firstRouter));
     }
 
+    /// <summary>
+    /// Check if the graph of Routers is connected.
+    /// </summary>
+    /// <param name="listOfRouters">List of Routers in graph.</param>
+    /// <returns>True -- if graph is connected, False -- otherwise.</returns>
     public static bool IsConnected(List<Router> listOfRouters)
     {
         var visitedRouters = new List<int> { listOfRouters[0].Name };
@@ -129,6 +176,11 @@ public class RoutersTopology
         return false;
     }
 
+    /// <summary>
+    /// Additional method to check the connectedness of the graph.
+    /// </summary>
+    /// <param name="router">Current Router.</param>
+    /// <param name="visitedRouters">List of visited Routers.</param>
     private static void FindNotVisitedRouters(Router router, List<int> visitedRouters)
     {
         foreach (var key in router.RelatedRouters.Keys)
@@ -141,6 +193,11 @@ public class RoutersTopology
         }
     }
 
+    /// <summary>
+    /// Method that find optimal configuration in graph.
+    /// </summary>
+    /// <param name="listOfRouters">List of Routers.</param>
+    /// <returns>List of pairs of Routers, that contains in optimal configuration. </returns>
     public static List<(Router ancestor, Router child)> FindOptimalConfiguration(List<Router> listOfRouters)
     {
         var currentRouter = listOfRouters[0];
@@ -154,6 +211,11 @@ public class RoutersTopology
         return listOfRibs;
     }
 
+    /// <summary>
+    /// Method, that find max bandwidth in List of Routers.
+    /// </summary>
+    /// <param name="travesalList">List of Routers, where we want to find max bandwidth.</param>
+    /// <returns>Pair of Routers - rib in graph.</returns>
     private static (Router, Router) FindRouterWithMaxBandwidth(List<Router> travesalList)
     {
         var maxBandwidth = int.MinValue;
@@ -175,10 +237,14 @@ public class RoutersTopology
         return (ancestorRouter, optimalRouter);
     }
 
-    private static void WriteTopologyInFile(List<(Router, Router)> topologyResult)
+    /// <summary>
+    /// Method, that write optimal configuration in file.
+    /// </summary>
+    /// <param name="topologyResult">Result of algorithm, that find optimal configuration.</param>
+    private static void WriteTopologyInFile(List<(Router, Router)> topologyResult, string filePath)
     {
         topologyResult.Sort(ComparePairByName);
-        using (StreamWriter file = new("../../../SolutionResult.txt"))
+        using (StreamWriter file = new(filePath))
         {
             var currentRouterName = -1;
             for (int i = 0; i < topologyResult.Count; ++i)

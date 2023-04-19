@@ -1,4 +1,8 @@
-﻿namespace Routers;
+﻿// <copyright file = "ParseString.cs" author = "Egor Shishkarev">
+// Copyright (c) Egor Shishkarev. All rights reserved.
+// </copyright>
+
+namespace Routers;
 
 using System.Text;
 using static Routers.RoutersTopology;
@@ -9,7 +13,7 @@ using static Routers.RoutersTopology;
 public class ParseString
 {
     /// <summary>
-    /// Additional type of variable
+    /// Additional type of variable.
     /// </summary>
     public enum State
     {
@@ -26,10 +30,10 @@ public class ParseString
     }
 
     /// <summary>
-    /// Parse configuration to Router, Array of Related Rouers, Array of Bandwidth
+    /// Parse configuration to Router, Array of Related Routers, Array of Bandwidth.
     /// </summary>
-    /// <param name="configuration"></param>
-    /// <returns></returns>
+    /// <param name="configuration">String in pattern - X: X (X), ... , X (X), where X - positive number</param>
+    /// <returns>Instance of Router, Array of Related Routers, Array of Bandwidth.</returns>
     public static (Router router, int[] relatedRouters, int[] bandwidth) ParseConfiguration(string configuration)
     {
         var numberOfRelatedRouters = new List<int>();
@@ -107,7 +111,7 @@ public class ParseString
         }
         if (currentState != State.ClosedBracket)
         {
-            return (new Router(0), Array.Empty<int>(), Array.Empty<int>());
+            throw new WrongExpressionException("Wrong expression!");
         }
         var router = new Router(numberOfRouter);
         return (router, numberOfRelatedRouters.ToArray(), bandwidth.ToArray());

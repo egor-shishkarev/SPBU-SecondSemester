@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "Program": {
+      "commandName": "Project",
+      "commandLineArgs": "../../../NetworkTopology.txt ../../../SolutionResult.txt",
+      "workingDirectory": "C:\\Users\\Егор\\source\\repos\\SPBU-SecondSemester\\Homework5\\Program\\bin\\Debug\\net7.0"
+    }
+  }
+}
