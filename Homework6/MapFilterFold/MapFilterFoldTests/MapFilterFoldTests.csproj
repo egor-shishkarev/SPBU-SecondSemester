@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Map\MapFilterFold.csproj" />
+    <ProjectReference Include="..\MapFilterFold\MapFilterFold.csproj" />
   </ItemGroup>
 
 </Project>
