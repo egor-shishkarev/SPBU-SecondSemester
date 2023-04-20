@@ -48,7 +48,7 @@ public class EventLoop
                 {
                     Console.Write(" \b");
                 }
-                score += 500;
+                score += 10;
                 Console.Write($"{score}");
                 Console.SetCursorPosition(columnNumberCoin, rowNumberCoin);
                 
