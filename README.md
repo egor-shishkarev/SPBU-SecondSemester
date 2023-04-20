@@ -17,6 +17,7 @@ _____
   - [Routers](https://github.com/egor-shishkarev/SPBU-SecondSemester/tree/Homework5/Homework5)
 - ## Homework 6
   - [MapFilterFold](https://github.com/egor-shishkarev/SPBU-SecondSemester/tree/Homework6_task1/Homework6/MapFilterFold) 
+  - [Game](https://github.com/egor-shishkarev/SPBU-SecondSemester/tree/Homework6_task2/Homework6/Game)
 ____
 ## License
 Distributed under the Apache2.0 License. See [LICENSE](https://github.com/egor-shishkarev/SPBU-SecondSemester/blob/main/LICENSE) for more information.
