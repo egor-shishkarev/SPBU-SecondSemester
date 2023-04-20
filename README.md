@@ -15,6 +15,8 @@ _____
   - [Unique List](https://github.com/egor-shishkarev/SPBU-SecondSemester/tree/Homework4_task2/Homework4/List)
 - ## Homework 5
   - [Routers](https://github.com/egor-shishkarev/SPBU-SecondSemester/tree/Homework5/Homework5)
+- ## Homework 6
+  - [MapFilterFold](https://github.com/egor-shishkarev/SPBU-SecondSemester/tree/Homework6_task1/Homework6/MapFilterFold) 
 ____
 ## License
 Distributed under the Apache2.0 License. See [LICENSE](https://github.com/egor-shishkarev/SPBU-SecondSemester/blob/main/LICENSE) for more information.
