@@ -25,6 +25,9 @@ public class EventLoop
             Console.WriteLine(line);
         }
         Console.SetCursorPosition(1, 1);
+        Console.Write("@");
+        Console.SetCursorPosition(1, 1);
+        Console.CursorVisible = false;
         while (true)
         {
             var key = Console.ReadKey(true);
@@ -35,6 +38,9 @@ public class EventLoop
                 {
                     continue;
                 }
+                Console.Write(" \b \b");
+                Console.SetCursorPosition(left - 1, top);
+                Console.Write("@");
                 Console.SetCursorPosition(left - 1, top);
             }
             if (key.Key == ConsoleKey.RightArrow)
@@ -44,6 +50,9 @@ public class EventLoop
                 {
                     continue;
                 }
+                Console.Write(" \b \b");
+                Console.SetCursorPosition(left + 1, top);
+                Console.Write("@");
                 Console.SetCursorPosition(left + 1, top);
             }
             if (key.Key == ConsoleKey.UpArrow)
@@ -53,6 +62,9 @@ public class EventLoop
                 {
                     continue;
                 }
+                Console.Write(" \b \b");
+                Console.SetCursorPosition(left, top - 1);
+                Console.Write("@");
                 Console.SetCursorPosition(left, top - 1);
             }
             if (key.Key == ConsoleKey.DownArrow)
@@ -62,6 +74,9 @@ public class EventLoop
                 {
                     continue;
                 }
+                Console.Write(" \b \b");
+                Console.SetCursorPosition(left, top + 1);
+                Console.Write("@");
                 Console.SetCursorPosition(left, top + 1);
             }
         }
