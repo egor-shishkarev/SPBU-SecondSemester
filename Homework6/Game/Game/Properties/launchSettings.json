@@ -1,8 +1,7 @@
 {
   "profiles": {
     "Game": {
-      "commandName": "Project",
-      "commandLineArgs": "../../../Level1.txt"
+      "commandName": "Project"
     }
   }
 }
