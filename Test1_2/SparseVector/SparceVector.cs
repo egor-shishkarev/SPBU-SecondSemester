@@ -2,9 +2,9 @@
 
 public class SparceVector
 {
-    public VectorElement? head;
+    private VectorElement? head;
 
-    public VectorElement? tail;
+    private VectorElement? tail;
 
     public int logicalLength = 0;
 
@@ -50,10 +50,16 @@ public class SparceVector
         {
             throw new ArgumentOutOfRangeException("Index can't be less than zero!");
         }
+        if (IsNull())
+        {
+            head = new VectorElement(name, value);
+            tail = head;
+        }
         if (name > tail.CellName)
         {
             tail.Add(new VectorElement(name, value));
             tail = tail.Next;
+            logicalLength = name + 1;
             return;
         }
         if (name < head.CellName)
@@ -62,17 +68,16 @@ public class SparceVector
             head = new VectorElement(name, value);
             head.Add(tempElmement);
         }
-        if (IsNull())
-        {
-            head = new VectorElement(name, value);
-            tail = head;
-        }
         var currentElement = head;
         while (currentElement != null)
         {
             if (currentElement.CellName == name)
             {
                 currentElement.Value = value;
+                if (value == 0)
+                {
+                    DeleteElement(currentElement);
+                }
                 return;
             }
             else if (currentElement.CellName < name && (currentElement.Next != null && currentElement.Next.CellName > name))
@@ -86,8 +91,118 @@ public class SparceVector
             currentElement = currentElement.Next;
         }
     }
+
+    public static SparceVector Addition(SparceVector first, SparceVector second)
+    {
+        var newVector = new SparceVector();
+        var firstElement = first.head;
+        var secondElement = second.head;
+        while (firstElement != null || secondElement != null)
+        {
+            if (firstElement.CellName == secondElement.CellName)
+            {
+                newVector[firstElement.CellName] = firstElement.Value + secondElement.Value;
+                firstElement = firstElement.Next;
+                secondElement = secondElement.Next;
+                continue;
+            }
+            if (firstElement.CellName > secondElement.CellName)
+            {
+                newVector[secondElement.CellName] = secondElement.Value;
+                secondElement = secondElement.Next;
+                continue;
+            }
+            if (secondElement.CellName > firstElement.CellName)
+            {
+                newVector[firstElement.CellName] = firstElement.Value;
+                firstElement = firstElement.Next;
+            }
+        }
+        return newVector;
+    } 
+
+    public static SparceVector Subtraction(SparceVector first, SparceVector second)
+    {
+        var newVector = new SparceVector();
+        var firstElement = first.head;
+        var secondElement = second.head;
+        while (firstElement != null || secondElement != null)
+        {
+            if (firstElement.CellName == secondElement.CellName)
+            {
+                newVector[firstElement.CellName] = firstElement.Value - secondElement.Value;
+                firstElement = firstElement.Next;
+                secondElement = secondElement.Next;
+                continue;
+            }
+            if (firstElement.CellName > secondElement.CellName)
+            {
+                newVector[secondElement.CellName] = -secondElement.Value;
+                secondElement = secondElement.Next;
+                continue;
+            }
+            if (secondElement.CellName > firstElement.CellName)
+            {
+                newVector[firstElement.CellName] = firstElement.Value;
+                firstElement = firstElement.Next;
+            }
+        }
+        return newVector;
+    }
+
+    public static int ScalarProduct(SparceVector first, SparceVector second)
+    {
+        var scalarProduct = 0;
+        var firstElement = first.head;
+        var secondElement = second.head;
+        while (firstElement != null || secondElement != null)
+        {
+            if (firstElement.CellName == secondElement.CellName)
+            {
+                scalarProduct += firstElement.Value * secondElement.Value;
+                firstElement = firstElement.Next;
+                secondElement = secondElement.Next;
+                continue;
+            }
+            if (firstElement.CellName > secondElement.CellName)
+            {
+                secondElement = secondElement.Next;
+                continue;
+            }
+            if (secondElement.CellName > firstElement.CellName)
+            {
+                firstElement = firstElement.Next;
+            }
+        }
+        return scalarProduct;
+    }
+
+    private void DeleteElement(VectorElement vectorElement)
+    {
+        if (vectorElement == head)
+        {
+            if (vectorElement.Next != null)
+            {
+                head = vectorElement.Next;
+                vectorElement.Next.Previous = null;
+                vectorElement.Next = null;
+            }
+            else
+            {
+                head = null;
+            }
+        }
+        vectorElement.Previous = vectorElement.Next;
+        vectorElement.Next = null;
+        vectorElement.Previous = null;
+    }
+
     public void PrintVector()
     {
+        if (IsNull())
+        {
+            Console.WriteLine("Вектор из нулей");
+        }
         VectorElement currentElement = head;
         while (currentElement != null)
         {
@@ -141,9 +256,3 @@ public class SparceVector
         }
     }
 }
-
-/*Реализовать разреженный вектор с методами сложения, вычитания, 
- * скалярного умножения и проверки на нулевой вектор. Разреженным 
- * называется вектор, который может быть очень большим, но 
- * подавляющее большинство его элементов — нули 
- * (и за счёт этого его можно — и нужно — эффективно хранить в памяти).*/
