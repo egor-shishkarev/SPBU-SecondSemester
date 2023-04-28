@@ -51,6 +51,7 @@ public class SparceVectorTests
         vector[3] = 6;
         vector[5] = 0;
         int[] changedArray = new int[] { 0, 2, 0, 6, 0, 0, 0, 0 };
+
         Assert.That(CompareValues(changedArray, vector), Is.True);
     }
 
@@ -58,6 +59,11 @@ public class SparceVectorTests
     public void AdditionShouldWorkCorrectly()
     {
         var vector1 = new SparceVector(new int[] { 0, 1, 5, 2, 100, 0, 0, 0, 0, 0, 0 });
-        var vector2 = new SparceVector(new int[] );
+        var vector2 = new SparceVector(new int[] { 5, 4, 0, 3, -95, 0, 0, 0, 0, 0, 0 });
+        var sumVector = SparceVector.Addition(vector1, vector2);
+        var expexctedResult = new int[] { 5, 5, 5, 5, 5, 0, 0, 0, 0, 0, 0 };
+
+        Assert.That(CompareValues(expexctedResult, sumVector));
     }
+
 }
