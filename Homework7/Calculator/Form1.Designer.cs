@@ -56,6 +56,7 @@
             Number1.TabIndex = 0;
             Number1.Text = "1";
             Number1.UseVisualStyleBackColor = true;
+            Number1.Click += NumberOrOperationClick;
             // 
             // Number2
             // 
@@ -66,6 +67,7 @@
             Number2.TabIndex = 1;
             Number2.Text = "2";
             Number2.UseVisualStyleBackColor = true;
+            Number2.Click += NumberOrOperationClick;
             // 
             // Number3
             // 
@@ -76,6 +78,7 @@
             Number3.TabIndex = 2;
             Number3.Text = "3";
             Number3.UseVisualStyleBackColor = true;
+            Number3.Click += NumberOrOperationClick;
             // 
             // Number4
             // 
@@ -86,6 +89,7 @@
             Number4.TabIndex = 3;
             Number4.Text = "4";
             Number4.UseVisualStyleBackColor = true;
+            Number4.Click += NumberOrOperationClick;
             // 
             // Number5
             // 
@@ -96,6 +100,7 @@
             Number5.TabIndex = 4;
             Number5.Text = "5";
             Number5.UseVisualStyleBackColor = true;
+            Number5.Click += NumberOrOperationClick;
             // 
             // Number6
             // 
@@ -106,6 +111,7 @@
             Number6.TabIndex = 5;
             Number6.Text = "6";
             Number6.UseVisualStyleBackColor = true;
+            Number6.Click += NumberOrOperationClick;
             // 
             // Number7
             // 
@@ -116,6 +122,7 @@
             Number7.TabIndex = 6;
             Number7.Text = "7";
             Number7.UseVisualStyleBackColor = true;
+            Number7.Click += NumberOrOperationClick;
             // 
             // Number8
             // 
@@ -126,6 +133,7 @@
             Number8.TabIndex = 7;
             Number8.Text = "8";
             Number8.UseVisualStyleBackColor = true;
+            Number8.Click += NumberOrOperationClick;
             // 
             // Number9
             // 
@@ -136,6 +144,7 @@
             Number9.TabIndex = 8;
             Number9.Text = "9";
             Number9.UseVisualStyleBackColor = true;
+            Number9.Click += NumberOrOperationClick;
             // 
             // Number0
             // 
@@ -146,6 +155,7 @@
             Number0.TabIndex = 9;
             Number0.Text = "0";
             Number0.UseVisualStyleBackColor = true;
+            Number0.Click += NumberOrOperationClick;
             // 
             // PlusButton
             // 
@@ -156,6 +166,7 @@
             PlusButton.TabIndex = 10;
             PlusButton.Text = "+";
             PlusButton.UseVisualStyleBackColor = true;
+            PlusButton.Click += NumberOrOperationClick;
             // 
             // MinusButton
             // 
@@ -166,6 +177,7 @@
             MinusButton.TabIndex = 11;
             MinusButton.Text = "-";
             MinusButton.UseVisualStyleBackColor = true;
+            MinusButton.Click += NumberOrOperationClick;
             // 
             // MultiplyButton
             // 
@@ -176,6 +188,7 @@
             MultiplyButton.TabIndex = 12;
             MultiplyButton.Text = "*";
             MultiplyButton.UseVisualStyleBackColor = true;
+            MultiplyButton.Click += NumberOrOperationClick;
             // 
             // DivisionButton
             // 
@@ -186,6 +199,7 @@
             DivisionButton.TabIndex = 13;
             DivisionButton.Text = "/";
             DivisionButton.UseVisualStyleBackColor = true;
+            DivisionButton.Click += NumberOrOperationClick;
             // 
             // DeleteButton
             // 
@@ -196,6 +210,7 @@
             DeleteButton.TabIndex = 14;
             DeleteButton.Text = "C";
             DeleteButton.UseVisualStyleBackColor = true;
+            DeleteButton.Click += DeleteButton_Click;
             // 
             // EqualButton
             // 
@@ -206,6 +221,7 @@
             EqualButton.TabIndex = 15;
             EqualButton.Text = "=";
             EqualButton.UseVisualStyleBackColor = true;
+            EqualButton.Click += NumberOrOperationClick;
             // 
             // outputWindow
             // 
