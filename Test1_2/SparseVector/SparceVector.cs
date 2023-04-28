@@ -192,7 +192,14 @@ public class SparceVector
                 head = null;
             }
         }
-        vectorElement.Previous = vectorElement.Next;
+        if (vectorElement.Previous != null)
+        {
+            vectorElement.Previous.Next = vectorElement.Next;
+        }
+        if (vectorElement.Next != null)
+        {
+            vectorElement.Next.Previous = vectorElement.Previous;
+        }
         vectorElement.Next = null;
         vectorElement.Previous = null;
     }
@@ -223,6 +230,11 @@ public class SparceVector
             currentElement = currentElement.Next;
         }
         return 0;
+    }
+
+    public int Length()
+    {
+        return logicalLength;
     }
 
     public bool IsNull()
