@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             Number1 = new Button();
             Number2 = new Button();
             Number3 = new Button();
@@ -257,8 +258,14 @@
             Controls.Add(Number3);
             Controls.Add(Number2);
             Controls.Add(Number1);
+            Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            MaximumSize = new Size(380, 550);
+            MinimumSize = new Size(380, 550);
             Name = "Form1";
+            RightToLeft = RightToLeft.No;
             Text = "Калькулятор";
+            TopMost = true;
             Load += Form1_Load;
             ResumeLayout(false);
             PerformLayout();

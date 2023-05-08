@@ -17,12 +17,13 @@ namespace Calculator
 
         private void DeleteButton_Click(object sender, EventArgs e)
         {
-
+            calculatorLogic.ClearDisplay();
         }
 
         private void NumberOrOperationClick(object sender, EventArgs e)
         {
-
+            var _sender = sender as Button;
+            calculatorLogic.AddElement(_sender!.Text.First());
         }
     }
 }
