@@ -2,12 +2,12 @@ namespace Calculator
 {
     public partial class Form1 : Form
     {
-        private CalculatorLogic calculatorLogic = new CalculatorLogic();
+        private readonly CalculatorLogic calculatorLogic = new();
         public Form1()
         {
             InitializeComponent();
 
-            outputWindow.DataBindings.Add("Text", calculatorLogic, "DisplayValue", true, DataSourceUpdateMode.OnPropertyChanged);
+            outputWindow.DataBindings.Add("Text", calculatorLogic, "DisplayNumber", true, DataSourceUpdateMode.OnPropertyChanged);
         }
 
         private void Form1_Load(object sender, EventArgs e)
