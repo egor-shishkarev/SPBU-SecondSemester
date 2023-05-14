@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerMotor : MonoBehaviour
 {
     private CharacterController controller;
-    private Vector3 playerVelocity;
+    public Vector3 playerVelocity;
     public float speed = 5f;
     public bool isGrounded;
     public float gravity = -9.8f;
