@@ -15,6 +15,7 @@ public class Death : MonoBehaviour
             controller = other.gameObject.GetComponent<CharacterController>();
             controller.enabled = false;
             other.gameObject.transform.position = new Vector3(100, 100, 100);
+            other.GetComponent<AudioSource>().Play();
             controller.enabled = true;
         }
     }
