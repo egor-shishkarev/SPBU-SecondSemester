@@ -19,8 +19,9 @@ public class Death : MonoBehaviour
             controller.enabled = false;
             other.gameObject.transform.position = new Vector3(-32.16f, 3.48f, 28.9f);
             controller.enabled = true;
-            GetComponent<AudioSource>().Play();
+            //GetComponent<AudioSource>().Play();
             Instantiate(deathSreen);
+            GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
         }
     }
 }
