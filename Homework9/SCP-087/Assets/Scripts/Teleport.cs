@@ -35,10 +35,9 @@ public class Teleport : MonoBehaviour
         }
         if (Random.Range(0.0f, 1.0f) <= appearanceProbability/100)
         {
-            Vector3 place = new(97.23f, -30.68f, 24.03f);
-            Quaternion quaternion = Quaternion.identity;
-            quaternion.y = -180f;
-            Instantiate(SCP, place, quaternion);
+            Vector3 place = new(97.23f, -31f, 24.03f);
+            SCP.transform.position = place;
+            
         }
     }
 }
