@@ -2,7 +2,7 @@
   "profiles": {
     "FindPair": {
       "commandName": "Project",
-      "commandLineArgs": "4\r\n"
+      "commandLineArgs": "6"
     }
   }
 }

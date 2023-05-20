@@ -32,10 +32,18 @@ public class Logic
         this.tableOfNumbers = tableOfNumbers;
     }
 
-    public void OpenCard(object sender)
+    public async void OpenCard(object sender)
     {
         if (listOfCards.Count == 2)
         {
+            return;
+        }
+        var _sender = sender as Button;
+        _sender.Text = tableOfNumbers[_sender.TabIndex].ToString();
+        listOfCards.Add(_sender);
+        if (listOfCards.Count == 2)
+        {
+            await Task.Delay(500);
             if (listOfCards[0].Text == listOfCards[1].Text)
             {
                 foreach (var card in listOfCards)
@@ -51,9 +59,6 @@ public class Logic
             }
             CloseCards();
         }
-        var _sender = sender as Button;
-        _sender.Text = tableOfNumbers[_sender.TabIndex].ToString();
-        listOfCards.Add(_sender);
     }
 
     public void CloseCards()
