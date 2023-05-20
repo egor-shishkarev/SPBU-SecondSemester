@@ -2,6 +2,9 @@ namespace FindPair
 {
     public partial class Form1 : Form
     {
+        /// <summary>
+        /// Logic for game;
+        /// </summary>
         Logic logic;
 
         public int numberOfPairs;
@@ -12,6 +15,11 @@ namespace FindPair
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Event on button click - opening a card.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void On_Click(object sender, EventArgs e)
         {
             logic.OpenCard(sender);

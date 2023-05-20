@@ -2,12 +2,19 @@
 
 public class Logic
 {
+    /// <summary>
+    /// Table of numbers - pairs for game Find Pair.
+    /// </summary>
     int[] tableOfNumbers;
 
+    /// <summary>
+    /// List of current open cards.
+    /// </summary>
     private List<Button> listOfCards = new List<Button>();
 
-    public int GetCount => listOfCards.Count;
-
+    /// <summary>
+    /// 
+    /// </summary>
     private int countOfOpenCards = 0;
 
     public Logic(int number)
