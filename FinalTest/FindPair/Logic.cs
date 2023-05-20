@@ -38,6 +38,10 @@ public class Logic
         {
             if (listOfCards[0].Text == listOfCards[1].Text)
             {
+                foreach (var card in listOfCards)
+                {
+                    card.Enabled = false;
+                }
                 listOfCards.Clear();
                 ++countOfOpenCards;
                 if (countOfOpenCards == tableOfNumbers.Count())
