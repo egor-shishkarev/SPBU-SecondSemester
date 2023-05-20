@@ -1,5 +1,3 @@
-using System.Net.Http.Headers;
-
 namespace FindPair
 {
     internal static class Program
@@ -21,6 +19,10 @@ namespace FindPair
             if (numberOfPairs % 2 != 0)
             {
                 throw new ArgumentException("It is necessary to enter only even numbers!");
+            }
+            if (numberOfPairs >= 20)
+            {
+                throw new ArgumentException("Too much elements!");
             }
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
