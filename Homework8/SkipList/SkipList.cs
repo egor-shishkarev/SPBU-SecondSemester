@@ -1,42 +1,111 @@
 ﻿namespace SkipList;
 
 using System.Collections;
-using System.Collections.Generic;
-using System.Xml.Linq;
 
-public class SkipList<T>//: IList<T>
+public class SkipList<T>: IList<T>
+    where T: IComparable
 {
-    private readonly Node Head;
+    private readonly Node Head = new Node(default, Array.Empty<Node>());
+
+    private readonly Node Tail = new Node(default, Array.Empty<Node>());
+
     public int Count { get; private set; }
 
-    public bool IsReadOnly { get; private set; }
+    public bool IsReadOnly => false;
 
+    private int maxHeight;
+
+    private int currentHeight;
+
+    public SkipList()
+    {
+        Head.Next[0] = Tail;
+    }
+
+    public SkipList(int maxHeight)
+    {
+        Head.Next[0] = Tail;
+        this.maxHeight = maxHeight;
+    }
 
     private class Node 
     { 
-        public T value { get; set; }
+        public T Value { get; set; }
 
-        int index { get; set; }
+        int Index { get; set; }
 
-        int level { get; set; } 
-
-        public Node Next { get; set; }
+        int Level { get; set; } 
 
 
+        /// <summary>
+        /// Array of nodes in environment. 0 - next node, 1 - down level node.
+        /// </summary>
+        public Node[] Next { get; set; }
+        
+        public Node(T item, Node[] next)
+        {
+            Value = item;
+            Next = next;
+        }
+
+        public Node(T item)
+        {
+            Value = item;
+        }
     } 
 
-    public IEnumerator<T> GetEnumerator()
-    {
-        Node? current = Head;
+    public IEnumerator<T> GetEnumerator() => new Enumerator(this);
 
-        while (current != null)
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+    public class Enumerator: IEnumerator<T>
+    {
+        Node currentNode;
+
+        private readonly SkipList<T> skipList;
+
+        public Enumerator(SkipList<T> skipList)
         {
-            yield return current.value;
-            current = current.Next;
+            currentNode = skipList.Head;
+            this.skipList = skipList;
+        }
+
+        public T Current
+        {
+            get
+            {
+                if (currentNode == skipList.Head)
+                {
+                    throw new InvalidOperationException();
+                }
+                return currentNode.Value!;
+            }
+        }
+
+        object IEnumerator.Current => Current;
+
+        public void Reset()
+        {
+            currentNode = skipList.Head;
+        }
+
+        public void Dispose()
+        {
+            GC.SuppressFinalize(this);
+        }
+
+        public bool MoveNext()
+        {
+            if (currentNode == skipList.Tail)
+            {
+                return false;
+            }
+
+            currentNode = currentNode.Next[0];
+
+            return true;
         }
     }
-
-    //public IEnumerable GetEnumerator() => GetEnumerator();
 
     public T this[int index]
     {
@@ -52,7 +121,7 @@ public class SkipList<T>//: IList<T>
 
     public int IndexOf(T item)
     {
-        return 0;
+        throw new NotSupportedException();
     }
 
     public void Insert(int index, T item)
@@ -67,7 +136,30 @@ public class SkipList<T>//: IList<T>
 
     public void Add(T item)
     {
+        Node currentNode = Head;
 
+        Node newNode = new Node(item);
+
+        int currentHeightOfNode = currentNode.Next.Length;
+
+        while (true)
+        {
+            if ((item.CompareTo(currentNode.Value) > 0 && currentNode.Next[currentHeightOfNode] == Tail) || (item.CompareTo(currentNode.Value) > 0 && item.CompareTo(currentNode.Next[currentHeightOfNode].Value) < 0))
+            {
+                if (currentHeightOfNode == 0)
+                {
+                    currentNode.Next[0] = newNode;
+                    newNode.Next[0] = currentNode.Next[currentHeightOfNode];
+                    break;
+                }
+                --currentHeightOfNode;
+                currentNode = currentNode.Next[currentHeightOfNode];
+            }
+            else
+            {
+                currentNode = currentNode.Next[currentHeightOfNode];
+            }
+        }
     }
 
     public void Clear()
@@ -77,7 +169,37 @@ public class SkipList<T>//: IList<T>
 
     public bool Contains(T item)
     {
-        return false;
+        if (Head.Next[0] == default)
+        {
+            return false;
+        }
+
+        Node currentNode = Head;
+
+        Node newNode = new Node(item);
+
+        int currentHeightOfNode = currentNode.Next.Length;
+
+        while (true)
+        {
+            if (item.CompareTo(currentNode.Value) == 0)
+            {
+                return true;
+            }
+            if ((item.CompareTo(currentNode.Value) > 0 && currentNode.Next[currentHeightOfNode] == Tail) || (item.CompareTo(currentNode.Value) > 0 && item.CompareTo(currentNode.Next[currentHeightOfNode].Value) < 0))
+            {
+                if (currentHeightOfNode == 0)
+                {
+                    return false;
+                }
+                --currentHeightOfNode;
+                currentNode = currentNode.Next[currentHeightOfNode];
+            }
+            else
+            {
+                currentNode = currentNode.Next[currentHeightOfNode];
+            }
+        }
     }
 
     public void CopyTo(T[] array, int arrayIndex)
@@ -89,6 +211,4 @@ public class SkipList<T>//: IList<T>
     {
         return false;
     }
-
-
 }
