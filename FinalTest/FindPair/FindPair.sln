@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33627.172
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FindPair", "FindPair.csproj", "{8DE43DDA-B92D-4B73-9101-F7925874291F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FindPairTest", "..\FindPairTest\FindPairTest.csproj", "{BB2FF867-45FD-4522-B530-ED44E6E2D203}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8DE43DDA-B92D-4B73-9101-F7925874291F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8DE43DDA-B92D-4B73-9101-F7925874291F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DE43DDA-B92D-4B73-9101-F7925874291F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DE43DDA-B92D-4B73-9101-F7925874291F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB2FF867-45FD-4522-B530-ED44E6E2D203}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB2FF867-45FD-4522-B530-ED44E6E2D203}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB2FF867-45FD-4522-B530-ED44E6E2D203}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB2FF867-45FD-4522-B530-ED44E6E2D203}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {82C7EB31-C5D3-45E4-B35F-DFA330D68BA4}
+	EndGlobalSection
+EndGlobal
