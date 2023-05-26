@@ -76,14 +76,8 @@ public class RoutersTopology
         WriteTopologyInFile(topologyResult, filePath);
     }
 
-    private static int CompareByName(Router firstRouter, Router secondRouter)
-    {
-        if (firstRouter.Name > secondRouter.Name)
-        {
-            return 1;
-        }
-        return -1;
-    }
+    private static int CompareByName(Router firstRouter, Router secondRouter) 
+        => firstRouter.Name > secondRouter.Name ? 1 : -1;
 
     /// <summary>
     /// Additional function to sorting Routers for writing in file.
@@ -117,7 +111,7 @@ public class RoutersTopology
     /// <returns>True -- if Router in List, False -- otherwise.</returns>
     private static bool IsInList(List<Router> listOfRouters, int name)
     {
-        foreach(var router in listOfRouters)
+        foreach (var router in listOfRouters)
         {
             if (router.Name == name)
             {
@@ -169,11 +163,7 @@ public class RoutersTopology
         var visitedRouters = new List<int> { listOfRouters[0].Name };
         var currentRouter = listOfRouters[0];
         FindNotVisitedRouters(currentRouter, visitedRouters);
-        if (visitedRouters.Count == listOfRouters.Count)
-        {
-            return true;
-        }
-        return false;
+        return visitedRouters.Count == listOfRouters.Count;
     }
 
     /// <summary>
@@ -244,23 +234,21 @@ public class RoutersTopology
     private static void WriteTopologyInFile(List<(Router, Router)> topologyResult, string filePath)
     {
         topologyResult.Sort(ComparePairByName);
-        using (StreamWriter file = new(filePath))
+        using StreamWriter file = new(filePath);
+        var currentRouterName = -1;
+        for (int i = 0; i < topologyResult.Count; ++i)
         {
-            var currentRouterName = -1;
-            for (int i = 0; i < topologyResult.Count; ++i)
+            if (topologyResult[i].Item1.Name != currentRouterName)
             {
-                if (topologyResult[i].Item1.Name != currentRouterName)
-                {
-                    file.Write($"{topologyResult[i].Item1.Name}: {topologyResult[i].Item2.Name} ({topologyResult[i].Item1.RelatedRouters[topologyResult[i].Item2.Name].bandwidth})");
-                    currentRouterName = topologyResult[i].Item1.Name;
-                } else
-                {
-                    file.Write($", {topologyResult[i].Item2.Name} ({topologyResult[i].Item1.RelatedRouters[topologyResult[i].Item2.Name].bandwidth})");
-                }
-                if (i < topologyResult.Count - 1 && topologyResult[i + 1].Item1.Name != currentRouterName)
-                {
-                    file.Write('\n');
-                }
+                file.Write($"{topologyResult[i].Item1.Name}: {topologyResult[i].Item2.Name} ({topologyResult[i].Item1.RelatedRouters[topologyResult[i].Item2.Name].bandwidth})");
+                currentRouterName = topologyResult[i].Item1.Name;
+            } else
+            {
+                file.Write($", {topologyResult[i].Item2.Name} ({topologyResult[i].Item1.RelatedRouters[topologyResult[i].Item2.Name].bandwidth})");
+            }
+            if (i < topologyResult.Count - 1 && topologyResult[i + 1].Item1.Name != currentRouterName)
+            {
+                file.Write('\n');
             }
         }
     }
