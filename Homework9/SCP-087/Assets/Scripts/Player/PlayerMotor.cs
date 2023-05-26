@@ -1,15 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMotor : MonoBehaviour
 {
+
     private CharacterController controller;
+
     public Vector3 playerVelocity;
+
     public float speed = 5f;
+
     public bool isGrounded;
+
     public float gravity = -9.8f;
+
     public float jumpHeight = 3f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,7 +27,7 @@ public class PlayerMotor : MonoBehaviour
         isGrounded = controller.isGrounded;
     }
 
-    //Receive the inputs for our InputManager.cs and apply them to out character controller
+    // Receive the inputs for InputManager.cs and apply them to out character controller
     public void ProcessMove(Vector2 input)
     {
         Vector3 moveDirection = Vector3.zero;
@@ -35,7 +40,6 @@ public class PlayerMotor : MonoBehaviour
             playerVelocity.y = -2f;
         }
         controller.Move(playerVelocity * Time.deltaTime);
-        //Debug.Log(playerVelocity.y);
     }
 
     public void Jump()

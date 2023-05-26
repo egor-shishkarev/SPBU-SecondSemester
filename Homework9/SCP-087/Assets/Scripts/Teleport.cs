@@ -1,9 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Transactions;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Windows;
 
 public class Teleport : MonoBehaviour
 {
@@ -37,7 +32,6 @@ public class Teleport : MonoBehaviour
         {
             Vector3 place = new(97.23f, -31f, 24.03f);
             SCP.transform.position = place;
-            
         }
     }
 }
