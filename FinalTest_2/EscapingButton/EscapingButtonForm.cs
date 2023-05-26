@@ -2,10 +2,9 @@ namespace EscapingButton
 {
     using ButtonLogic;
 
-    public partial class Form1 : Form
+    public partial class EscapingButtonForm : Form
     {
-        ButtonLogic buttonLogic = new ButtonLogic();
-        public Form1()
+        public EscapingButtonForm()
         {
             InitializeComponent();
         }
@@ -14,7 +13,7 @@ namespace EscapingButton
         {
             var _sender = sender as Button;
             var currentPosition = _sender.Location;
-            _sender.Location = buttonLogic.MoveButton(currentPosition);
+            _sender.Location = ButtonLogic.MoveButton(currentPosition);
         }
 
         private void currentButton_Click(object sender, EventArgs e)

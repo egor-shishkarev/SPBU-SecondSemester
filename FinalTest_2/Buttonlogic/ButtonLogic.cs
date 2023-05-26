@@ -1,16 +1,25 @@
-﻿using System.Drawing;
+﻿namespace ButtonLogic;
 
-namespace ButtonLogic;
+using System.Drawing;
 
+/// <summary>
+/// Class for random moving of button.
+/// </summary>
 public class ButtonLogic
 {
-    public Point MoveButton(Point location)
+    /// <summary>
+    /// Random create new coordinates for button.
+    /// </summary>
+    /// <param name="location">Current position of button.</param>
+    /// <returns>New position of button.</returns>
+    static public Point MoveButton(Point location)
     {
         var random = new Random();
         var (x, y) = (location.X, location.Y);
         var partOfXCoordinate = random.Next(0, 2);
         int newXCoordinate;
         int newYCoordinate;
+
         if ((partOfXCoordinate == 0 && x > 75) || x > 650)
         {
             newXCoordinate = random.Next(0, x - 75);

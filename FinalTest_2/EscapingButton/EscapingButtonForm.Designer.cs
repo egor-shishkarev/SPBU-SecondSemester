@@ -1,6 +1,6 @@
 ﻿namespace EscapingButton
 {
-    partial class Form1
+    partial class EscapingButtonForm
     {
         /// <summary>
         ///  Required designer variable.
@@ -50,13 +50,13 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
             Controls.Add(currentButton);
-            Name = "Form1";
+            Name = "EscapingButtonForm";
             Text = "Escaping Button";
             ResumeLayout(false);
         }
 
         #endregion
 
-        private Button currentButton;
+        public Button currentButton;
     }
 }
