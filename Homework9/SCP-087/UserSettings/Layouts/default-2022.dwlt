@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1536
     height: 772.8
   m_ShowMode: 4
-  m_Title: Project
+  m_Title: Scene
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 321}
   m_MaxSize: {x: 10000, y: 10000}
@@ -413,9 +413,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 
-      m_LastClickedID: 0
-      m_ExpandedIDs: 26fbffff
+      m_SelectedIDs: b26b0000
+      m_LastClickedID: 27570
+      m_ExpandedIDs: c8f3ffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -758,16 +758,16 @@ MonoBehaviour:
       layout: 4
       size: {x: 0, y: 0}
       sizeOverriden: 0
-    - dockPosition: 1
-      containerId: overlay-container--right
+    - dockPosition: 0
+      containerId: overlay-toolbar__bottom
       floating: 0
-      collapsed: 0
+      collapsed: 1
       displayed: 1
       snapOffset: {x: -209.60004, y: -242.40001}
       snapOffsetDelta: {x: 0, y: 0}
       snapCorner: 3
       id: AINavigationOverlay
-      index: 8
+      index: 0
       layout: 4
       size: {x: 0, y: 0}
       sizeOverriden: 0
@@ -782,9 +782,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -22.533232, y: 2.077208, z: 29.600147}
+    m_Target: {x: -2.501708, y: 15.037871, z: 12.747233}
     speed: 2
-    m_Value: {x: -22.533232, y: 2.077208, z: 29.600147}
+    m_Value: {x: -2.501708, y: 15.037871, z: 12.747233}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -830,9 +830,9 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.044525567, y: 0.37282574, z: -0.017915908, w: 0.92670923}
+    m_Target: {x: 0.010134261, y: 0.9464896, z: -0.029833019, w: 0.32134223}
     speed: 2
-    m_Value: {x: -0.044525567, y: -0.37282574, z: 0.017915908, w: -0.92670923}
+    m_Value: {x: 0.01017851, y: 0.94596106, z: -0.029816352, w: 0.3227461}
   m_Size:
     m_Target: 10
     speed: 2
@@ -1331,9 +1331,9 @@ MonoBehaviour:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 24.600006}
-    m_SelectedIDs: 6a6d0000
-    m_LastClickedID: 28010
-    m_ExpandedIDs: 000000002a6d00002c6d00002e6d000000ca9a3b
+    m_SelectedIDs: 826f0000
+    m_LastClickedID: 28546
+    m_ExpandedIDs: 00000000526f0000546f0000566f000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1361,7 +1361,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000002a6d00002c6d00002e6d0000
+    m_ExpandedIDs: 00000000526f0000546f0000566f0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
