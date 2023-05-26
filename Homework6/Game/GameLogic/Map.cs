@@ -2,9 +2,9 @@
 
 public class Map
 {
-    private string[] map; // Приватное!
+    private string[] map;
 
-    public Map(string filePath) // Проверять карту на валидность So-so
+    public Map(string filePath)
     {
         if (!File.Exists(filePath))
         {
