@@ -44,12 +44,13 @@
             currentButton.Click += currentButton_Click;
             currentButton.MouseEnter += button_MouseHover;
             // 
-            // Form1
+            // EscapingButtonForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
             Controls.Add(currentButton);
+            MinimumSize = new Size(818, 497);
             Name = "EscapingButtonForm";
             Text = "Escaping Button";
             ResumeLayout(false);

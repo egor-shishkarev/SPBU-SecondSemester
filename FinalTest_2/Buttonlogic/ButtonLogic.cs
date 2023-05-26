@@ -7,14 +7,15 @@ using System.Drawing;
 /// </summary>
 public class ButtonLogic
 {
+    private readonly Random random = new();
+
     /// <summary>
     /// Random create new coordinates for button.
     /// </summary>
     /// <param name="location">Current position of button.</param>
     /// <returns>New position of button.</returns>
-    static public Point MoveButton(Point location)
+    public Point MoveButton(Point location)
     {
-        var random = new Random();
         var (x, y) = (location.X, location.Y);
         var partOfXCoordinate = random.Next(0, 2);
         int newXCoordinate;
