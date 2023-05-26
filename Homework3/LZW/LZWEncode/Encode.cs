@@ -20,12 +20,12 @@ public static class Encode
             throw new ArgumentNullException(nameof(binaryFile), "Binary file mustn't be null!");
         }
         var trie = new Trie();
-        for (int i = 0; i < 256; ++i)
+        int currentSizeOfTrie = 256;
+        for (int i = 0; i < currentSizeOfTrie; ++i)
         {
             var newByte = new List<byte> { (byte)i };
             trie.Add(newByte, i);
         }
-        int currentSizeOfTrie = 256;
         int currentBitsForSymbol = 8;
         var previousSymbol = new List<byte>();
         var sumOfSymbols = new List<byte>();

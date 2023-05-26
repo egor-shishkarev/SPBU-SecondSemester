@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Program": {
+      "commandName": "Project",
+      "commandLineArgs": "C:\\Users\\Егор\\source\\repos\\SPBU-SecondSemester\\Homework3\\LZW\\Program\\example.txt.zipped -u"
+    }
+  }
+}

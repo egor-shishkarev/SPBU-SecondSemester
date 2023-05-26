@@ -12,7 +12,7 @@ public static class Archiver
     /// </summary>
     /// <param name="filePath">Path to the file we want to compress.</param>
     /// <exception cref="ArgumentException">File with this path doesn't exist!</exception>
-    public static void Compress(string filePath)
+    public static float Compress(string filePath)
     {
         if (!File.Exists(filePath))
         {
@@ -28,7 +28,7 @@ public static class Archiver
         File.WriteAllBytes(newFilePath, newBytes);
         var fileSize = new FileInfo(filePath).Length;
         var compressedFileSize = new FileInfo(newFilePath).Length;
-        Console.WriteLine($"Коэффициент сжатия - {fileSize / (float)compressedFileSize}");
+        return fileSize / (float)compressedFileSize;
     }
 
     /// <summary>

@@ -60,7 +60,7 @@ public class Trie
     /// <returns>True - if element not in Trie, False - if element already was in Trie.</returns>
     public void Add(List<byte> element, int value)
     {
-        if (element == null)
+        if (element == null || element.Count == 0)
         {
             throw new ArgumentNullException(nameof(element), "List of bytes mustn't be null!");
         }
@@ -85,9 +85,9 @@ public class Trie
     /// <returns>True - if Trie contain string, False - if Trie doesn't contain string.</returns>
     public bool Contains(List<byte> element)
     {
-        if (element == null)
+        if (element == null || element.Count == 0)
         {
-            throw new ArgumentNullException(nameof(element), "List of bytes mustn't be null!");
+            throw new ArgumentNullException();
         }
         var currentNode = head;
         foreach (byte part in element)
@@ -111,7 +111,7 @@ public class Trie
     /// <returns>True - if Trie contains string, False - if Trie doesn't contains string</returns>
     public bool Remove(List<byte> element)
     {
-        if (element == null)
+        if (element == null || element.Count == 0)
         {
             throw new ArgumentNullException(nameof(element), "List of bytes mustn't be null!");
         }

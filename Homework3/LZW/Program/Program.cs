@@ -2,14 +2,21 @@
 
 if (args.Length < 2)
 {
-    Console.WriteLine("No arguments were passed!");
+    Console.Error.WriteLine("No arguments were passed!");
+    return;
+}
+
+if (args.Length > 2)
+{
+    Console.Error.WriteLine("Too much arguments!");
     return;
 }
 
 if (args[1] == "-c")
 {
     var filePath = args[0];
-    Archiver.Compress(filePath);
+    var compressSize = Archiver.Compress(filePath);
+    Console.WriteLine($"Коэффициент сжатия - {compressSize}");
 }
 else if (args[1] == "-u")
 {
