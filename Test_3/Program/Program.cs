@@ -1,12 +1,11 @@
 ﻿using MTF;
 
-var newString = "Ababa";
+var newString = "Ololo123,";
 var MTFSequence = MTFEncoding.Encode(newString);
 Console.Write("[");
 foreach (var item in MTFSequence)
 {
-    Console.Write($"{item}, ");
+    Console.Write($"{item} ");
 }
 Console.WriteLine("]");
 
-Console.WriteLine((int)'Т');
