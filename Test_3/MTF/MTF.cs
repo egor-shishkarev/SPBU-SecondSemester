@@ -10,8 +10,8 @@ public class MTFEncoding
     /// </summary>
     /// <param name="inputString">String of english alphabet, which we want to encode.</param>
     /// <returns>Sequence of ints.</returns>
-    /// <exception cref="ArgumentNullException">inputString was null or empty.</exception>
-    /// <exception cref="ArgumentException">Nonexpected symbol in inputString.</exception>
+    /// <exception cref="ArgumentNullException">Input string was null or empty.</exception>
+    /// <exception cref="ArgumentException">Nonexpected symbol in input string.</exception>
     static public int[] Encode(string inputString)
     {
         if (string.IsNullOrEmpty(inputString))

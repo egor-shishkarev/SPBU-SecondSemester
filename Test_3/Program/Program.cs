@@ -1,11 +1,22 @@
 ﻿using MTF;
 
-var newString = "Ololo123,";
-var MTFSequence = MTFEncoding.Encode(newString);
-Console.Write("[");
-foreach (var item in MTFSequence)
-{
-    Console.Write($"{item} ");
-}
-Console.WriteLine("]");
+Console.Write("Введите строку => ");
+var inputString = Console.ReadLine();
 
+if (string.IsNullOrEmpty(inputString))
+{
+    Console.WriteLine("Строка не должна быть пустой!");
+    return;
+}
+
+var MTFSequence = MTFEncoding.Encode(inputString);
+Console.Write("\n[");
+for (int i = 0; i < MTFSequence.Length; ++i)
+{
+    Console.Write($"{MTFSequence[i]}");
+    if (i != MTFSequence.Length - 1)
+    {
+        Console.Write(", ");
+    }
+}
+Console.Write("]");
