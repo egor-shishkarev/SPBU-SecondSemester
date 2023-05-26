@@ -1,7 +1,8 @@
 {
   "profiles": {
     "Game": {
-      "commandName": "Project"
+      "commandName": "Project",
+      "commandLineArgs": "C:\\Users\\Егор\\source\\repos\\SPBU-SecondSemester\\Homework6\\Game\\Game\\Level2.txt"
     }
   }
 }

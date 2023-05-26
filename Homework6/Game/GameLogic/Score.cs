@@ -1,29 +1,28 @@
 ﻿namespace GameLogic;
 
 public class Score
-{
-    public int currentScore;
+{ 
+    public int currentScore; // Публичные поля
 
     public Score()
     {
-        currentScore = 0;
     }
 
-    public void IncreaseScore(int gain)
+    public void IncreaseScore(int gain) // Могут быть -
     {
         currentScore += gain;
     }
 
-    public void InitalizeScore(int countOfColumns)
+    public void InitalizeScore(int countOfColumns) // Проверять
     {
-        Console.SetCursorPosition(countOfColumns + 7, 0);
+        Console.SetCursorPosition(countOfColumns + 7, 0); // Константы
         Console.WriteLine("Ваш счёт: 0");
         Console.SetCursorPosition(1, 1);
     }
 
     public void PrintScore(int countOfColumns)
     {
-        Console.SetCursorPosition(countOfColumns + 17, 0);
+        Console.SetCursorPosition(countOfColumns + 17, 0); // Константы
         for (int i = 0; i < currentScore.ToString().Length; ++i)
         {
             Console.Write(" \b");

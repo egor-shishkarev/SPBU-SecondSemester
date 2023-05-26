@@ -1,6 +1,6 @@
 namespace Game.Tests;
 
-public class Tests
+public class Tests // Тесты 
 {
     [SetUp]
     public void Setup()

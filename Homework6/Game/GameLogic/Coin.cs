@@ -1,13 +1,11 @@
-﻿using static System.Formats.Asn1.AsnWriter;
-
-namespace GameLogic;
+﻿namespace GameLogic;
 
 public class Coin
 {
     /// <summary>
     /// Coordinates of coin on map.
     /// </summary>
-    public int row;
+    public int row; // Паблик 
 
     public int column;
 
@@ -34,13 +32,9 @@ public class Coin
         Console.Write("$");
     }
 
-    public bool CheckPosition(Character character)
+    public bool CheckPosition(Character character) // Нулл 
     {
-        if (character.row == row && character.column == column)
-        {
-            return true;
-        }
-        return false;
+        return character.row == row && character.column == column;
     }
 
     /// <summary>
@@ -49,15 +43,15 @@ public class Coin
     /// <param name="map">Current map.</param>
     /// <param name="currentPosition">Current position of character.</param>
     /// <returns>Row coordinate and column coordinate of found position coordinates.</returns>
-    public static (int, int) GetRandomPosition(string[] map, (int, int) currentPosition)
+    private static (int, int) GetRandomPosition(string[] map, (int, int) currentPosition)
     {
-        Random randomNumeber = new();
-        var rowNumber = randomNumeber.Next(1, map.Length - 2);
-        var columnNumber = randomNumeber.Next(1, map[0].Length - 2);
-        while (map[rowNumber][columnNumber] != ' ' || (rowNumber, columnNumber) == currentPosition)
+        Random randomNumber = new();
+        var rowNumber = randomNumber.Next(1, map.Length - 1);
+        var columnNumber = randomNumber.Next(1, map[0].Length - 1);
+        while (map[rowNumber][columnNumber] != ' ' || (rowNumber, columnNumber) == currentPosition) // К карте и её проверке - бесконечный цикл
         {
-            rowNumber = randomNumeber.Next(1, map.Length - 2);
-            columnNumber = randomNumeber.Next(1, map[0].Length - 2);
+            rowNumber = randomNumber.Next(1, map.Length - 1);
+            columnNumber = randomNumber.Next(1, map[0].Length - 1);
         }
         return (rowNumber, columnNumber);
     }

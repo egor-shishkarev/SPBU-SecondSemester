@@ -1,6 +1,6 @@
 ﻿namespace GameLogic;
 
-public class Logic
+public class Logic // Вынести из гейма сюда всю логику
 {
     public static void OnLeft(object? sender, EventArgs args)
     {

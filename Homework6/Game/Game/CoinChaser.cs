@@ -9,7 +9,7 @@ if (args.Length == 0)
 {
     Console.WriteLine("\nДля старта игры нажмите любую кнопку.");
     Console.ReadKey(true);
-    var game = new Game();
+    var game = new Game("../../../Level1.txt", false);
     Game.Run();
 }
 

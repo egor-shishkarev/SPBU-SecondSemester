@@ -5,7 +5,7 @@ public class Character
     /// <summary>
     /// 
     /// </summary>
-    public int row;
+    public int row; // Публичные поля
 
     public int column;
 
@@ -20,7 +20,7 @@ public class Character
     }
 
 
-    public void InitializeCharacter()
+    public void InitializeCharacter() // Принт
     {
         Console.SetCursorPosition(row, column);
         Console.Write("@");
@@ -30,6 +30,8 @@ public class Character
     {
         Console.SetCursorPosition(column, row);
     }
+
+    // Комментарии
     public void MoveRight()
     {
         (int left, int top) = (column, row);
