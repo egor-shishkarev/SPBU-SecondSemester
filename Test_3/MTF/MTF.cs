@@ -8,10 +8,10 @@ public class MTFEncoding
     /// <summary>
     /// Main method of encoding of English alphabet strings by the Move-To-Front algorithm.
     /// </summary>
-    /// <param name="inputString">String of english alphabet, which we want to encode.</param>
+    /// <param name="inputString">String of English alphabet, which we want to encode.</param>
     /// <returns>Sequence of ints.</returns>
     /// <exception cref="ArgumentNullException">Input string was null or empty.</exception>
-    /// <exception cref="ArgumentException">Nonexpected symbol in input string.</exception>
+    /// <exception cref="ArgumentException">Unexpected symbol in input string.</exception>
     static public int[] Encode(string inputString)
     {
         if (string.IsNullOrEmpty(inputString))
