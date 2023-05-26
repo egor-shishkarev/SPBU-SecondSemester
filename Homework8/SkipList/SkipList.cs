@@ -1,13 +1,15 @@
 ﻿namespace SkipList;
 
 using System.Collections;
+using System.Runtime.InteropServices;
+using System.Xml.Linq;
 
 public class SkipList<T>: IList<T>
     where T: IComparable
 {
-    private readonly Node Head = new Node(default, Array.Empty<Node>());
+    private readonly Node Head = new(default, new List<Node>());
 
-    private readonly Node Tail = new Node(default, Array.Empty<Node>());
+    private readonly Node Tail = new(default, new List<Node>());
 
     public int Count { get; private set; }
 
@@ -19,12 +21,12 @@ public class SkipList<T>: IList<T>
 
     public SkipList()
     {
-        Head.Next[0] = Tail;
+        Head.Next.Add(Tail);
     }
 
     public SkipList(int maxHeight)
     {
-        Head.Next[0] = Tail;
+        Head.Next.Add(Tail);
         this.maxHeight = maxHeight;
     }
 
@@ -32,17 +34,12 @@ public class SkipList<T>: IList<T>
     { 
         public T Value { get; set; }
 
-        int Index { get; set; }
-
-        int Level { get; set; } 
-
-
         /// <summary>
-        /// Array of nodes in environment. 0 - next node, 1 - down level node.
+        /// Array of nodes in environment. 
         /// </summary>
-        public Node[] Next { get; set; }
+        public List<Node> Next { get; set; }
         
-        public Node(T item, Node[] next)
+        public Node(T item, List<Node> next)
         {
             Value = item;
             Next = next;
@@ -51,6 +48,7 @@ public class SkipList<T>: IList<T>
         public Node(T item)
         {
             Value = item;
+            Next = new List<Node>();
         }
     } 
 
@@ -121,7 +119,7 @@ public class SkipList<T>: IList<T>
 
     public int IndexOf(T item)
     {
-        throw new NotSupportedException();
+        throw new NotSupportedException("In this type of list, searching index of element is not provided!");
     }
 
     public void Insert(int index, T item)
@@ -140,7 +138,7 @@ public class SkipList<T>: IList<T>
 
         Node newNode = new Node(item);
 
-        int currentHeightOfNode = currentNode.Next.Length;
+        int currentHeightOfNode = currentNode.Next.Count - 1;
 
         while (true)
         {
@@ -148,8 +146,9 @@ public class SkipList<T>: IList<T>
             {
                 if (currentHeightOfNode == 0)
                 {
+                    var tempNode = currentNode.Next[0];
                     currentNode.Next[0] = newNode;
-                    newNode.Next[0] = currentNode.Next[currentHeightOfNode];
+                    newNode.Next.Add(tempNode);
                     break;
                 }
                 --currentHeightOfNode;
@@ -160,6 +159,7 @@ public class SkipList<T>: IList<T>
                 currentNode = currentNode.Next[currentHeightOfNode];
             }
         }
+        ++Count;
     }
 
     public void Clear()
@@ -176,9 +176,7 @@ public class SkipList<T>: IList<T>
 
         Node currentNode = Head;
 
-        Node newNode = new Node(item);
-
-        int currentHeightOfNode = currentNode.Next.Length;
+        int currentHeightOfNode = currentNode.Next.Count - 1;
 
         while (true)
         {
@@ -210,5 +208,28 @@ public class SkipList<T>: IList<T>
     public bool Remove(T item)
     {
         return false;
+    }
+
+    private void MovingNodeToNewLevel(Node currentNode, Node newNode)
+    {
+        int maxHeight = currentNode.Next.Count - 1;
+        int currentHeight = 0;
+        var adjacentNodes = new List<Node>() { newNode };
+        while (RandomMoving() && currentHeight < maxHeight)
+        {
+            var tempNode = currentNode.Next[currentHeight + 1];
+            var newLevelNode = new Node(newNode.Value);
+            currentNode.Next[currentHeight + 1].Next[currentHeight + 1] = newLevelNode;
+            newLevelNode.Next.Add(newNode);
+
+
+        }
+    }
+
+    private bool RandomMoving()
+    {
+        var random = new Random();
+
+        return random.NextDouble() > 0.5;
     }
 }
