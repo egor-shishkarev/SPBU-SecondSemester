@@ -2,20 +2,15 @@ namespace TrieClass.Test;
 
 public class Tests
 {
-    [SetUp]
-    public void Setup()
-    {
-    }
-
     [Test]
     public void AddNewElementShouldContainItAndReturnTrue()
     {
         var trie = new Trie();
-        bool isContain = trie.Add("ololo");
+        bool contains = trie.Add("ololo");
         Assert.Multiple(() =>
         {
             Assert.That(trie.Contains("ololo"), Is.True);
-            Assert.That(isContain, Is.True);
+            Assert.That(contains, Is.True);
         });
     }
 
@@ -110,5 +105,53 @@ public class Tests
         trie.Add("aba");
 
         Assert.That(trie.Size, Is.EqualTo(2));
+    }
+
+    [Test]
+    public void TryingToAddNullOrEmptyStringShouldThrowArgumentException()
+    {
+        var trie = new Trie();
+        string? nullString = null;
+        Assert.Multiple(() =>
+        {
+            Assert.Throws<ArgumentException>(() => trie.Add(""));
+            Assert.Throws<ArgumentNullException>(() => trie.Add(nullString!));
+        });
+    }
+
+    [Test]
+    public void TryingToCheckContainsNullOrEmptyStringShouldThrowArgumentException()
+    {
+        var trie = new Trie();
+        string? nullString = null;
+        Assert.Multiple(() =>
+        {
+            Assert.Throws<ArgumentException>(() => trie.Contains(""));
+            Assert.Throws<ArgumentNullException>(() => trie.Contains(nullString!));
+        });
+    }
+
+    [Test]
+    public void TryingToRemoveNullOrEmptyStringShouldThrowArgumentException()
+    {
+        var trie = new Trie();
+        string? nullString = null;
+        Assert.Multiple(() =>
+        {
+            Assert.Throws<ArgumentException>(() => trie.Remove(""));
+            Assert.Throws<ArgumentNullException>(() => trie.Remove(nullString!));
+        });
+    }
+
+    [Test]
+    public void TryingToCheckHowManyStartsWithNullOrEmptyStringShouldThrowArgumentException()
+    {
+        var trie = new Trie();
+        string? nullString = null;
+        Assert.Multiple(() =>
+        {
+            Assert.Throws<ArgumentException>(() => trie.HowManyStartsWithPrefix(""));
+            Assert.Throws<ArgumentNullException>(() => trie.HowManyStartsWithPrefix(nullString!));
+        });
     }
 }

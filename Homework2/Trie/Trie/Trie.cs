@@ -54,10 +54,7 @@ public class Trie
     /// <returns>True - if element not in Trie, False - if element already was in Trie.</returns>
     public bool Add(string element)
     {
-        if (element == null)
-        {
-            throw new Exception();
-        }
+        ArgumentException.ThrowIfNullOrEmpty(element);
         if (Contains(element))
         {
             return false;
@@ -83,11 +80,8 @@ public class Trie
     /// <param name="element">String, that we want to check for containing in Trie. </param>
     /// <returns>True - if Trie contain string, False - if Trie doesn't contain string.</returns>
     public bool Contains(string element) 
-    { 
-        if (element == null)
-        {
-            throw new Exception();
-        }
+    {
+        ArgumentException.ThrowIfNullOrEmpty(element);
         var currentNode = head;
         foreach (char symbol in element)
         {
@@ -110,10 +104,7 @@ public class Trie
     /// <returns>True - if Trie contains string, False - if Trie doesn't contains string</returns>
     public bool Remove(string element) 
     {  
-        if (element == null)
-        {
-            throw new Exception();
-        }
+        ArgumentException.ThrowIfNullOrEmpty(element);
         if (!Contains(element))
         {
             return false;
@@ -141,10 +132,7 @@ public class Trie
     /// <returns>Number of strings, that contain given prefix</returns>
     public int HowManyStartsWithPrefix(string prefix)
     {
-        if (prefix == null)
-        {
-            throw new Exception();
-        }
+        ArgumentException.ThrowIfNullOrEmpty(prefix);
         var currentNode = head;
         foreach(char symbol in prefix)
         {
