@@ -6,6 +6,10 @@ public static class BWT
 {
     public static (StringBuilder BWTString, int lastPosition) DirectBWT(string stringToConvert)
     {
+        if (stringToConvert.Contains('\0'))
+        {
+            return (new StringBuilder(0), 0);
+        }
         if (string.IsNullOrEmpty(stringToConvert))
         {
             return (new StringBuilder(0), 0);

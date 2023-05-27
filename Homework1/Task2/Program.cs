@@ -11,7 +11,12 @@ Console.Write("Введите строку, которую хотите полу
 var stringToConvert = Console.ReadLine();
 if (string.IsNullOrEmpty(stringToConvert))
 {
-    Console.WriteLine("Строка не была введена!");
+    Console.WriteLine("\nСтрока не была введена!");
+    return;
+}
+if (stringToConvert.Contains('\0'))
+{
+    Console.WriteLine($"\nБыл введён запрещённый символ - \\0 - char {(int)'\0'}, проверьте строку и повторите ввод!");
     return;
 }
 (StringBuilder BWTString, int lastPosition) = BWT.DirectBWT(stringToConvert);
