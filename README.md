@@ -2,8 +2,8 @@
 _____
 ## Homeworks
 - ## Homework 1
-  - [Bubble Sort](https://github.com/egor-shishkarev/SPBU-SecondSemester/tree/Homework1_task2/Homework1/Task2) 
-  - [Burrows-Wheeler transform](https://github.com/egor-shishkarev/SPBU-SecondSemester/tree/main/Homework1/Task1)
+  - [Bubble Sort](https://github.com/egor-shishkarev/SPBU-SecondSemester/tree/main/Homework1/Task1) 
+  - [Burrows-Wheeler transform](https://github.com/egor-shishkarev/SPBU-SecondSemester/tree/Homework1_task2/Homework1/Task2) 
 - ## Homework 2
   - [Trie](https://github.com/egor-shishkarev/SPBU-SecondSemester/tree/Homework2_task1/Homework2/Trie)
   - [Stack Calculator](https://github.com/egor-shishkarev/SPBU-SecondSemester/tree/Homework2_task2/Homework2/StackCalculator)
