@@ -212,75 +212,75 @@ public class CalculatorLogic : INotifyPropertyChanged
                 break;
             }
             case State.Operation:
+            {
+                if (char.IsDigit(symbol))
                 {
-                    if (char.IsDigit(symbol))
-                    {
-                        numberInMemory = DisplayNumber;
-                        DisplayNumber = symbol.ToString();
-                        currentState = State.Number;
-                        break;
-                    }
-                    if (IsOperation(symbol))
-                    {
-                        operationSign = symbol.ToString();
-                        break;
-                    }
-                    if (symbol == '=')
-                    {
-                        try
-                        {
-                            DisplayNumber = Calculate(numberInMemory, DisplayNumber, operationSign).ToString();
-                        } 
-                        catch (DivideByZeroException)
-                        {
-                            ClearDisplay();
-                            currentState = State.Error;
-                            DisplayNumber = "Error";
-                            break;
-                        }
-                    }
+                    numberInMemory = DisplayNumber;
+                    DisplayNumber = symbol.ToString();
+                    currentState = State.Number;
                     break;
                 }
+                if (IsOperation(symbol))
+                {
+                    operationSign = symbol.ToString();
+                    break;
+                }
+                if (symbol == '=')
+                {
+                    try
+                    {
+                        DisplayNumber = Calculate(numberInMemory, DisplayNumber, operationSign).ToString();
+                    } 
+                    catch (DivideByZeroException)
+                    {
+                        ClearDisplay();
+                        currentState = State.Error;
+                        DisplayNumber = "Error";
+                        break;
+                    }
+                }
+                break;
+            }
             case State.Equality:
+            {
+                if (char.IsDigit(symbol))
                 {
-                    if (char.IsDigit(symbol))
-                    {
-                        numberInMemory = DisplayNumber;
-                        DisplayNumber = symbol.ToString();
-                        currentState = State.Number;
-                        break;
-                    }
-                    if (IsOperation(symbol))
-                    {
-                        operationSign = symbol.ToString(); 
-                        break;
-                    }
-                    if (symbol == '=')
-                    {
-                        try
-                        {
-                            DisplayNumber = Calculate(DisplayNumber, numberInMemory, operationSign).ToString();
-                        } 
-                        catch (DivideByZeroException)
-                        {
-                            ClearDisplay();
-                            currentState = State.Error;
-                            DisplayNumber = "Error";
-                            break;
-                        }
-                    }
+                    numberInMemory = DisplayNumber;
+                    DisplayNumber = symbol.ToString();
+                    currentState = State.Number;
                     break;
                 }
+                if (IsOperation(symbol))
+                {
+                    operationSign = symbol.ToString(); 
+                    break;
+                }
+                if (symbol == '=')
+                {
+                    try
+                    {
+                        DisplayNumber = Calculate(DisplayNumber, numberInMemory, operationSign).ToString();
+                    } 
+                    catch (DivideByZeroException)
+                    {
+                        ClearDisplay();
+                        currentState = State.Error;
+                        DisplayNumber = "Error";
+                        break;
+                    }
+                }
+                break;
+            }
             case State.Error:
+            {
+                if (char.IsDigit(symbol))
                 {
-                    if (char.IsDigit(symbol))
-                    {
-                        DisplayNumber = symbol.ToString();
-                        numberInMemory = "0";
-                        currentState = State.Number;
-                    }
-                    break;
+                    DisplayNumber = symbol.ToString();
+                    numberInMemory = "0";
+                    currentState = State.Number;
                 }
+                break;
+            }
         }
     }
 

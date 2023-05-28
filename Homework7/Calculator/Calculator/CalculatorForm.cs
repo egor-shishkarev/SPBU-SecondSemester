@@ -1,9 +1,9 @@
 namespace Calculator
 {
-    public partial class Form1 : Form
+    public partial class CalculatorForm : Form
     {
         private readonly CalculatorLogic calculatorLogic = new();
-        public Form1()
+        public CalculatorForm()
         {
             InitializeComponent();
 

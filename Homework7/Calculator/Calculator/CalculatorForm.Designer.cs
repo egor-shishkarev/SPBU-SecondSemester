@@ -1,6 +1,6 @@
 ﻿namespace Calculator
 {
-    partial class Form1
+    partial class CalculatorForm
     {
         /// <summary>
         ///  Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CalculatorForm));
             Number1 = new Button();
             Number2 = new Button();
             Number3 = new Button();
@@ -206,7 +206,7 @@
             // DeleteButton
             // 
             DeleteButton.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            DeleteButton.Location = new Point(270, 156);
+            DeleteButton.Location = new Point(225, 34);
             DeleteButton.Name = "DeleteButton";
             DeleteButton.Size = new Size(80, 65);
             DeleteButton.TabIndex = 11;
@@ -248,7 +248,7 @@
             DotButton.UseVisualStyleBackColor = true;
             DotButton.Click += NumberOrOperationClick;
             // 
-            // Form1
+            // CalculatorForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -273,7 +273,7 @@
             Controls.Add(Number1);
             Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             Icon = (Icon)resources.GetObject("$this.Icon");
-            Name = "Form1";
+            Name = "CalculatorForm";
             RightToLeft = RightToLeft.No;
             Text = "Калькулятор";
             TopMost = true;
