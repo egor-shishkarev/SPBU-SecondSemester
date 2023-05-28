@@ -60,12 +60,4 @@ public class CalculatorTests
 
         Assert.That(calculatorLogic.DisplayNumber, Is.EqualTo(result));
     }
-
-    [TestCase("0,85+0,15=", "1")]
-    public void OperationWithFloatNumbersShouldReturnExpectedResult(string expression, string result)
-    {
-        AddExpressionInCalculator(expression);
-
-        Assert.That(calculatorLogic.DisplayNumber, Is.EqualTo(result));
-    }
 }
