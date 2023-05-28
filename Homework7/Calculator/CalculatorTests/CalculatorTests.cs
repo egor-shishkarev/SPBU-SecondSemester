@@ -1,6 +1,5 @@
 namespace Calculator.Tests;
 
-
 public class CalculatorTests
 {
     readonly CalculatorLogic calculatorLogic = new CalculatorLogic();
