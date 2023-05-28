@@ -13,7 +13,7 @@ public class ParseTree
         return 0f;
     }
 
-    public string StringRepresentation() => head.StringRepresentation;
+    public string StringRepresentation => head.StringRepresentation;
 
     public void Print() => head.Print();
 }
