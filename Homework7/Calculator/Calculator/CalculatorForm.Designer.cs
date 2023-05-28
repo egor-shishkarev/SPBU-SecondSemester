@@ -252,7 +252,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(366, 507);
+            ClientSize = new Size(362, 503);
             Controls.Add(DotButton);
             Controls.Add(OutputWindow);
             Controls.Add(EqualButton);
@@ -273,6 +273,8 @@
             Controls.Add(Number1);
             Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             Icon = (Icon)resources.GetObject("$this.Icon");
+            MaximumSize = new Size(380, 550);
+            MinimumSize = new Size(380, 550);
             Name = "CalculatorForm";
             RightToLeft = RightToLeft.No;
             Text = "Калькулятор";

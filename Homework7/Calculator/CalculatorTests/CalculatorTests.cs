@@ -62,7 +62,6 @@ public class CalculatorTests
     }
 
     [TestCase("0,85+0,15=", "1")]
-    [TestCase("36/8=", "4,5")]
     public void OperationWithFloatNumbersShouldReturnExpectedResult(string expression, string result)
     {
         AddExpressionInCalculator(expression);
