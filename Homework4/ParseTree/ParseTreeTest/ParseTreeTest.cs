@@ -54,4 +54,17 @@ public class ParseTreeTest
     {
         Assert.Throws<ArgumentException>(() => new ParseTree(expression));
     }
+
+    [Test]
+    public void TryingToCreateParseTreeWithNullOrEmptyShouldThrowException()
+    {
+        var emptyString = "";
+        string? nullString = null;
+
+        Assert.Multiple(() =>
+        {
+            Assert.Throws<ArgumentNullException>(() => new ParseTree(nullString!));
+            Assert.Throws<ArgumentException>(() => new ParseTree(emptyString));
+        });
+    }
 }
