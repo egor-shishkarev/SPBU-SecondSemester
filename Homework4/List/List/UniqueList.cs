@@ -1,7 +1,17 @@
 ﻿namespace Lists;
 
+/// <summary>
+/// Class descendant List with non-repeating values.
+/// </summary>
+/// <typeparam name="T">Type of element in list. Should be IComparable.</typeparam>
 public class UniqueList<T>: List<T> where T: IComparable
 {
+    /// <summary>
+    /// Special method for UniqueList to change values. Additionally checks if the element with such value already exists in the list.
+    /// </summary>
+    /// <param name="index">Index in list.</param>
+    /// <param name="newValue">New value of node.</param>
+    /// <exception cref="InvalidOperationElementAlreadyExistException">Element with such value already exist in list.</exception>
     public override void ChangeValue(int index, T newValue)
     {
         var currentNode = Head;
@@ -16,6 +26,12 @@ public class UniqueList<T>: List<T> where T: IComparable
         base.ChangeValue(index, newValue);
     }
 
+    /// <summary>
+    /// Special method for UniqueList to add new elements in list by index. Additionally checks if the element with such value already exist in the list.
+    /// </summary>
+    /// <param name="index">Index in list.</param>
+    /// <param name="value">Value of new node.</param>
+    /// <exception cref="InvalidOperationElementAlreadyExistException">Element with such value already exist in list.</exception>
     public override void Add(int index, T value)
     {
         if (Contains(value))
@@ -25,6 +41,11 @@ public class UniqueList<T>: List<T> where T: IComparable
         base.Add(index, value);
     }
 
+    /// <summary>
+    /// Special method for UniqueList to add new elements in the end of list. Additionally checks if the element with such value already exist in the list.
+    /// </summary>
+    /// <param name="value">Value of new node.</param>
+    /// <exception cref="InvalidOperationElementAlreadyExistException">Element with such value already exist in list.</exception>
     public override void Add(T value)
     {
         if (Contains(value))
@@ -34,6 +55,11 @@ public class UniqueList<T>: List<T> where T: IComparable
         base.Add(value);
     }
 
+    /// <summary>
+    /// Special method for UniqueList to remove elements by value. 
+    /// </summary>
+    /// <param name="value">Node's value which we want to remove.</param>
+    /// <exception cref="InvalidOperationRemoveNonexistentElementException">Element with such value already exist in list.</exception>
     public void RemoveByValue(T value)
     {
         if (Count == 0)
