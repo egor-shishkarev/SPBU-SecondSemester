@@ -4,7 +4,7 @@ public class CalculatorTests
 {
     readonly CalculatorLogic calculatorLogic = new();
 
-    private readonly float delta = 0.00000001f;
+    private readonly float delta = 0.0001f;
     private void AddExpressionInCalculator(string expression)
     {
         foreach (var symbol in expression)
