@@ -7,7 +7,7 @@ namespace Calculator
         {
             InitializeComponent();
 
-            outputWindow.DataBindings.Add("Text", calculatorLogic, "DisplayNumber", true, DataSourceUpdateMode.OnPropertyChanged);
+            OutputWindow.DataBindings.Add("Text", calculatorLogic, "DisplayNumber", true, DataSourceUpdateMode.OnPropertyChanged);
         }
 
         private void Form1_Load(object sender, EventArgs e)
