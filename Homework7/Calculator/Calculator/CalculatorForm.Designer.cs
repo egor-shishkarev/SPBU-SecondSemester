@@ -206,7 +206,7 @@
             // DeleteButton
             // 
             DeleteButton.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            DeleteButton.Location = new Point(225, 34);
+            DeleteButton.Location = new Point(270, 156);
             DeleteButton.Name = "DeleteButton";
             DeleteButton.Size = new Size(80, 65);
             DeleteButton.TabIndex = 11;
