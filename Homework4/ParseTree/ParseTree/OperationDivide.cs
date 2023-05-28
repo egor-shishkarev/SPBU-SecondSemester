@@ -9,7 +9,7 @@ public class OperationDivide: Operation
     /// </summary>
     /// <param name="leftOperand">Left operand in parse tree.</param>
     /// <param name="rightOperand">Right operand in parse tree.</param>
-    public OperationDivide(Operand leftOperand, Operand rightOperand)
+    public OperationDivide(IOperand leftOperand, IOperand rightOperand)
         :base("/", leftOperand, rightOperand)
     {
     }

@@ -7,7 +7,7 @@ public class OperationMultiply: Operation
     /// </summary>
     /// <param name="leftOperand">Left operand in parse tree.</param>
     /// <param name="rightOperand">Right operand in parse tree.</param>
-    public OperationMultiply(Operand leftOperand, Operand rightOperand)
+    public OperationMultiply(IOperand leftOperand, IOperand rightOperand)
         :base("*", leftOperand, rightOperand)
     {
     }

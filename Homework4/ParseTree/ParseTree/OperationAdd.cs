@@ -7,7 +7,7 @@ public class OperationAdd: Operation
     /// </summary>
     /// <param name="leftOperand">Left operand in parse tree.</param>
     /// <param name="rightOperand">Right operand in parse tree.</param>
-    public OperationAdd(Operand leftOperand, Operand rightOperand)
+    public OperationAdd(IOperand leftOperand, IOperand rightOperand)
         :base("+", leftOperand, rightOperand)
     { 
     }

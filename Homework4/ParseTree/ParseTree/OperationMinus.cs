@@ -7,7 +7,7 @@ public class OperationMinus: Operation
     /// </summary>
     /// <param name="leftOperand">Left operand in parse tree.</param>
     /// <param name="rightOperand">Right operand in parse tree.</param>
-    public OperationMinus(Operand leftOperand, Operand rightOperand)
+    public OperationMinus(IOperand leftOperand, IOperand rightOperand)
         :base("-", leftOperand, rightOperand)
     {
     }

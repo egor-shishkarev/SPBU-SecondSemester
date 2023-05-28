@@ -1,5 +1,8 @@
 ﻿namespace Trees;
 
+/// <summary>
+/// Interface for all operands in parse tree.
+/// </summary>
 public interface IOperand
 {
     /// <summary>
