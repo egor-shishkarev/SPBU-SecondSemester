@@ -33,6 +33,24 @@ public class MapFilterFoldTests
     }
 
     [Test]
+    public void MapWithNullListShouldThrowArgumentNullException()
+    {
+        List<int>? listOfElements = null;
+        var function = (int x) => x + 1;
+
+        Assert.Throws<ArgumentNullException>(() => CustomMethods.Map(listOfElements!, function));
+    }
+
+    [Test]
+    public void MapWithNullFunctionShouldThrowArgumentNullException()
+    {
+        var listOfElements = new List<int>() { 1, 2, 3 };
+        Func<int, int>? function = null;
+
+        Assert.Throws<ArgumentNullException>(() => CustomMethods.Map(listOfElements, function!));
+    }
+
+    [Test]
     public void FilterWithIntFunctionShouldReturnExpectedResult()
     {
         var listOfElements = new List<int> { 4, -4, 2, 0, -5, -1 };
@@ -59,6 +77,25 @@ public class MapFilterFoldTests
         var function = (int x) => x % 7 == 0;
 
         Assert.That(CustomMethods.Filter(listOfElements, function), Is.EqualTo(new List<int>()));
+    }
+
+
+    [Test]
+    public void FilterWithNullListShouldThrowArgumentNullException()
+    {
+        List<int>? listOfElements = null;
+        var function = (int x) => x % 7 == 0;
+
+        Assert.Throws<ArgumentNullException>(() => CustomMethods.Filter(listOfElements!, function));
+    }
+
+    [Test]
+    public void FilterWithNullFunctionShouldThrowArgumentNullException()
+    {
+        var listOfElements = new List<int>() { 1, 2, 3 };
+        Func<int, bool>? function = null;
+
+        Assert.Throws<ArgumentNullException>(() => CustomMethods.Filter(listOfElements, function!));
     }
 
     [Test]
@@ -91,5 +128,25 @@ public class MapFilterFoldTests
         var function = (int acc, int x) => acc + x;
 
         Assert.That(CustomMethods.Fold(listOfElements, accumulator, function), Is.EqualTo(accumulator));
+    }
+
+    [Test]
+    public void FoldWithNullListShouldThrowArgumentNullException()
+    {
+        List<int>? listOfElements = null;
+        var accumulator = 2;
+        var function = (int acc, int x) => acc + x;
+
+        Assert.Throws<ArgumentNullException>(() => CustomMethods.Fold(listOfElements!, accumulator, function));
+    }
+
+    [Test]
+    public void FoldWithNullFunctionShouldThrowArgumentNullException()
+    {
+        var listOfElements = new List<int>() { 1, 2, 3 };
+        var accumulator = 2;
+        Func<int, int, int>? function = null;
+
+        Assert.Throws<ArgumentNullException>(() => CustomMethods.Fold(listOfElements, accumulator, function!));
     }
 }
