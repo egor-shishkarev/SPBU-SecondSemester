@@ -244,7 +244,7 @@
             DotButton.Name = "DotButton";
             DotButton.Size = new Size(80, 80);
             DotButton.TabIndex = 10;
-            DotButton.Text = ".";
+            DotButton.Text = ",";
             DotButton.UseVisualStyleBackColor = true;
             DotButton.Click += NumberOrOperationClick;
             // 

@@ -2,8 +2,9 @@ namespace Calculator.Tests;
 
 public class CalculatorTests
 {
-    readonly CalculatorLogic calculatorLogic = new CalculatorLogic();
+    readonly CalculatorLogic calculatorLogic = new();
 
+    private readonly float delta = 0.00000001f;
     private void AddExpressionInCalculator(string expression)
     {
         foreach (var symbol in expression)
@@ -59,5 +60,14 @@ public class CalculatorTests
         AddExpressionInCalculator(expression);
 
         Assert.That(calculatorLogic.DisplayNumber, Is.EqualTo(result));
+    }
+
+    [TestCase("0,85+0,15=", 1)]
+    public void OperationWithFloatNumbersShouldReturnExpectedResult(string expression, float result)
+    {
+        AddExpressionInCalculator(expression);
+        float.TryParse(calculatorLogic.DisplayNumber, out float number);
+
+        Assert.That(Math.Abs(number - result), Is.LessThan(delta));
     }
 }

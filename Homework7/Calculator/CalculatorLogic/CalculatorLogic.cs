@@ -1,29 +1,56 @@
-﻿using System.ComponentModel;
+﻿namespace Calculator;
 
-namespace Calculator;
+using System.ComponentModel;
 
-public class CalculatorLogic: INotifyPropertyChanged
+public class CalculatorLogic : INotifyPropertyChanged
 {
+    /// <summary>
+    /// Current display number.
+    /// </summary>
     private string displayNumber = "0";
 
+    /// <summary>
+    /// Current number in memory.
+    /// </summary>
     private string numberInMemory = "0";
 
+    /// <summary>
+    /// Current operation sign.
+    /// </summary>
     private string operationSign = "";
 
+    /// <summary>
+    /// Constant for division.
+    /// </summary>
     private readonly float delta = 0.00000001f;
 
+    /// <summary>
+    /// Current state of calculator.
+    /// </summary>
     private State currentState = State.Number;
+
+    /// <summary>
+    /// States for calculator.
+    /// </summary>
     enum State
     {
         Number,
+        Dot,
         NumberAfterDot,
         Operation,
         Equality,
         Error
     }
 
+    /// <summary>
+    /// Event of changing displayNumber.
+    /// </summary>
     public event PropertyChangedEventHandler? PropertyChanged;
 
+    /// <summary>
+    /// Main method to add symbols in calculators window.
+    /// </summary>
+    /// <param name="symbol">Symbol which we want to add.</param>
     public void AddElement(char symbol)
     {
         switch (currentState)
@@ -48,35 +75,67 @@ public class CalculatorLogic: INotifyPropertyChanged
                 }
                 if (symbol == '=' && operationSign != "")
                 {
-                    var tempNumber = DisplayNumber;
-                    DisplayNumber = Calculate(DisplayNumber, numberInMemory, operationSign).ToString();
-                    numberInMemory = tempNumber;
-                    currentState = State.Number;
+                    try
+                    {
+                        var tempNumber = DisplayNumber;
+                        DisplayNumber = Calculate(numberInMemory, DisplayNumber, operationSign).ToString();
+                        numberInMemory = tempNumber;
+                    } 
+                    catch (DivideByZeroException)
+                    {
+                        ClearDisplay();
+                        DisplayNumber = "Error";
+                        currentState = State.Error;
+                        break;
+                    }
+                    currentState = State.Equality;
                 }
                 if (IsOperation(symbol))
                 {
-                    if (operationSign == "")
+                    try
                     {
-                        operationSign = symbol.ToString();
-                        numberInMemory = DisplayNumber;
+                        if (operationSign == "")
+                        {
+                            operationSign = symbol.ToString();
+                            numberInMemory = DisplayNumber;
+                        }
+                        else
+                        {
+                            var tempNumber = DisplayNumber;
+                            DisplayNumber = Calculate(numberInMemory, DisplayNumber, operationSign).ToString();
+                            numberInMemory = tempNumber;
+                            operationSign = symbol.ToString();
+                        }
+                        currentState = State.Operation;
+                        break;
                     }
-                    else
+                    catch (DivideByZeroException)
                     {
-                        DisplayNumber = Calculate(DisplayNumber, numberInMemory, operationSign).ToString();
-                        operationSign = symbol.ToString();
+                        ClearDisplay();
+                        DisplayNumber = "Error";
+                        currentState = State.Error;
                     }
-                    currentState = State.Operation;
-                    break;
+                    
                 }
-                if (symbol == '.')
+                if (symbol == ',')
                 {
-                    currentState = State.NumberAfterDot;
+                    currentState = State.Dot;
                     if (DisplayNumber == "Error")
                     {
                         DisplayNumber = "0,";
                         break;
                     }
                     DisplayNumber += ",";
+                    break;
+                }
+                break;
+            }
+            case State.Dot:
+            {
+                if (char.IsDigit(symbol))
+                {
+                    DisplayNumber += symbol;
+                    currentState = State.NumberAfterDot;
                     break;
                 }
                 break;
@@ -90,29 +149,64 @@ public class CalculatorLogic: INotifyPropertyChanged
                 }
                 if (symbol == '=' && operationSign != "")
                 {
-                    DisplayNumber = Calculate(DisplayNumber, numberInMemory, operationSign).ToString();
-                    currentState = State.Number;
+                    try
+                    {
+                        var tempNumber = DisplayNumber;
+                        DisplayNumber = Calculate(numberInMemory, DisplayNumber, operationSign).ToString();
+                        numberInMemory = tempNumber;
+                        currentState = State.Operation;
+                    } 
+                    catch (DivideByZeroException) 
+                    {
+                        ClearDisplay();
+                        DisplayNumber = "Error";
+                        currentState = State.Error;
+                    }
                     break;
                 }
-                if (IsOperation(symbol)) // Тут что?
+                if (IsOperation(symbol))
                 {
-                    if (operationSign == "")
+                    try
                     {
-                        operationSign = symbol.ToString();
-                        numberInMemory = DisplayNumber;
+                        if (operationSign == "")
+                        {
+                            operationSign = symbol.ToString();
+                            numberInMemory = DisplayNumber;
+                        }
+                        else
+                        {
+                            var tempNumber = DisplayNumber;
+                            DisplayNumber = Calculate(numberInMemory, DisplayNumber, operationSign).ToString();
+                            numberInMemory = tempNumber;
+                            operationSign = symbol.ToString();
+                        }
+                        currentState = State.Operation;
                     }
-                    else
+                    catch (DivideByZeroException)
                     {
-                        DisplayNumber = Calculate(DisplayNumber, numberInMemory, operationSign).ToString();
-                        operationSign = symbol.ToString();
+                        ClearDisplay();
+                        DisplayNumber = "Error";
+                        currentState = State.Error;
+                        break;
                     }
-                    currentState = State.Operation;
                     break;
                 }
                 if (symbol == '=' && operationSign != "")
                 {
-                    DisplayNumber = Calculate(DisplayNumber, numberInMemory, operationSign).ToString();
-                    currentState = State.Number;
+                    try
+                    {
+                        var tempNumber = DisplayNumber;
+                        DisplayNumber = Calculate(numberInMemory, DisplayNumber, operationSign).ToString();
+                        numberInMemory = tempNumber;
+                    }
+                    catch (DivideByZeroException)
+                    {
+                        ClearDisplay();
+                        DisplayNumber = "Error";
+                        currentState = State.Error;
+                        break;
+                    }
+                    currentState = State.Equality;
                     break;
                 }
                 break;
@@ -135,7 +229,7 @@ public class CalculatorLogic: INotifyPropertyChanged
                     {
                         try
                         {
-                            DisplayNumber = Calculate(DisplayNumber, numberInMemory, operationSign).ToString();
+                            DisplayNumber = Calculate(numberInMemory, DisplayNumber, operationSign).ToString();
                         } 
                         catch (DivideByZeroException)
                         {
@@ -144,7 +238,6 @@ public class CalculatorLogic: INotifyPropertyChanged
                             DisplayNumber = "Error";
                             break;
                         }
-                        currentState = State.Equality;
                     }
                     break;
                 }
@@ -159,8 +252,7 @@ public class CalculatorLogic: INotifyPropertyChanged
                     }
                     if (IsOperation(symbol))
                     {
-                        operationSign = symbol.ToString();
-                        //currentState = State.Operation; 
+                        operationSign = symbol.ToString(); 
                         break;
                     }
                     if (symbol == '=')
@@ -191,14 +283,25 @@ public class CalculatorLogic: INotifyPropertyChanged
                 }
         }
     }
-    
+
+
+    /// <summary>
+    /// Method to calculate two numbers, represented as a string.
+    /// </summary>
+    /// <param name="numberOnDisplay">Current number on display.</param>
+    /// <param name="numberInMemory">Saved number for future operations.</param>
+    /// <param name="operationSign">Sign of the operation.</param>
+    /// <returns>Float number - result of operation.</returns>
+    /// <exception cref="ArgumentException">String was not a float number.</exception>
+    /// <exception cref="DivideByZeroException">Division by zero.</exception>
+    /// <exception cref="NotSupportedException">Operation not in -, +, *, /</exception>
     private float Calculate(string numberOnDisplay, string numberInMemory, string operationSign)
     {
-        if (!float.TryParse(numberInMemory, out float firstNumber))
+        if (!float.TryParse(numberOnDisplay, out float firstNumber))
         {
             throw new ArgumentException("Not a number!");
         }
-        if (!float.TryParse(numberOnDisplay, out float secondNumber))
+        if (!float.TryParse(numberInMemory, out float secondNumber))
         {
             throw new ArgumentException("Not a number!");
         }
@@ -234,6 +337,9 @@ public class CalculatorLogic: INotifyPropertyChanged
         }
     }
 
+    /// <summary>
+    /// The method by which we pass the number to the output.
+    /// </summary>
     public string DisplayNumber
     {
         get
@@ -254,11 +360,16 @@ public class CalculatorLogic: INotifyPropertyChanged
     public void ClearDisplay()
     {
         DisplayNumber = "0";
-        numberInMemory = "";
+        numberInMemory = "0";
         operationSign = "";
         currentState = State.Number;
     }
 
+    /// <summary>
+    /// Additional method to check if 
+    /// </summary>
+    /// <param name="symbol">Symbol which we want to check.</param>
+    /// <returns>true - if symbol in -, +, *, /; otherwise - false;</returns>
     private bool IsOperation(char symbol)
     {
         return symbol == '-' || symbol == '+' || symbol == '*' || symbol == '/';
