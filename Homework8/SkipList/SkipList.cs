@@ -1,6 +1,7 @@
 ﻿namespace SkipList;
 
 using System.Collections;
+using System.Xml.Linq;
 
 public class SkipList<T>: IList<T>
     where T: IComparable
@@ -227,7 +228,6 @@ public class SkipList<T>: IList<T>
         }
 
         var listOfNodes = new List<Node>();
-        var isEmpty = Head.Next[0] == Tail;
         for (int i = 0; i <= heightOfNewNode; ++i)
         {
             listOfNodes.Add(new Node(item));
@@ -236,29 +236,23 @@ public class SkipList<T>: IList<T>
                 listOfNodes[i - 1].Next[1] = listOfNodes[i];
             }
         }
-
-        for (int i = 0; i < heightOfNewNode - currentHeightOfSkipList; ++i)
-        {
-            listOfNodes[i].Next[0] = Tail;
-            if (Head.Next[0] == Tail)
-            {
-                Head.Next[0] = listOfNodes[0];
-                continue;
-            }
-            Head.Next.Add(listOfNodes[i]);
-        }
-        if (isEmpty)
-        {
-            return;
-        }
         Node currentNode = Head;
 
-        var newNode = listOfNodes[currentHeightOfSkipList > heightOfNewNode ? 0 : heightOfNewNode - currentHeightOfSkipList];
+        var newNode = listOfNodes[0];
         while (true)
         {
             if (currentNode == Head)
             {
-                if (item.CompareTo(currentNode.Next[currentHeightOfSkipList].Value) < 0)
+                if (heightOfNewNode >= currentHeightOfSkipList)
+                {
+                    for (int i = currentHeightOfSkipList + 1; i <= heightOfNewNode; ++i)
+                    {
+                        var node = listOfNodes[i];
+                        Head.Next.Add(node);
+                        node.Next[0] = Tail;
+                    }
+                }
+                if (item.CompareTo(currentNode.Next[currentHeightOfSkipList].Value) < 0 || currentNode.Next[0] == Tail)
                 {
                     var tempNode = currentNode.Next[currentHeightOfSkipList];
                     currentNode.Next[currentHeightOfSkipList] = newNode;
