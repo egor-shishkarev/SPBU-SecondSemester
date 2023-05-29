@@ -1,26 +1,35 @@
 ﻿namespace SkipList;
 
 using System.Collections;
-using System.Xml.Linq;
 
-public class SkipList<T>: IList<T>
-    where T: IComparable
+/// <summary>
+/// Special list, where operation of Remove, Add, Contains are O(logN).
+/// </summary>
+/// <typeparam name="T">Type of elements in list.</typeparam>
+public class SkipList<T> : IList<T> where T : IComparable
 {
-    private Node Head = new(default!, new List<Node>() { default! });
+    /// <summary>
+    /// Main node in Skip List.
+    /// </summary>
+    private Node Head = new(default!, new Node[1]);
 
-    private readonly Node Tail = new(default!, new List<Node>());
+    /// <summary>
+    /// End node in Skip List.
+    /// </summary>
+    private readonly Node Tail = new(default!, Array.Empty<Node>());
 
+    /// <summary>
+    /// Count of elements in list.
+    /// </summary>
     public int Count { get; private set; }
 
+    /// <summary>
+    /// A property that indicates whether the structure can be changed after creation.
+    /// </summary>
     public bool IsReadOnly => false;
 
     /// <summary>
-    /// Max count of levels in skip list.
-    /// </summary>
-    private readonly int maxHeight = 3;
-
-    /// <summary>
-    /// Random function for adding elements to the following levels.
+    /// Random function for adding elements to the up levels.
     /// </summary>
     private readonly Random random = new();
 
@@ -45,51 +54,54 @@ public class SkipList<T>: IList<T>
     {
         if (maxHeight < 0)
         {
-            throw new ArgumentOutOfRangeException("Count of levels less than zero is not possible!");
+            throw new ArgumentOutOfRangeException(nameof(maxHeight));
         }
         Head.Next[0] = Tail;
-        this.maxHeight = maxHeight;
     }
 
-    private class Node // Done
-    { 
+    /// <summary>
+    /// Element in Skip List.
+    /// </summary>
+    private class Node
+    {
         /// <summary>
         /// Value of Node.
         /// </summary>
         public T Value { get; set; }
 
         /// <summary>
-        /// Array of nodes in environment.
+        /// Links to the following nodes at the i-th level.
         /// </summary>
-        public List<Node> Next { get; set; }
-        
+        public Node[] Next { get; set; }
+
         /// <summary>
-        /// Constructor for node, where next nodes are known.
+        /// Constructor for node.
         /// </summary>
         /// <param name="item">Value of Node.</param>
-        /// <param name="next">Nodes in environment.</param>
-        public Node(T item, List<Node> next)
+        /// <param name="next">Following nodes.</param>
+        public Node(T item, Node[] next)
         {
             Value = item;
             Next = next;
         }
+    }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="item"></param>
-        public Node(T item)
-        {
-            Value = item;
-            Next = new List<Node>() { default!, default! };
-        }
-    } 
-
+    /// <summary>
+    /// Creates new enumerator.
+    /// </summary>
+    /// <returns></returns>
     public IEnumerator<T> GetEnumerator() => new Enumerator(this);
 
+    /// <summary>
+    /// Return enumerator.
+    /// </summary>
+    /// <returns></returns>
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-    public class Enumerator: IEnumerator<T>
+    /// <summary>
+    /// Enumerator for Skip List.
+    /// </summary>
+    public class Enumerator : IEnumerator<T>
     {
         Node currentNode;
 
@@ -148,7 +160,14 @@ public class SkipList<T>: IList<T>
         }
     }
 
-    public T this[int index] // Done
+    /// <summary>
+    /// Method to return element's value by construction  - SkipList[index].
+    /// </summary>
+    /// <param name="index">Index of element, which value we want to return.</param>
+    /// <returns>Value of element.</returns>
+    /// <exception cref="ArgumentOutOfRangeException">Index was out of range.</exception>
+    /// <exception cref="NotSupportedException">Can't change values in Skip List.</exception>
+    public T this[int index]
     {
         get
         {
@@ -171,7 +190,13 @@ public class SkipList<T>: IList<T>
         }
     }
 
-    public int IndexOf(T item) // Done
+    /// <summary>
+    /// Find index of element in Skip List.
+    /// </summary>
+    /// <param name="item">Value of element, which index we want to find.</param>
+    /// <returns>Index of element in Skip List.</returns>
+    /// <exception cref="ArgumentNullException">Item was null.</exception>
+    public int IndexOf(T item)
     {
         if (item == null)
         {
@@ -189,187 +214,94 @@ public class SkipList<T>: IList<T>
         return -1;
     }
 
-    public void Insert(int index, T item) // Done
+    /// <summary>
+    /// Not supported operation in Skip List.
+    /// </summary>
+    /// <param name="index">Index.</param>
+    /// <param name="item">Value.</param>
+    /// <exception cref="NotSupportedException">Not supported operation in Skip List.</exception>
+    public void Insert(int index, T item)
     {
         throw new NotSupportedException("In this type of list, insertion by index is not provided!");
     }
 
-    public void RemoveAt(int index) // Done
+    /// <summary>
+    /// Remove element from Skip List by index.
+    /// </summary>
+    /// <param name="index">Index of element, which we want to remove.</param>
+    public void RemoveAt(int index)
     {
-        if (index < 0 || index >= Count)
-        {
-            throw new ArgumentOutOfRangeException(nameof(index));
-        }
-        var currentNode = Head;
-        for (int i = 0; i < index; ++i)
-        {
-            currentNode = currentNode.Next[0];
-        }
-        currentNode.Next[0] = currentNode.Next[0].Next[0];
-        ++currentVersionOfList;
-        --Count;
-        return;
+        Remove(this[index]);
     }
 
-    public void Add(T item) // + Moving node to a new Level.
-    { 
+    /// <summary>
+    /// Method, which add new element to Skip List.
+    /// </summary>
+    /// <param name="item">Value, which we want to add in Skip List.</param>
+    /// <exception cref="ArgumentNullException">Item was null.</exception>
+    public void Add(T item)
+    {
         if (item == null)
         {
             throw new ArgumentNullException(nameof(item));
         }
 
-        int heightOfNewNode = 0;
+        var heightOfNewNode = 1;
 
-        int currentHeightOfSkipList = Head.Next.Count - 1;
-
-        while (RandomMoving() && heightOfNewNode < maxHeight)
+        while (heightOfNewNode <= Head.Next.Length && RandomMoving())
         {
             ++heightOfNewNode;
         }
 
-        var listOfNodes = new List<Node>();
-        for (int i = 0; i <= heightOfNewNode; ++i)
+        var newNode = new Node(item, new Node[heightOfNewNode]);
+
+        var previousNodesOnEachLevel = GetPreviousNodesOnEachLevel(item);
+
+        for (int i = 0; i < heightOfNewNode && i < Head.Next.Length; ++i)
         {
-            listOfNodes.Add(new Node(item));
-            if (i - 1 >= 0)
-            {
-                listOfNodes[i - 1].Next[1] = listOfNodes[i];
-            }
+            newNode.Next[i] = previousNodesOnEachLevel[i].Next[i];
+            previousNodesOnEachLevel[i].Next[i] = newNode;
         }
-        Node currentNode = Head;
 
-        var newNode = listOfNodes[0];
-        while (true)
+        if (heightOfNewNode > Head.Next.Length)
         {
-            if (currentNode == Head)
-            {
-                if (heightOfNewNode >= currentHeightOfSkipList)
-                {
-                    for (int i = currentHeightOfSkipList + 1; i <= heightOfNewNode; ++i)
-                    {
-                        var node = listOfNodes[i];
-                        Head.Next.Add(node);
-                        node.Next[0] = Tail;
-                    }
-                }
-                if (item.CompareTo(currentNode.Next[currentHeightOfSkipList].Value) < 0 || currentNode.Next[0] == Tail)
-                {
-                    var tempNode = currentNode.Next[currentHeightOfSkipList];
-                    currentNode.Next[currentHeightOfSkipList] = newNode;
-                    newNode.Next[currentHeightOfSkipList] = tempNode;
-                    if (currentNode.Next.Count == 1 || currentNode.Next[1] == default)
-                    {
-                        break;
-                    }
-                    if (currentHeightOfSkipList == 0)
-                    {
-                        break;
-                    }
-                    currentNode = currentNode.Next[currentHeightOfSkipList - 1];
-                    newNode = listOfNodes[listOfNodes.IndexOf(newNode) + 1];
-                }
-                if (currentNode.Next[currentHeightOfSkipList] != Tail)
-                {
-                    currentNode = currentNode.Next[currentHeightOfSkipList];
-                    continue;
-                }
-                else
-                {
-                    --currentHeightOfSkipList;
-                    currentNode = currentNode.Next[currentHeightOfSkipList];
-                    continue;
-                }
-            }
-            else
-            {
-                if ((item.CompareTo(currentNode.Value) > 0 && currentNode.Next[0] == Tail) ||
-                (item.CompareTo(currentNode.Value) > 0 && item.CompareTo(currentNode.Next[0].Value) < 0) ||
-                currentNode == Head && item.CompareTo(currentNode.Next[0].Value) < 0 ||
-                currentNode == Head && currentNode.Next[0] == Tail)
-                {
-                    var tempNode = currentNode.Next[0];
-                    currentNode.Next[0] = newNode;
-                    newNode.Next[0] = tempNode;
-                    if (currentNode.Next.Count == 1 || currentNode.Next[1] == default)
-                    {
-                        break;
-                    }
-                    if (currentHeightOfSkipList == 0)
-                    {
-                        break;
-                    }
-                    currentNode = currentNode.Next[1];
-                    if (listOfNodes.IndexOf(newNode) + 1 >= listOfNodes.Count - 1)
-                    {
-                        break;
-                    }
-                    newNode = listOfNodes[listOfNodes.IndexOf(newNode) + 1];
-                }
-                else
-                {
-                    if (currentNode.Next[0] != Tail)
-                    {
-                        currentNode = currentNode.Next[0];
-                        continue;
-                    }
-                    else
-                    {
-                        currentNode = currentNode.Next[1];
-                        currentHeightOfSkipList = 0;
-                        continue;
-                    }
-                }
-            }
-
-
-            
+            var newHead = new Node(default!, new Node[heightOfNewNode]);
+            Head.Next.CopyTo(newHead.Next, 0);
+            newHead.Next[heightOfNewNode - 1] = newNode;
+            Head = newHead;
+            newNode.Next[heightOfNewNode - 1] = Tail;
         }
         ++currentVersionOfList;
         ++Count;
     }
 
-    public void Clear() // Done
+    /// <summary>
+    /// Clears Skip List.
+    /// </summary>
+    public void Clear()
     {
         ++currentVersionOfList;
         Count = 0;
-        Head = new Node(default!, new List<Node>() { default! });
+        Head = new Node(default!, new Node[1]);
         Head.Next[0] = Tail;
     }
 
     public bool Contains(T item)
     {
-        if (Head.Next[0] == default)
-        {
-            return false;
-        }
+        var previousNodes = GetPreviousNodesOnEachLevel(item);
 
-        Node currentNode = Head;
-
-        int currentHeightOfNode = currentNode.Next.Count - 1;
-
-        while (true)
-        {
-            if (item.CompareTo(currentNode.Value) == 0)
-            {
-                return true;
-            }
-            if ((item.CompareTo(currentNode.Value) > 0 && currentNode.Next[currentHeightOfNode] == Tail) || (item.CompareTo(currentNode.Value) > 0 && item.CompareTo(currentNode.Next[currentHeightOfNode].Value) < 0))
-            {
-                if (currentHeightOfNode == 0)
-                {
-                    return false;
-                }
-                --currentHeightOfNode;
-                currentNode = currentNode.Next[currentHeightOfNode];
-            }
-            else
-            {
-                currentNode = currentNode.Next[currentHeightOfNode];
-            }
-        }
+        return previousNodes[0].Next[0] != Tail && item.CompareTo(previousNodes[0].Next[0].Value) == 0;
     }
 
-    public void CopyTo(T[] array, int arrayIndex) // Done
+    /// <summary>
+    /// Copies Skip List to array starting from the specified index.
+    /// </summary>
+    /// <param name="array">Array where we want copy our Skip List.</param>
+    /// <param name="arrayIndex">The index from which the Skip List will start in the array.</param>
+    /// <exception cref="ArgumentNullException">Arrat was null.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">Index was out of range.</exception>
+    /// <exception cref="ArgumentException">Not enough space in array.</exception>
+    public void CopyTo(T[] array, int arrayIndex)
     {
         if (array == null)
         {
@@ -383,7 +315,6 @@ public class SkipList<T>: IList<T>
         {
             throw new ArgumentException("Not enough space in array!");
         }
-
         var currentNode = Head.Next[0];
         for (int i = 0; i < Count; ++i)
         {
@@ -392,14 +323,67 @@ public class SkipList<T>: IList<T>
         }
     }
 
+    /// <summary>
+    /// Removes an element from Skip List.
+    /// </summary>
+    /// <param name="item">Value of element, which we want to remove.</param>
+    /// <returns>True - if element contains in list; otherwise - false.</returns>
+    /// <exception cref="ArgumentNullException">Item was null.</exception>
     public bool Remove(T item)
     {
-        ++currentVersionOfList;
+        if (item == null)
+        {
+            throw new ArgumentNullException(nameof(item));
+        }
+        var previousNodesOnEachLevels = GetPreviousNodesOnEachLevel(item);
+        var nextNode = previousNodesOnEachLevels[0].Next[0];
+        if (nextNode != Tail && item.CompareTo(nextNode.Value) == 0)
+        {
+            for (int i = 0; i < nextNode.Next.Length; ++i)
+            {
+                previousNodesOnEachLevels[i].Next[i] = nextNode.Next[i];
+            }
+            --Count;
+            ++currentVersionOfList;
+            return true;
+        }
         return false;
     }
 
+    /// <summary>
+    /// An additional function to move an item to a new level.
+    /// </summary>
+    /// <returns></returns>
     private bool RandomMoving()
     {
         return random.NextDouble() > 0.5;
+    }
+
+    /// <summary>
+    /// Method to find previous nodes for every level in Skip List.
+    /// </summary>
+    /// <param name="item">Value for which we want to find previous nodes.</param>
+    /// <returns>Array of previous nodes.</returns>
+    /// <exception cref="ArgumentNullException">Item was null.</exception>
+    private Node[] GetPreviousNodesOnEachLevel(T item)
+    {
+        if (item == null)
+        {
+            throw new ArgumentNullException(nameof(item));
+        }
+        var currentNode = Head;
+        var previousNodes = new Node[Head.Next.Length];
+        for (var i = Head.Next.Length - 1; i >= 0; --i)
+        {
+            var isMore = item.CompareTo(currentNode.Next[i].Value) > 0;
+
+            while (isMore && currentNode.Next[i] != Tail)
+            {
+                currentNode = currentNode.Next[i];
+                isMore = item.CompareTo(currentNode.Next[i].Value) > 0;
+            }
+            previousNodes[i] = currentNode;
+        }
+        return previousNodes;
     }
 }
