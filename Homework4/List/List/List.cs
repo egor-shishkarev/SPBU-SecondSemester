@@ -1,13 +1,10 @@
-﻿using System.Xml.Linq;
-
-namespace Lists;
+﻿namespace Lists;
 
 /// <summary>
 /// Class of own list.
 /// </summary>
 /// <typeparam name="T">Type of element in list. Should be IComparable.</typeparam>
-public class List<T>
-    where T: IComparable
+public class List<T> where T : IComparable
 {
     /// <summary>
     /// Main node in list.
@@ -15,14 +12,9 @@ public class List<T>
     private protected Node? Head;
 
     /// <summary>
-    /// Count of elements in list.
-    /// </summary>
-    private protected int count = 0;
-
-    /// <summary>
     /// Method, which returns count of elements in list.
     /// </summary>
-    public int Count => count;
+    public int Count { get; private protected set; }
 
     /// <summary>
     /// Element in list.
@@ -76,6 +68,10 @@ public class List<T>
     /// <exception cref="ArgumentOutOfRangeException">Index was out of range.</exception>
     public virtual void ChangeValue(int index, T newValue)
     {
+        if (newValue == null)
+        {
+            throw new ArgumentNullException(nameof(newValue));
+        }
         if (index > Count - 1 || index < 0)
         {
             throw new ArgumentOutOfRangeException(nameof(index));
@@ -116,6 +112,10 @@ public class List<T>
     /// <exception cref="ArgumentOutOfRangeException">Index was out of range.</exception>
     public virtual void Add(int index, T value)
     {
+        if (value == null)
+        {
+            throw new ArgumentNullException(nameof(value));
+        }
         if (index > Count || index < 0)
         {
             throw new ArgumentOutOfRangeException(nameof(index));
@@ -124,7 +124,7 @@ public class List<T>
         if (index == 0)
         {
             Head = new Node(value, Head!);
-            ++count;
+            ++Count;
             return;
         }
         for (int i = 0; i < index - 1; ++i)
@@ -133,7 +133,7 @@ public class List<T>
         }
         var newNode = new Node(value, currentNode!.Next!);
         currentNode.Next = newNode;
-        ++count;
+        ++Count;
     }
 
     /// <summary>
@@ -142,10 +142,14 @@ public class List<T>
     /// <param name="value">Value of new node.</param>
     public virtual void Add(T value)
     {
+        if (value == null)
+        {
+            throw new ArgumentNullException(nameof(value));
+        }
         if (Count == 0)
         {
             Head = new Node(value, Head!);
-            ++count;
+            ++Count;
             return;
         }
         var currentNode = Head;
@@ -155,7 +159,7 @@ public class List<T>
         }
         var newNode = new Node(value, currentNode!.Next!);
         currentNode.Next = newNode;
-        ++count;
+        ++Count;
     }
 
     /// <summary>
@@ -172,7 +176,7 @@ public class List<T>
         if (index == 0)
         {
             Head = Head!.Next;
-            --count;
+            --Count;
             return;
         }
         var currentNode = Head;
@@ -181,7 +185,7 @@ public class List<T>
             currentNode = currentNode!.Next;
         }
         currentNode!.Next = currentNode.Next!.Next;
-        --count;
+        --Count;
     }
 
     /// <summary>
@@ -191,6 +195,10 @@ public class List<T>
     /// <returns>True - if element with such value exist in list; otherwise - false.</returns>
     public bool Contains(T value)
     {
+        if (value == null)
+        {
+            throw new ArgumentNullException(nameof(value));
+        }
         var currentNode = Head;
         for (int i = 0; i < Count; ++i)
         {

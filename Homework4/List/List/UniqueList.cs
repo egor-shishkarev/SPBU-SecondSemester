@@ -4,22 +4,26 @@
 /// Class descendant List with non-repeating values.
 /// </summary>
 /// <typeparam name="T">Type of element in list. Should be IComparable.</typeparam>
-public class UniqueList<T>: List<T> where T: IComparable
+public class UniqueList<T> : List<T> where T : IComparable
 {
     /// <summary>
     /// Special method for UniqueList to change values. Additionally checks if the element with such value already exists in the list.
     /// </summary>
     /// <param name="index">Index in list.</param>
     /// <param name="newValue">New value of node.</param>
-    /// <exception cref="InvalidOperationElementAlreadyExistException">Element with such value already exist in list.</exception>
+    /// <exception cref="InvalidOperationElementAlreadyExistsException">Element with such value already exist in list.</exception>
     public override void ChangeValue(int index, T newValue)
     {
+        if (newValue == null)
+        {
+            throw new ArgumentNullException(nameof(newValue));
+        }
         var currentNode = Head;
         for (int i = 0; i < Count; ++i)
         {
             if (i != index && newValue.CompareTo(currentNode!.Value) == 0)
             {
-                throw new InvalidOperationElementAlreadyExistException("Element already exist in list!");
+                throw new InvalidOperationElementAlreadyExistsException("Element already exist in list!");
             }
             currentNode = currentNode!.Next;
         }
@@ -31,12 +35,12 @@ public class UniqueList<T>: List<T> where T: IComparable
     /// </summary>
     /// <param name="index">Index in list.</param>
     /// <param name="value">Value of new node.</param>
-    /// <exception cref="InvalidOperationElementAlreadyExistException">Element with such value already exist in list.</exception>
+    /// <exception cref="InvalidOperationElementAlreadyExistsException">Element with such value already exist in list.</exception>
     public override void Add(int index, T value)
     {
         if (Contains(value))
         {
-            throw new InvalidOperationElementAlreadyExistException("Element already exist in list!");
+            throw new InvalidOperationElementAlreadyExistsException("Element already exist in list!");
         }
         base.Add(index, value);
     }
@@ -45,12 +49,12 @@ public class UniqueList<T>: List<T> where T: IComparable
     /// Special method for UniqueList to add new elements in the end of list. Additionally checks if the element with such value already exist in the list.
     /// </summary>
     /// <param name="value">Value of new node.</param>
-    /// <exception cref="InvalidOperationElementAlreadyExistException">Element with such value already exist in list.</exception>
+    /// <exception cref="InvalidOperationElementAlreadyExistsException">Element with such value already exist in list.</exception>
     public override void Add(T value)
     {
         if (Contains(value))
         {
-            throw new InvalidOperationElementAlreadyExistException("Element already exist in list!");
+            throw new InvalidOperationElementAlreadyExistsException("Element already exist in list!");
         }
         base.Add(value);
     }
@@ -64,7 +68,7 @@ public class UniqueList<T>: List<T> where T: IComparable
     {
         if (Count == 0)
         {
-            return;
+            throw new ArgumentException("You cannot delete an item from an empty list!");
         }
         if (value.CompareTo(Head!.Value) == 0)
         {
@@ -76,7 +80,7 @@ public class UniqueList<T>: List<T> where T: IComparable
             if (value.CompareTo(currentNode!.Next!.Value) == 0)
             {
                 currentNode.Next = currentNode.Next.Next;
-                --count;
+                --Count;
                 return;
             }
             currentNode = currentNode!.Next;
@@ -85,6 +89,6 @@ public class UniqueList<T>: List<T> where T: IComparable
         {
             throw new InvalidOperationRemoveNonexistentElementException(nameof(value));
         }
-        --count;
+        --Count;
     }
 }

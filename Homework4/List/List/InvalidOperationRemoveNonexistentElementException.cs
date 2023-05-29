@@ -1,6 +1,6 @@
 ﻿namespace Lists;
 
-public class InvalidOperationRemoveNonexistentElementException: InvalidOperationException
+public class InvalidOperationRemoveNonexistentElementException : InvalidOperationException
 {
     public InvalidOperationRemoveNonexistentElementException() { }
 

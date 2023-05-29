@@ -16,19 +16,19 @@ public class UniqueListTests
     }
 
     [Test]
-    public void TryingToAddAlreadyExistElementShouldThrowException()
+    public void TryingToAddAlreadyExistElementShouldThrowExceptionTest()
     {
-        Assert.Throws<InvalidOperationElementAlreadyExistException>(() => list.Add(1));
+        Assert.Throws<InvalidOperationElementAlreadyExistsException>(() => list.Add(1));
     }
 
     [Test]
-    public void TryingToChangeValueToAlreadyExistShouldThrowException()
+    public void TryingToChangeValueToAlreadyExistShouldThrowExceptionTest()
     {
-        Assert.Throws<InvalidOperationElementAlreadyExistException>(() => list.ChangeValue(0, 5));
+        Assert.Throws<InvalidOperationElementAlreadyExistsException>(() => list.ChangeValue(0, 5));
     }
 
     [Test]
-    public void TryingToRemoveElementWhichNotExistInListShouldThrowException()
+    public void TryingToRemoveElementWhichNotExistInListShouldThrowExceptionTest()
     {
         Assert.Throws<InvalidOperationRemoveNonexistentElementException>(() => list.RemoveByValue(6));
     }

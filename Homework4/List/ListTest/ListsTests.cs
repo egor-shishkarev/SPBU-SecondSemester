@@ -2,7 +2,7 @@
 
 public class ListsTests
 {
-    public static IEnumerable<TestCaseData> Lists
+    private static IEnumerable<TestCaseData> Lists
     {
         get
         {
@@ -13,9 +13,11 @@ public class ListsTests
 
             var output = new System.Collections.Generic.List<TestCaseData>();
 
+            const int countOfElements = 6;
+
             foreach (var item in lists)
             {
-                for (int i = 0; i < 6; ++i)
+                for (int i = 0; i < countOfElements; ++i)
                 {
                     item.Add(i);
                 }
@@ -42,7 +44,7 @@ public class ListsTests
     }
 
     [TestCaseSource(nameof(Lists))]
-    public void AddNewElementToListShouldWork(List<int> list)
+    public void AddNewElementToListShouldWorkTest(List<int> list)
     {
         list.Add(10);
         list.Add(7);
@@ -52,7 +54,7 @@ public class ListsTests
     }
 
     [TestCaseSource(nameof(Lists))]
-    public void AddNewElementByIndexShouldWork(List<int> list)
+    public void AddNewElementByIndexShouldWorkTest(List<int> list)
     {
         list.Add(0, 10);
         list.Add(3, 7);
@@ -62,7 +64,7 @@ public class ListsTests
     }
 
     [TestCaseSource(nameof(Lists))]
-    public void ChangeElementShouldWork(List<int> list)
+    public void ChangeElementShouldWorkTest(List<int> list)
     {
         list[0] = 10;
         list.ChangeValue(1, 7);
@@ -72,7 +74,7 @@ public class ListsTests
     }
 
     [TestCaseSource(nameof(Lists))]
-    public void RemoveByIndexShouldWork(List<int> list)
+    public void RemoveByIndexShouldWorkTest(List<int> list)
     {
         list.RemoveByIndex(0);
         list.RemoveByIndex(list.Count - 1);
@@ -82,7 +84,7 @@ public class ListsTests
     }
 
     [TestCaseSource(nameof(Lists))]
-    public void ContainsShouldWork(List<int> list)
+    public void ContainsShouldWorkTest(List<int> list)
     {
         Assert.Multiple(() =>
         {
@@ -92,19 +94,19 @@ public class ListsTests
     }
 
     [TestCaseSource(nameof(Lists))] 
-    public void TryingToAddNewELementByIndexOutOfRangeShouldThrowException(List<int> list)
+    public void TryingToAddNewELementByIndexOutOfRangeShouldThrowExceptionTest(List<int> list)
     {
         Assert.Throws<ArgumentOutOfRangeException>(() => list.Add(7, 10));
     }
 
     [TestCaseSource(nameof(Lists))]
-    public void TryingToRemoveElementByIndexOutOfRangeShouldThrowException(List<int> list)
+    public void TryingToRemoveElementByIndexOutOfRangeShouldThrowExceptionTest(List<int> list)
     {
         Assert.Throws<ArgumentOutOfRangeException>(() => list.RemoveByIndex(6));
     }
 
     [TestCaseSource(nameof(Lists))]
-    public void TryingToChangeElementByIndexOutOfRangeShouldThrowException(List<int> list)
+    public void TryingToChangeElementByIndexOutOfRangeShouldThrowExceptionTest(List<int> list)
     {
         Assert.Throws<ArgumentOutOfRangeException>(() => list.ChangeValue(6, 10));
     }
