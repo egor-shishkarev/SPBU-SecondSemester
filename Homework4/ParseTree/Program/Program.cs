@@ -11,16 +11,16 @@ while (string.IsNullOrEmpty(filePath))
 
 if (!File.Exists(filePath))
 {
-    Console.WriteLine("Такого файла не существует, проверьте правильность ввода пути и существование файла!");
-    return;
+    Console.Error.WriteLine("Такого файла не существует, проверьте правильность ввода пути и существование файла!");
+    return -1;
 }
 
 var expression = File.ReadAllText(filePath);
 
 if (string.IsNullOrEmpty(expression))
 {
-    Console.WriteLine("Файл был пуст, пожалуйста, проверьте содержание файла.");
-    return;
+    Console.Error.WriteLine("Файл был пуст, пожалуйста, проверьте содержание файла.");
+    return -1;
 }
 
 ParseTree parseTree;
@@ -31,7 +31,7 @@ try
 catch (ArgumentException e)
 {
     Console.WriteLine(e.Message);
-    return;
+    return -1;
 }
 
 double result;
@@ -42,8 +42,9 @@ try
 catch (ArgumentException e)
 {
     Console.WriteLine(e.Message);
-    return;
+    return -1;
 }
 Console.WriteLine($"Результат вычисления выражения по дереву - {result}");
 Console.WriteLine("Дерево разбора: ");
 parseTree.Print();
+return 0;

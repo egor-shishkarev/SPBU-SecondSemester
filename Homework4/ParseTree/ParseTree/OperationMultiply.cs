@@ -1,6 +1,6 @@
 ﻿namespace Trees;
 
-public class OperationMultiply: Operation
+public class OperationMultiply : Operation
 {
     /// <summary>
     /// Create a new instance of OperationMultiply class.
@@ -8,7 +8,7 @@ public class OperationMultiply: Operation
     /// <param name="leftOperand">Left operand in parse tree.</param>
     /// <param name="rightOperand">Right operand in parse tree.</param>
     public OperationMultiply(IOperand leftOperand, IOperand rightOperand)
-        :base("*", leftOperand, rightOperand)
+            :base("*", leftOperand, rightOperand)
     {
     }
 

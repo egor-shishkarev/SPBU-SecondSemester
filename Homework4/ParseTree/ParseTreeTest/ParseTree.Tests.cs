@@ -1,12 +1,13 @@
 namespace Trees.Test;
 
-public class ParseTreeTest
+public class ParseTreeTests
 {
     const double delta = 0.00001F;
 
     [TestCase("(* (+ 1 1) 2)", 4)]
     [TestCase("(/ (+ (* 7 4) (- 3 3)) (+ 1 (* 7 3)))", 1.27272F)]
-    public void ExpressionShouldCalculateRight(string expression, double expectedResult)
+    [TestCase("(- (/ (- (* (- 1 10) (/ 5 2)) (/ 100 5)) 10) 7)", -11.25F)]
+    public void ExpressionShouldCalculateRightTest(string expression, double expectedResult)
     {
         var parseTree = new ParseTree(expression);
         var result = parseTree.Calculate();
@@ -15,7 +16,7 @@ public class ParseTreeTest
 
     [TestCase("(/ 1 0)")]
     [TestCase("(+ (+ 9 4) (/ (* 4 5) (- 1 1)))")]
-    public void DivisonByZeroShouldThrowException(string expression)
+    public void DivisonByZeroShouldThrowExceptionTest(string expression)
     {
         var parseTree = new ParseTree(expression);
         Assert.Throws<DivideByZeroException>(() => parseTree.Calculate());
@@ -24,7 +25,7 @@ public class ParseTreeTest
     [TestCase("(+ 1 1")]
     [TestCase("(+ 1 1)  )")]
     [TestCase("(+ 1 (* (- 4 5) (* 1 2))")]
-    public void WrongBalanceOfBracketsShouldThrowException(string expression)
+    public void WrongBalanceOfBracketsShouldThrowExceptionTest(string expression)
     {
         Assert.Throws<ArgumentException>(() => new ParseTree(expression));
     }
@@ -32,7 +33,7 @@ public class ParseTreeTest
     [TestCase("(& 1 1)")]
     [TestCase("(+ a 1)")]
     [TestCase("(* (+ 1 1) (/ 0 f))")]
-    public void UnexpectedSymbolInExpressionShouldThrowException(string expression)
+    public void UnexpectedSymbolInExpressionShouldThrowExceptionTest(string expression)
     {
         Assert.Throws<ArgumentException>(() => new ParseTree(expression));
     }
@@ -41,7 +42,7 @@ public class ParseTreeTest
     [TestCase("( + 1 1)")]
     [TestCase("(+  1 1)")]
     [TestCase("(+ 1  1)")]
-    public void ExpressionsAreNotBasedOnATemplateShouldThrowException(string expression)
+    public void ExpressionsAreNotBasedOnATemplateShouldThrowExceptionTest(string expression)
     {
         Assert.Throws<ArgumentException>(() => new ParseTree(expression));
     }
@@ -50,13 +51,13 @@ public class ParseTreeTest
     [TestCase("(+ 1 )")]
     [TestCase("(* 1 ())")]
     [TestCase("(* (+ 1)")]
-    public void IncompleteExpressionsShouldThrowException(string expression)
+    public void IncompleteExpressionsShouldThrowExceptionTest(string expression)
     {
         Assert.Throws<ArgumentException>(() => new ParseTree(expression));
     }
 
     [Test]
-    public void TryingToCreateParseTreeWithNullOrEmptyShouldThrowException()
+    public void TryingToCreateParseTreeWithNullOrEmptyShouldThrowExceptionTest()
     {
         var emptyString = "";
         string? nullString = null;

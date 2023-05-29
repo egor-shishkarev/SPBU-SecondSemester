@@ -1,4 +1,6 @@
-﻿namespace Trees;
+﻿using System.Globalization;
+
+namespace Trees;
 
 /// <summary>
 /// Abstract class for all operation.

@@ -1,6 +1,6 @@
 ﻿namespace Trees;
 
-public class OperationAdd: Operation
+public class OperationAdd : Operation
 {
     /// <summary>
     /// Create a new instance of OperationAdd class.
@@ -8,7 +8,7 @@ public class OperationAdd: Operation
     /// <param name="leftOperand">Left operand in parse tree.</param>
     /// <param name="rightOperand">Right operand in parse tree.</param>
     public OperationAdd(IOperand leftOperand, IOperand rightOperand)
-        :base("+", leftOperand, rightOperand)
+            :base("+", leftOperand, rightOperand)
     { 
     }
 

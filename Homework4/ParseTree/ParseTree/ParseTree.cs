@@ -21,12 +21,11 @@ public class ParseTree
     {
         ArgumentException.ThrowIfNullOrEmpty(expression);
         int currentIndex = 0;
-        if (!ParenthesisBalance(expression))
+        if (!AreParenthesesBalanced(expression))
         {
             throw new ArgumentException("Wrong parenthesis balance!");
         }
         head = CreateNewNode(expression, ref currentIndex);
-        
     }
 
     /// <summary>
@@ -162,7 +161,7 @@ public class ParseTree
     /// </summary>
     /// <param name="expression">Expression, which we want to represent in tree.</param>
     /// <returns>True - balance is maintained; otherwise - false;</returns>
-    private static bool ParenthesisBalance(string expression)
+    private static bool AreParenthesesBalanced(string expression)
     {
         var summOfParanthesis = 0;
         for (int i = 0; i < expression.Length; ++i)

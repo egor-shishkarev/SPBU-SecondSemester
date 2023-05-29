@@ -1,4 +1,6 @@
-﻿namespace Trees;
+﻿using System.Globalization;
+
+namespace Trees;
 
 /// <summary>
 /// Number operand in parse tree - {124} for example
@@ -22,7 +24,7 @@ public class Operand: IOperand
     /// <summary>
     /// Change int number to string for console output.
     /// </summary>
-    public string StringRepresentation => Value.ToString();
+    public string StringRepresentation => Value.ToString("G", NumberFormatInfo.CurrentInfo);
 
     /// <summary>
     /// Just return number.
