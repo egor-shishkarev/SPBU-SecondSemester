@@ -5,7 +5,7 @@ using System.Collections;
 public class SkipList<T>: IList<T>
     where T: IComparable
 {
-    private Node Head = new(default!, new List<Node>());
+    private Node Head = new(default!, new List<Node>() { default! });
 
     private readonly Node Tail = new(default!, new List<Node>());
 
@@ -16,7 +16,7 @@ public class SkipList<T>: IList<T>
     /// <summary>
     /// Max count of levels in skip list.
     /// </summary>
-    private int maxHeight;
+    private readonly int maxHeight = 4;
 
     /// <summary>
     /// Random function for adding elements to the following levels.
@@ -33,7 +33,7 @@ public class SkipList<T>: IList<T>
     /// </summary>
     public SkipList()
     {
-        Head.Next.Add(Tail);
+        Head.Next[0] = Tail;
     }
 
     /// <summary>
@@ -46,7 +46,7 @@ public class SkipList<T>: IList<T>
         {
             throw new ArgumentOutOfRangeException("Count of levels less than zero is not possible!");
         }
-        Head.Next.Add(Tail);
+        Head.Next[0] = Tail;
         this.maxHeight = maxHeight;
     }
 
@@ -80,7 +80,7 @@ public class SkipList<T>: IList<T>
         public Node(T item)
         {
             Value = item;
-            Next = new List<Node>();
+            Next = new List<Node>() { default!, default! };
         }
     } 
 
@@ -211,37 +211,99 @@ public class SkipList<T>: IList<T>
     }
 
     public void Add(T item) // + Moving node to a new Level.
-    {
+    { 
         if (item == null)
         {
             throw new ArgumentNullException(nameof(item));
         }
+
+        int heightOfNewNode = 0;
+
+        int currentHeightOfSkipList = Head.Next.Count - 1;
+
+        while (RandomMoving() && heightOfNewNode < maxHeight)
+        {
+            ++heightOfNewNode;
+        }
+
+        var listOfNodes = new List<Node>();
+        var isEmpty = Head.Next[0] == Tail;
+        for (int i = 0; i <= heightOfNewNode; ++i)
+        {
+            listOfNodes.Add(new Node(item));
+            if (i - 1 >= 0)
+            {
+                listOfNodes[i - 1].Next[1] = listOfNodes[i];
+            }
+        }
+
+        for (int i = 0; i < heightOfNewNode - currentHeightOfSkipList; ++i)
+        {
+            listOfNodes[i].Next[0] = Tail;
+            if (Head.Next[0] == Tail)
+            {
+                Head.Next[0] = listOfNodes[0];
+                continue;
+            }
+            Head.Next.Add(listOfNodes[i]);
+        }
+        if (isEmpty)
+        {
+            return;
+        }
         Node currentNode = Head;
 
-        Node newNode = new(item);
-
-        int currentHeightOfNode = currentNode.Next.Count - 1;
+        var newNode = listOfNodes[currentHeightOfSkipList > heightOfNewNode ? 0 : heightOfNewNode - currentHeightOfSkipList];
 
         while (true)
         {
-            if ((item.CompareTo(currentNode.Value) > 0 && currentNode.Next[currentHeightOfNode] == Tail) || 
-                (item.CompareTo(currentNode.Value) > 0 && item.CompareTo(currentNode.Next[currentHeightOfNode].Value) < 0) || 
-                currentNode == Head && item.CompareTo(currentNode.Next[currentHeightOfNode].Value) < 0)
+            if ((item.CompareTo(currentNode.Value) > 0 && currentNode.Next[currentHeightOfSkipList] == Tail) ||
+                (item.CompareTo(currentNode.Value) > 0 && item.CompareTo(currentNode.Next[currentHeightOfSkipList].Value) < 0) ||
+                currentNode == Head && item.CompareTo(currentNode.Next[currentHeightOfSkipList].Value) < 0 ||
+                currentNode == Head && currentNode.Next[0] == Tail)
             {
-                if (currentHeightOfNode == 0)
+                var tempNode = currentNode.Next[currentHeightOfSkipList];
+                currentNode.Next[currentHeightOfSkipList] = newNode;
+                newNode.Next[currentHeightOfSkipList] = tempNode;
+                if (currentNode.Next.Count == 1 || currentNode.Next[1] == default)
                 {
-                    var tempNode = currentNode.Next[0];
-                    currentNode.Next[0] = newNode;
-                    newNode.Next.Add(tempNode);
-                    MovingNodeToNewLevel(currentNode, newNode);
                     break;
                 }
-                --currentHeightOfNode;
-                currentNode = currentNode.Next[currentHeightOfNode];
+                if (currentHeightOfSkipList == 0)
+                {
+                    break;
+                }
+                currentNode = currentNode.Next[currentHeightOfSkipList - 1];
+                newNode = listOfNodes[listOfNodes.IndexOf(newNode) + 1];
             }
             else
             {
-                currentNode = currentNode.Next[currentHeightOfNode];
+                if (currentNode == Head && currentNode.Next[currentHeightOfSkipList] != Tail || currentNode.Next[0] != Tail)
+                {
+                    if (currentNode == Head)
+                    {
+                        currentNode = currentNode.Next[currentHeightOfSkipList];
+                    }
+                    else
+                    {
+                        currentNode = currentNode.Next[0];
+                    }
+                    continue;
+                }
+                else
+                {
+                    if (currentNode == Head)
+                    {
+                        --currentHeightOfSkipList;
+                        currentNode = currentNode.Next[currentHeightOfSkipList];
+                    }
+                    else
+                    {
+                        currentNode = currentNode.Next[1];
+                        currentHeightOfSkipList = 0;
+                    }
+                    continue;
+                }
             }
         }
         ++currentVersionOfList;
@@ -252,8 +314,8 @@ public class SkipList<T>: IList<T>
     {
         ++currentVersionOfList;
         Count = 0;
-        Head = new Node(default!, new List<Node>());
-        Head.Next.Add(Tail);
+        Head = new Node(default!, new List<Node>() { default! });
+        Head.Next[0] = Tail;
     }
 
     public bool Contains(T item)
@@ -289,31 +351,33 @@ public class SkipList<T>: IList<T>
         }
     }
 
-    public void CopyTo(T[] array, int arrayIndex)
+    public void CopyTo(T[] array, int arrayIndex) // Done
     {
+        if (array == null)
+        {
+            throw new ArgumentNullException(nameof(array));
+        }
+        if (arrayIndex < 0 || arrayIndex > array.Length - 1)
+        {
+            throw new ArgumentOutOfRangeException(nameof(arrayIndex));
+        }
+        if (Count + arrayIndex > array.Length)
+        {
+            throw new ArgumentException("Not enough space in array!");
+        }
 
+        var currentNode = Head.Next[0];
+        for (int i = 0; i < Count; ++i)
+        {
+            array[arrayIndex + i] = currentNode.Value;
+            currentNode = currentNode.Next[0];
+        }
     }
 
     public bool Remove(T item)
     {
         ++currentVersionOfList;
         return false;
-    }
-
-    private void MovingNodeToNewLevel(Node currentNode, Node newNode)
-    {
-        int maxHeight = currentNode.Next.Count - 1;
-        int currentHeight = 0;
-        var adjacentNodes = new List<Node>() { newNode };
-        while (RandomMoving() && currentHeight < maxHeight)
-        {
-            var tempNode = currentNode.Next[currentHeight + 1];
-            var newLevelNode = new Node(newNode.Value);
-            currentNode.Next[currentHeight + 1].Next[currentHeight + 1] = newLevelNode;
-            newLevelNode.Next.Add(newNode);
-
-
-        }
     }
 
     private bool RandomMoving()
