@@ -16,7 +16,7 @@ public class SkipList<T>: IList<T>
     /// <summary>
     /// Max count of levels in skip list.
     /// </summary>
-    private readonly int maxHeight = 4;
+    private readonly int maxHeight = 3;
 
     /// <summary>
     /// Random function for adding elements to the following levels.
@@ -237,7 +237,7 @@ public class SkipList<T>: IList<T>
             }
         }
 
-        for (int i = 0; i <= heightOfNewNode - currentHeightOfSkipList; ++i)
+        for (int i = 0; i < heightOfNewNode - currentHeightOfSkipList; ++i)
         {
             listOfNodes[i].Next[0] = Tail;
             if (Head.Next[0] == Tail)
@@ -254,57 +254,81 @@ public class SkipList<T>: IList<T>
         Node currentNode = Head;
 
         var newNode = listOfNodes[currentHeightOfSkipList > heightOfNewNode ? 0 : heightOfNewNode - currentHeightOfSkipList];
-
         while (true)
         {
-            if ((item.CompareTo(currentNode.Value) > 0 && currentNode.Next[currentHeightOfSkipList] == Tail) ||
-                (item.CompareTo(currentNode.Value) > 0 && item.CompareTo(currentNode.Next[currentHeightOfSkipList].Value) < 0) ||
-                currentNode == Head && item.CompareTo(currentNode.Next[currentHeightOfSkipList].Value) < 0 ||
-                currentNode == Head && currentNode.Next[0] == Tail)
+            if (currentNode == Head)
             {
-                var tempNode = currentNode.Next[currentHeightOfSkipList];
-                currentNode.Next[currentHeightOfSkipList] = newNode;
-                newNode.Next[currentHeightOfSkipList] = tempNode;
-                if (currentNode.Next.Count == 1 || currentNode.Next[1] == default)
+                if (item.CompareTo(currentNode.Next[currentHeightOfSkipList].Value) < 0)
                 {
-                    break;
-                }
-                if (currentHeightOfSkipList == 0)
-                {
-                    break;
-                }
-                currentNode = currentNode.Next[currentHeightOfSkipList - 1];
-                newNode = listOfNodes[listOfNodes.IndexOf(newNode) + 1];
-            }
-            else
-            {
-                if (currentNode == Head && currentNode.Next[currentHeightOfSkipList] != Tail || currentNode.Next[0] != Tail)
-                {
-                    if (currentNode == Head)
+                    var tempNode = currentNode.Next[currentHeightOfSkipList];
+                    currentNode.Next[currentHeightOfSkipList] = newNode;
+                    newNode.Next[currentHeightOfSkipList] = tempNode;
+                    if (currentNode.Next.Count == 1 || currentNode.Next[1] == default)
                     {
-                        currentNode = currentNode.Next[currentHeightOfSkipList];
+                        break;
                     }
-                    else
+                    if (currentHeightOfSkipList == 0)
                     {
-                        currentNode = currentNode.Next[0];
+                        break;
                     }
+                    currentNode = currentNode.Next[currentHeightOfSkipList - 1];
+                    newNode = listOfNodes[listOfNodes.IndexOf(newNode) + 1];
+                }
+                if (currentNode.Next[currentHeightOfSkipList] != Tail)
+                {
+                    currentNode = currentNode.Next[currentHeightOfSkipList];
                     continue;
                 }
                 else
                 {
-                    if (currentNode == Head)
+                    --currentHeightOfSkipList;
+                    currentNode = currentNode.Next[currentHeightOfSkipList];
+                    continue;
+                }
+            }
+            else
+            {
+                if ((item.CompareTo(currentNode.Value) > 0 && currentNode.Next[0] == Tail) ||
+                (item.CompareTo(currentNode.Value) > 0 && item.CompareTo(currentNode.Next[0].Value) < 0) ||
+                currentNode == Head && item.CompareTo(currentNode.Next[0].Value) < 0 ||
+                currentNode == Head && currentNode.Next[0] == Tail)
+                {
+                    var tempNode = currentNode.Next[0];
+                    currentNode.Next[0] = newNode;
+                    newNode.Next[0] = tempNode;
+                    if (currentNode.Next.Count == 1 || currentNode.Next[1] == default)
                     {
-                        --currentHeightOfSkipList;
-                        currentNode = currentNode.Next[currentHeightOfSkipList];
+                        break;
+                    }
+                    if (currentHeightOfSkipList == 0)
+                    {
+                        break;
+                    }
+                    currentNode = currentNode.Next[1];
+                    if (listOfNodes.IndexOf(newNode) + 1 >= listOfNodes.Count - 1)
+                    {
+                        break;
+                    }
+                    newNode = listOfNodes[listOfNodes.IndexOf(newNode) + 1];
+                }
+                else
+                {
+                    if (currentNode.Next[0] != Tail)
+                    {
+                        currentNode = currentNode.Next[0];
+                        continue;
                     }
                     else
                     {
                         currentNode = currentNode.Next[1];
                         currentHeightOfSkipList = 0;
+                        continue;
                     }
-                    continue;
                 }
             }
+
+
+            
         }
         ++currentVersionOfList;
         ++Count;
