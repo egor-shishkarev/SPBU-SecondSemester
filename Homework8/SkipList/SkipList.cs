@@ -237,7 +237,7 @@ public class SkipList<T>: IList<T>
             }
         }
 
-        for (int i = 0; i < heightOfNewNode - currentHeightOfSkipList; ++i)
+        for (int i = 0; i <= heightOfNewNode - currentHeightOfSkipList; ++i)
         {
             listOfNodes[i].Next[0] = Tail;
             if (Head.Next[0] == Tail)
