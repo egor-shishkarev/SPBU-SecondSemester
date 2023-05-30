@@ -1,9 +1,9 @@
 namespace TrieClass.Test;
 
-public class Tests
+public class TrieTests
 {
     [Test]
-    public void AddNewElementShouldContainItAndReturnTrue()
+    public void AddNewElementShouldContainItAndReturnTrueTest()
     {
         var trie = new Trie();
         bool contains = trie.Add("ololo");
@@ -15,7 +15,7 @@ public class Tests
     }
 
     [Test] 
-    public void AddNewElementShouldChangeSize()
+    public void AddNewElementShouldChangeSizeTest()
     {
         var trie = new Trie();
         int firstSize = trie.Size;
@@ -26,7 +26,7 @@ public class Tests
     }
 
     [Test]
-    public void AddExistingElementShouldReturnFalseAndNotChangeSize()
+    public void AddExistingElementShouldReturnFalseAndNotChangeSizeTest()
     {
         var trie = new Trie();
         trie.Add("aba");
@@ -42,7 +42,7 @@ public class Tests
     }
 
     [Test]
-    public void RemoveExistingElementShouldNotContainItAndReturnTrue()
+    public void RemoveExistingElementShouldNotContainItAndReturnTrueTest()
     {
         var trie = new Trie();
         trie.Add("olo");
@@ -58,7 +58,7 @@ public class Tests
     }
 
     [Test]
-    public void RemoveNotContainedStringShouldReturnFalse()
+    public void RemoveNotContainedStringShouldReturnFalseTest()
     {
         var trie = new Trie();
 
@@ -66,7 +66,7 @@ public class Tests
     }
 
     [Test] 
-    public void RemoveElementShouldChangeSize()
+    public void RemoveElementShouldChangeSizeTest()
     {
         var trie = new Trie();
         trie.Add("abab");
@@ -78,7 +78,7 @@ public class Tests
     }
 
     [Test]
-    public void ContainsShouldReturnFalseToNotContainedString()
+    public void ContainsShouldReturnFalseToNotContainedStringTest()
     {
         var trie = new Trie();
 
@@ -86,7 +86,7 @@ public class Tests
     }
 
     [Test] 
-    public void HowManyStartsWithPrefixShouldWork()
+    public void HowManyStartsWithPrefixShouldWorkTest()
     {
         var trie = new Trie();
         trie.Add("ababc");
@@ -98,7 +98,7 @@ public class Tests
     }
 
     [Test]
-    public void SizeOfTrieShouldWork()
+    public void SizeOfTrieShouldWorkTest()
     {
         var trie = new Trie();
         trie.Add("abc");
@@ -108,7 +108,7 @@ public class Tests
     }
 
     [Test]
-    public void TryingToAddNullOrEmptyStringShouldThrowArgumentException()
+    public void TryingToAddNullOrEmptyStringShouldThrowArgumentExceptionTest()
     {
         var trie = new Trie();
         string? nullString = null;
@@ -120,7 +120,7 @@ public class Tests
     }
 
     [Test]
-    public void TryingToCheckContainsNullOrEmptyStringShouldThrowArgumentException()
+    public void TryingToCheckContainsNullOrEmptyStringShouldThrowArgumentExceptionTest()
     {
         var trie = new Trie();
         string? nullString = null;
@@ -132,7 +132,7 @@ public class Tests
     }
 
     [Test]
-    public void TryingToRemoveNullOrEmptyStringShouldThrowArgumentException()
+    public void TryingToRemoveNullOrEmptyStringShouldThrowArgumentExceptionTest()
     {
         var trie = new Trie();
         string? nullString = null;
@@ -144,7 +144,7 @@ public class Tests
     }
 
     [Test]
-    public void TryingToCheckHowManyStartsWithNullOrEmptyStringShouldThrowArgumentException()
+    public void TryingToCheckHowManyStartsWithNullOrEmptyStringShouldThrowArgumentExceptionTest()
     {
         var trie = new Trie();
         string? nullString = null;

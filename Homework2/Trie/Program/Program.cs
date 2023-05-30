@@ -25,7 +25,7 @@ while (true)
         case 0:
         {
             Console.WriteLine("Работа закончена.");
-            return;
+            return 0;
         }
         case 1:
         {
