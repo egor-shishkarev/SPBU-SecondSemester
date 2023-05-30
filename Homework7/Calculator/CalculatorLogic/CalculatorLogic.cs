@@ -2,6 +2,9 @@
 
 using System.ComponentModel;
 
+/// <summary>
+/// Class of calculator logic - adding elements to display, calculating values.
+/// </summary>
 public class CalculatorLogic : INotifyPropertyChanged
 {
     /// <summary>
@@ -366,7 +369,7 @@ public class CalculatorLogic : INotifyPropertyChanged
     }
 
     /// <summary>
-    /// Additional method to check if 
+    /// Additional method to check if symbol is operation.
     /// </summary>
     /// <param name="symbol">Symbol which we want to check.</param>
     /// <returns>true - if symbol in -, +, *, /; otherwise - false;</returns>

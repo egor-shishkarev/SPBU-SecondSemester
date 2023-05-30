@@ -1,8 +1,8 @@
 namespace Calculator.Tests;
 
-public class CalculatorTests
+public class CalculatorLogicTests
 {
-    readonly CalculatorLogic calculatorLogic = new();
+    private readonly CalculatorLogic calculatorLogic = new();
 
     private void AddExpressionInCalculator(string expression)
     {
@@ -19,13 +19,13 @@ public class CalculatorTests
     }
 
     [Test]
-    public void CalculatorWithoutInputInformationShouldDisplayZero()
+    public void CalculatorWithoutInputInformationShouldDisplayZeroTest()
     {
         Assert.That(calculatorLogic.DisplayNumber, Is.EqualTo("0"));
     }
 
     [Test]
-    public void NumberWhichAddToCalculatorShouldDisplay()
+    public void NumberWhichAddToCalculatorShouldDisplayTest()
     {
         calculatorLogic.AddElement('3');
 
@@ -35,7 +35,7 @@ public class CalculatorTests
     [TestCase("1+1+", "2")]
     [TestCase("1+5-3/3=", "1")]
     [TestCase("100/2*5=", "250")]
-    public void SimpleExpressionsShouldReturnExpectedResult(string expression, string result)
+    public void SimpleExpressionsShouldReturnExpectedResultTest(string expression, string result)
     {
         AddExpressionInCalculator(expression);
 
@@ -44,7 +44,7 @@ public class CalculatorTests
 
     [TestCase("1/0=")]
     [TestCase("1-1/0=")]
-    public void DivisionByZeroShouldReturnErrorOnDisplay(string expression)
+    public void DivisionByZeroShouldReturnErrorOnDisplayTest(string expression)
     {
         AddExpressionInCalculator(expression);
 
@@ -54,7 +54,7 @@ public class CalculatorTests
     [TestCase("1+1=====", "6")]
     [TestCase("1*1=====", "1")]
     [TestCase("1+======", "7")]
-    public void MultipleOperationShouldReturnExpectedResult(string expression, string result)
+    public void MultipleOperationShouldReturnExpectedResultTest(string expression, string result)
     {
         AddExpressionInCalculator(expression);
 
