@@ -20,6 +20,8 @@ _____
   - [Game](https://github.com/egor-shishkarev/SPBU-SecondSemester/tree/Homework6_task2/Homework6/Game)
 - ## Homework 7
   - [Calculator](https://github.com/egor-shishkarev/SPBU-SecondSemester/tree/Homework7/Homework7/Calculator)
+- ## Homework 8
+  - [Skip List](https://github.com/egor-shishkarev/SPBU-SecondSemester/tree/Homework8/Homework8)
 - ## Homework 9
   - [SCP-087](https://github.com/egor-shishkarev/SPBU-SecondSemester/tree/SCP-087/Homework9/SCP-087)
 ____
