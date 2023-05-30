@@ -1,7 +1,15 @@
 ﻿namespace Transform;
 
+/// <summary>
+/// Class of sorting by bubble sort method of suffix in string.
+/// </summary>
 public static class Sorting
 {
+    /// <summary>
+    /// Method of bubble sort of suffix in string.
+    /// </summary>
+    /// <param name="stringToConvert">String, which suffix we want to sort.</param>
+    /// <returns>Array of index of suffixes; True - if string to convert wasn't null; otherwise - false.</returns>
     public static (int[], bool) BubbleSuffixSort(string stringToConvert)
     {
         if (stringToConvert == null)

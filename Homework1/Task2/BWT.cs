@@ -2,8 +2,16 @@
 
 using System.Text;
 
+/// <summary>
+/// Class of two methods BWT - Direct and Reverse transform.
+/// </summary>
 public static class BWT
 {
+    /// <summary>
+    /// Apply BWT to string.
+    /// </summary>
+    /// <param name="stringToConvert">String, which we want to transform.</param>
+    /// <returns>String after applying BWT.</returns>
     public static (StringBuilder BWTString, int lastPosition) DirectBWT(string stringToConvert)
     {
         if (stringToConvert.Contains('\0'))
@@ -30,6 +38,12 @@ public static class BWT
         return (BWTString, lastPosition);
     }
 
+    /// <summary>
+    /// Apply reverse BWT to restore original string.
+    /// </summary>
+    /// <param name="BWTString">String after applying BWT.</param>
+    /// <param name="lastPosition">Last position in BWT.</param>
+    /// <returns>Original string before applying BWT.</returns>
     public static StringBuilder ReverseBWT(StringBuilder BWTString, int lastPosition)
     {
         if (BWTString == null || string.IsNullOrEmpty(BWTString.ToString()) || (lastPosition > BWTString.Length || lastPosition < 0))
