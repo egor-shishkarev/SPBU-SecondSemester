@@ -47,19 +47,6 @@ public class SkipList<T> : IList<T> where T : IComparable
     }
 
     /// <summary>
-    /// Specific constructor for SkipList, where you can choose max height.
-    /// </summary>
-    /// <param name="maxHeight">Max count of levels in skip list.</param>
-    public SkipList(int maxHeight)
-    {
-        if (maxHeight < 0)
-        {
-            throw new ArgumentOutOfRangeException(nameof(maxHeight));
-        }
-        Head.Next[0] = Tail;
-    }
-
-    /// <summary>
     /// Element in Skip List.
     /// </summary>
     private class Node
