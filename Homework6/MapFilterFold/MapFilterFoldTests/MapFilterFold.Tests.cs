@@ -4,7 +4,7 @@ public class MapFilterFoldTests
 {
 
     [Test]
-    public void MapWithIntFunctionShouldReturnExpectedResults()
+    public void MapWithIntFunctionShouldReturnExpectedResultsTest()
     {
         var listOfElements = new List<int> { 1, 2, 3 };
         var function = (int x) => x * 2;
@@ -14,7 +14,7 @@ public class MapFilterFoldTests
     }
 
     [Test]
-    public void MapWithStringFunctionShoulfReturnExpectedResult()
+    public void MapWithStringFunctionShoulfReturnExpectedResultTest()
     {
         var listOfElements = new List<int> { 1, 2, 3 };
         var function = (int x) => x.ToString() + "0" + x.ToString();
@@ -24,7 +24,7 @@ public class MapFilterFoldTests
     }
 
     [Test]
-    public void MapWithEmptyListShouldReturnEmptyList()
+    public void MapWithEmptyListShouldReturnEmptyListTest()
     {
         var listOfElements = new List<int>();
         var function = (int x) => x + 1;
@@ -33,7 +33,7 @@ public class MapFilterFoldTests
     }
 
     [Test]
-    public void MapWithNullListShouldThrowArgumentNullException()
+    public void MapWithNullListShouldThrowArgumentNullExceptionTest()
     {
         List<int>? listOfElements = null;
         var function = (int x) => x + 1;
@@ -42,7 +42,7 @@ public class MapFilterFoldTests
     }
 
     [Test]
-    public void MapWithNullFunctionShouldThrowArgumentNullException()
+    public void MapWithNullFunctionShouldThrowArgumentNullExceptionTest()
     {
         var listOfElements = new List<int>() { 1, 2, 3 };
         Func<int, int>? function = null;
@@ -51,7 +51,7 @@ public class MapFilterFoldTests
     }
 
     [Test]
-    public void FilterWithIntFunctionShouldReturnExpectedResult()
+    public void FilterWithIntFunctionShouldReturnExpectedResultTest()
     {
         var listOfElements = new List<int> { 4, -4, 2, 0, -5, -1 };
         var function = (int x) => x > 0;
@@ -61,7 +61,7 @@ public class MapFilterFoldTests
     }
 
     [Test]
-    public void FilterWithStringFunctionShouldReturnExpectedResult()
+    public void FilterWithStringFunctionShouldReturnExpectedResultTest()
     {
         var listOfElements = new List<string> { "Hello", "World", "!", "False", "True" };
         var function = (string x) => x.Contains('l');
@@ -71,7 +71,7 @@ public class MapFilterFoldTests
     }
 
     [Test]
-    public void FilterWithEmptyListShouldReturnEmptyList()
+    public void FilterWithEmptyListShouldReturnEmptyListTest()
     {
         var listOfElements = new List<int>();
         var function = (int x) => x % 7 == 0;
@@ -81,7 +81,7 @@ public class MapFilterFoldTests
 
 
     [Test]
-    public void FilterWithNullListShouldThrowArgumentNullException()
+    public void FilterWithNullListShouldThrowArgumentNullExceptionTest()
     {
         List<int>? listOfElements = null;
         var function = (int x) => x % 7 == 0;
@@ -90,7 +90,7 @@ public class MapFilterFoldTests
     }
 
     [Test]
-    public void FilterWithNullFunctionShouldThrowArgumentNullException()
+    public void FilterWithNullFunctionShouldThrowArgumentNullExceptionTest()
     {
         var listOfElements = new List<int>() { 1, 2, 3 };
         Func<int, bool>? function = null;
@@ -99,7 +99,7 @@ public class MapFilterFoldTests
     }
 
     [Test]
-    public void FoldWithIntFunctionShouldReturnExpectedResult()
+    public void FoldWithIntFunctionShouldReturnExpectedResultTest()
     {
         var listOfElements = new List<int> { 1, 2, 3, 4, 5, 6};
         var accumulator = 1;
@@ -110,7 +110,7 @@ public class MapFilterFoldTests
     }
 
     [Test]
-    public void FoldWithStringFunctionShouldReturnExpectedResult()
+    public void FoldWithStringFunctionShouldReturnExpectedResultTest()
     {
         var listOfElements = new List<string> { "He", "llo", " " , "Wor", "l", "d!" };
         var accumulator = "";
@@ -121,7 +121,7 @@ public class MapFilterFoldTests
     }
 
     [Test]
-    public void FoldWithEmptyListShouldReturnAccumulatorValue()
+    public void FoldWithEmptyListShouldReturnAccumulatorValueTest()
     {
         var listOfElements = new List<int>();
         var accumulator = 2;
@@ -131,7 +131,7 @@ public class MapFilterFoldTests
     }
 
     [Test]
-    public void FoldWithNullListShouldThrowArgumentNullException()
+    public void FoldWithNullListShouldThrowArgumentNullExceptionTest()
     {
         List<int>? listOfElements = null;
         var accumulator = 2;
@@ -141,7 +141,7 @@ public class MapFilterFoldTests
     }
 
     [Test]
-    public void FoldWithNullFunctionShouldThrowArgumentNullException()
+    public void FoldWithNullFunctionShouldThrowArgumentNullExceptionTest()
     {
         var listOfElements = new List<int>() { 1, 2, 3 };
         var accumulator = 2;
